@@ -1,0 +1,191 @@
+package com.erdem.designexample
+
+import android.content.ContentValues
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
+import java.time.Year
+
+class DatabaseOperations {
+
+    fun add(helper:DatabaseHelper, garden:TeaGardens, harverst: TeaHarverst, context: Context){
+
+        val db = helper.writableDatabase
+
+        val harverstValues = ContentValues()
+        val gardenValues = ContentValues()
+
+        gardenValues.put("gardenName", garden.gardenName)
+        harverstValues.put("year", harverst.year)
+        harverstValues.put("month", harverst.month)
+        harverstValues.put("day", harverst.day)
+        harverstValues.put("season", harverst.season)
+        harverstValues.put("weight_kg", harverst.weight_kg)
+
+
+        //Eğer daha önce bu bahçe ismi kullanılmamış ise kayıt yapar
+        if (isGardenExists(helper,garden.gardenName) == -1) {
+
+            db.insertOrThrow("TeaGardens", null, gardenValues)
+            val garden_id = isGardenExists(helper,garden.gardenName)
+            harverstValues.put("garden_id", garden_id)
+            db.insertOrThrow("TeaHarverst", null, harverstValues)
+
+        } else {
+            if (!checkSeasonAndYear(helper, harverst.year, harverst.season, isGardenExists(helper, garden.gardenName))) {
+                harverstValues.put("garden_id", isGardenExists(helper,garden.gardenName))
+                db.insertOrThrow("TeaHarverst", null, harverstValues)
+            } else {
+                Toast.makeText(context, "Kayıt mevcut", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        checkSeasonAndYear(helper,harverst.year, harverst.season, isGardenExists(helper,garden.gardenName))
+
+        //db.execSQL("DELETE FROM TeaGardens")
+        //db.close()
+    }
+
+    fun readData(helper:DatabaseHelper, year: Int, season: Int) : ArrayList<TeaHarverst> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id " +
+                                    "WHERE year = ? AND season =?",
+            arrayOf(year.toString(), season.toString())
+        )
+
+        val harverst = ArrayList<TeaHarverst>()
+
+        while(cursor.moveToNext()) {
+
+            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+            val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
+            val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
+            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
+            val gardenName = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
+            val weight_kg = cursor.getInt(cursor.getColumnIndexOrThrow("weight_kg"))
+
+            val tmp = TeaHarverst(year,month,day,season,gardenName, weight_kg)
+            harverst.add(tmp)
+
+        }
+        cursor.close()
+        return harverst
+    }
+
+
+    //Eğer girilen bahçe ismi daha önce kullanılmış ise id değeri döner
+    //Eğer bahçe ismi daha önce kullanılmamış ise -1 değerini döner
+    fun isGardenExists(helper: DatabaseHelper, gardenName: String) : Int {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT id FROM TeaGardens WHERE gardenName = ?", arrayOf(gardenName))
+
+        var tmp:Int = -1
+
+        while (cursor.moveToNext()) {
+            tmp = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+        }
+
+        cursor.close()
+        return tmp
+    }
+
+    //TRUE --> Verilen yıl ve sezon içinde bahçenin kaydı var
+    //FALSE  --> Verilen yıl ve sezon içinde bahçenin kaydı yok
+
+    fun checkSeasonAndYear(helper: DatabaseHelper, year: Int, season:Int, garden_id:Int) :Boolean{
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT id FROM TeaHarverst WHERE season = ? AND year = ? AND garden_id = ? ",
+                                arrayOf(season.toString(), year.toString(), garden_id.toString() ))
+
+        cursor.use {
+            // Eğer sonuç bulunursa true döndür, aksi takdirde false
+            return if (cursor.moveToNext()) {
+                val tmp = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+                cursor.close()
+                db.close()
+                true
+            } else {
+                cursor.close()
+
+                false
+            }
+        }
+
+    }
+
+    fun deleteData(helper: DatabaseHelper, gardenName:String) {
+
+        val db = helper.writableDatabase
+        db.delete("TeaGardens", "gardenName=?", arrayOf(gardenName))
+    }
+
+    fun readYear(helper: DatabaseHelper) : ArrayList<String> {
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT year FROM TeaHarverst ",null)
+
+        val years = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("year"))
+
+            if(!years.contains(tmp)) {
+                years.add(tmp)
+            }
+        }
+
+        cursor.close()
+        return years
+    }
+
+    fun readSeason(helper: DatabaseHelper, year: Int) : ArrayList<String> {
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT season FROM TeaHarverst WHERE year = ?", arrayOf(year.toString()))
+
+        val seasons = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("season"))
+
+            if(!seasons.contains(tmp)) {
+                seasons.add(tmp)
+            }
+        }
+
+        cursor.close()
+        return seasons
+    }
+
+    fun readGardens(helper: DatabaseHelper, string: String) :ArrayList<String> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT gardenName FROM TeaGardens WHERE gardenName LIKE '%$string%' ", null)
+
+        var gardens = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
+
+            gardens.add(tmp)
+
+        }
+        return gardens
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

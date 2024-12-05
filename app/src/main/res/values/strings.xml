@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">designExample</string>
+    <string name="bottom_bar_1">Bahçeler</string>
+    <string name="bottom_bar_2">Kayıt ekle</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
