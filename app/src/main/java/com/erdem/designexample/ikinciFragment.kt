@@ -150,7 +150,7 @@ class ikinciFragment : Fragment() {
 
         binding.silButton.setOnClickListener {
             /*val helper = DatabaseHelper(requireContext())
-            DatabaseOperations().deleteData(helper,binding.tarlaEditText.text.toString())
+            DatabaseOperations().deleteData(helper,binding.tarlaEditText.text.toString())*/
         }
 
         /*
