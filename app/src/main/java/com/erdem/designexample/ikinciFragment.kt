@@ -70,7 +70,7 @@ class ikinciFragment : Fragment() {
         binding.ozelButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 if(binding.cardView.visibility == View.VISIBLE) {
-                    //Kapanma sırasında animasyon ekliyor !!
+                    //Kapanma sırasında animasyon ekliyor !!!
                     TransitionManager.beginDelayedTransition(binding.cardView, AutoTransition())
                     binding.cardView.visibility = View.GONE
                 }else {
