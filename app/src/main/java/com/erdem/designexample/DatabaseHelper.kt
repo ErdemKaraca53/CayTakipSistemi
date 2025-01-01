@@ -22,9 +22,9 @@ class DatabaseHelper(contex:Context) : SQLiteOpenHelper(contex, "db", null, 5) {
                 "season INTEGER NOT NULL, " +
                 "garden_id INTEGER NOT NULL, " +
                 "weight_kg INTEGER NOT NULL, " +
-                "price REAL NOT NULL, " +
-                "company TEXT NOT NULL UNIQUE, " +
-                "paymentDate TEXT NOT NULL, " +
+                "company TEXT  UNIQUE, " +
+                "price REAL , " +
+                "paymentDate TEXT , " +
                 "FOREIGN KEY (garden_id) REFERENCES TeaGardens(id))")
     }
 

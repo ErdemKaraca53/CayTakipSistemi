@@ -89,11 +89,11 @@
             android:textAlignment="viewStart"
             android:textColor="@color/textViewColor"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/tarihEditText"
+            app:layout_constraintBottom_toTopOf="@+id/tarihTextView"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tarihEditText"
+            android:id="@+id/tarihTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_custom"
@@ -129,7 +129,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tarihEditText"
+            app:layout_constraintStart_toEndOf="@+id/tarihTextView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.45" />
 
@@ -172,7 +172,8 @@
             android:text="Sürüm"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/surumEditText"
-            app:layout_constraintStart_toStartOf="@+id/surumEditText" />
+            app:layout_constraintStart_toStartOf="@+id/surumEditText"
+            android:textColor="@color/textViewColor"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -182,7 +183,7 @@
             android:layout_marginTop="24dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tarihEditText">
+            app:layout_constraintTop_toBottomOf="@+id/tarihTextView">
 
             <RadioButton
                 android:id="@+id/devletButton"
@@ -212,8 +213,9 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_marginTop="16dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup">
@@ -236,24 +238,93 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/vadeEditText"
-                    android:layout_width="185dp"
+                <TextView
+                    android:id="@+id/vadeTextView"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/edit_text_custom"
                     android:backgroundTint="@color/editTextGray"
                     android:ems="10"
                     android:fontFamily="@font/sen"
-                    android:hint="Vade Tarihi"
+                    android:text="Vade Tarihi"
                     android:inputType="text"
+                    android:padding="15dp"
+                    android:textSize="17sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/editTextColor"
+                    android:textColorHint="@color/editTextColor"
+                    app:layout_constraintEnd_toStartOf="@+id/fiyatEditText"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vadeTarihiTextView"
+                    app:layout_constraintWidth_percent="0.45" />
+
+                <EditText
+                    android:id="@+id/fiyatEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_custom"
+                    android:backgroundTint="@color/editTextGray"
+                    android:ems="10"
+                    android:fontFamily="@font/sen"
+                    android:hint="Fiyat giriniz"
+                    android:inputType="number|numberDecimal"
                     android:padding="15dp"
                     android:textAlignment="center"
                     android:textColor="@color/editTextColor"
                     android:textColorHint="@color/editTextColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vadeTarihiTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/vadeTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     app:layout_constraintWidth_percent="0.45" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/sen"
+                    android:text="Satış Fiyatı"
+                    android:textColor="@color/textViewColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="@+id/fiyatEditText"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/satisYeriEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_custom"
+                    android:backgroundTint="@color/editTextGray"
+                    android:ems="10"
+                    android:fontFamily="@font/sen"
+                    android:gravity="center"
+                    android:hint="Satış yeri"
+                    android:inputType="text"
+                    android:padding="15dp"
+                    android:textColor="@color/editTextColor"
+                    android:textColorHint="@color/editTextColor"
+                    app:layout_constraintStart_toStartOf="@+id/vadeTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintWidth_percent="0.45" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/sen"
+                    android:text="Satış Yeri"
+                    android:textColor="@color/textViewColor"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vadeTextView" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

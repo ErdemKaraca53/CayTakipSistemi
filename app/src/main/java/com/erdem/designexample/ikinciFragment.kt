@@ -39,6 +39,14 @@ class ikinciFragment : Fragment() {
         _binding = FragmentIkiniciBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        val calendar = Calendar.getInstance()
+        val yil = calendar.get(Calendar.YEAR)
+        val ay = calendar.get(Calendar.MONTH)
+
+        val tarih = "31/${(ay+2) % 12}/$yil"
+
+        binding.vadeTextView.text = "$tarih"
+
         val tarla = TeaGardens("")
         val hasat = TeaHarverst(0,0,0,0,"",0)
         val dbHelper = DatabaseHelper(requireContext())
@@ -56,27 +64,53 @@ class ikinciFragment : Fragment() {
          */
         binding.devletButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                if(binding.cardView.getVisibility() == View.GONE) {
+                /*if(binding.cardView.getVisibility() == View.GONE) {
 
-                    TransitionManager.beginDelayedTransition(binding.cardView, AutoTransition())
+                    //Kapanma sırasında animasyon ekliyor !!!
+                    //Çok hoşuma gitmedi ??
+                    //TransitionManager.beginDelayedTransition(binding.cardView, AutoTransition())
                     binding.cardView.visibility = View.VISIBLE
                 }else {
                     binding.cardView.visibility = View.VISIBLE;
-                }
-                Toast.makeText(requireContext(), "DEVLET", Toast.LENGTH_SHORT).show()
+                }*/
+
+                val calendar = Calendar.getInstance()
+                val yil = calendar.get(Calendar.YEAR)
+                val ay = calendar.get(Calendar.MONTH)
+
+                val tarih = "31/${(ay+2) % 12}/$yil"
+
+                binding.vadeTextView.text = "$tarih"
+                binding.vadeTextView.setOnClickListener(null)
+                Toast.makeText(requireContext(), "Vade tarihi değiştirildi", Toast.LENGTH_SHORT).show()
             }
+
         }
 
         binding.ozelButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                if(binding.cardView.visibility == View.VISIBLE) {
-                    //Kapanma sırasında animasyon ekliyor !!!
-                    TransitionManager.beginDelayedTransition(binding.cardView, AutoTransition())
-                    binding.cardView.visibility = View.GONE
-                }else {
-                    binding.cardView.visibility = View.VISIBLE;
+                binding.vadeTextView.text = "Tarih seçiniz"
+                binding.vadeTextView.setOnClickListener {
+
+                    val calendar = Calendar.getInstance()
+                    val yil = calendar.get(Calendar.YEAR)
+                    val ay = calendar.get(Calendar.MONTH)
+                    val gun = calendar.get(Calendar.DAY_OF_MONTH)
+
+                    val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                        val tarih = "$dayOfMonth/${month+1}/$year"
+                        binding.vadeTextView.text = tarih
+
+                    },yil, ay, gun)
+
+                    datePickerDialog.setTitle("Tarih seçiniz")
+                    datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "AYARLA", datePickerDialog)
+                    datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "İPTAL", datePickerDialog)
+
+                    datePickerDialog.show()
+
                 }
-                Toast.makeText(requireContext(), "ÖZEL", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -102,7 +136,7 @@ class ikinciFragment : Fragment() {
         })
 
 
-        binding.tarihEditText.setOnClickListener {
+        binding.tarihTextView.setOnClickListener {
 
             val calendar = Calendar.getInstance()
             val yil = calendar.get(Calendar.YEAR)
@@ -112,7 +146,7 @@ class ikinciFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
                 val tarih = "$dayOfMonth/${month+1}/$year"
-                binding.tarihEditText.text = tarih
+                binding.tarihTextView.text = tarih
 
                 hasat.day = dayOfMonth
                 hasat.month = month+1
@@ -127,19 +161,31 @@ class ikinciFragment : Fragment() {
             datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "İPTAL", datePickerDialog)
 
             datePickerDialog.show()
-            binding.tarihEditText.setTextColor(Color.GRAY)
+            binding.tarihTextView.setTextColor(Color.GRAY)
         }
 
 
 
         binding.kaydetButton.setOnClickListener {
 
-            val editTexts = listOf(binding.tarlaEditText, binding.tarihEditText, binding.kgEditText, binding.surumEditText)
+            val editTexts = listOf(binding.tarlaEditText,
+                                    binding.tarihTextView,
+                                    binding.kgEditText,
+                                    binding.surumEditText,
+                binding.satisYeriEditText,
+                binding.fiyatEditText,
+                binding.vadeTextView
+                )
             var allFieldsFilled = true
 
-            if(binding.tarihEditText.text.toString().trim() == "Tarih seçiniz") {
+            if(binding.tarihTextView.text.toString().trim() == "Tarih seçiniz") {
                 allFieldsFilled = false
-                binding.tarihEditText.setTextColor(Color.RED)
+                binding.tarihTextView.setTextColor(Color.RED)
+            }
+            Log.e("tarih", binding.vadeTextView.text.toString().trim())
+            if(binding.vadeTextView.text.toString().trim() == "Tarih seçiniz") {
+                allFieldsFilled = false
+                binding.vadeTextView.setTextColor(Color.RED)
             }
 
 
