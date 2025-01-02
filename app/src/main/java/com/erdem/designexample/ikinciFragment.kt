@@ -6,12 +6,11 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.icu.util.Calendar
+import android.icu.util.LocaleData
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.transition.AutoTransition
-import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +22,11 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.erdem.designexample.databinding.FragmentIkiniciBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 
 class ikinciFragment : Fragment() {
@@ -39,6 +43,12 @@ class ikinciFragment : Fragment() {
         _binding = FragmentIkiniciBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        /*Uygulama başlatıldığında satış yeri seçimi devlet olarak ayarlı olduğu için
+           satış yeri girişini pasif hale getirmek gerekli
+        * */
+        binding.satisYeriEditText.isFocusable = false
+        binding.satisYeriEditText.setHint("DEVLET")
+
         val calendar = Calendar.getInstance()
         val yil = calendar.get(Calendar.YEAR)
         val ay = calendar.get(Calendar.MONTH)
@@ -48,22 +58,13 @@ class ikinciFragment : Fragment() {
         binding.vadeTextView.text = "$tarih"
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0)
+        val hasat = TeaHarverst(0,0,0,0,"",0, "", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
-        /*val dbHelper = DatabaseHelper(requireContext())
-        val gardens = DatabaseOperations().readGardens(dbHelper)
 
-        val adapter = ArrayAdapter<String>(requireContext(), R.id.tarlaEditText,)
-
-        dbHelper.close()*/
-        /*
-            TARİH GİRDİSİ ALINIYOR
-
-            hasat değişkeninin tarih bilgisi burada düzenleniyor
-
-         */
         binding.devletButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                binding.satisYeriEditText.isFocusable = false
+                binding.satisYeriEditText.isFocusableInTouchMode = false
                 /*if(binding.cardView.getVisibility() == View.GONE) {
 
                     //Kapanma sırasında animasyon ekliyor !!!
@@ -81,15 +82,21 @@ class ikinciFragment : Fragment() {
                 val tarih = "31/${(ay+2) % 12}/$yil"
 
                 binding.vadeTextView.text = "$tarih"
+                binding.satisYeriEditText.setHint("DEVLET")
                 binding.vadeTextView.setOnClickListener(null)
                 Toast.makeText(requireContext(), "Vade tarihi değiştirildi", Toast.LENGTH_SHORT).show()
+                hasat.SatisYeri = "Devlet"
             }
 
         }
 
         binding.ozelButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                binding.satisYeriEditText.isFocusable = true
+                binding.satisYeriEditText.isFocusableInTouchMode = true
                 binding.vadeTextView.text = "Tarih seçiniz"
+                binding.satisYeriEditText.setHint("Satış yerini giriniz")
+                hasat.SatisYeri = binding.satisYeriEditText.text.toString()
                 binding.vadeTextView.setOnClickListener {
 
                     val calendar = Calendar.getInstance()
@@ -111,6 +118,7 @@ class ikinciFragment : Fragment() {
                     datePickerDialog.show()
 
                 }
+
             }
         }
 
@@ -208,6 +216,11 @@ class ikinciFragment : Fragment() {
             tarla.gardenName = binding.tarlaEditText.text.toString().trim()
             hasat.season = binding.surumEditText.text.toString().toInt()
             hasat.weight_kg = binding.kgEditText.text.toString().toInt()
+            hasat.SatisYeri = binding.satisYeriEditText.text.toString()
+
+            hasat.VadeTarihi = binding.vadeTextView.text.toString()
+            hasat.SatisFiyati = binding.fiyatEditText.text.toString().toFloat()
+
 
 
             Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()

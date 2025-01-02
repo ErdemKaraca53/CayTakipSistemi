@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import java.time.Year
 
 class DatabaseOperations {
 
@@ -22,6 +21,13 @@ class DatabaseOperations {
         harverstValues.put("season", harverst.season)
         harverstValues.put("weight_kg", harverst.weight_kg)
 
+        Log.e("deneme",harverst.SatisYeri)
+        Log.e("deneme",harverst.SatisFiyati.toString())
+        Log.e("deneme",harverst.VadeTarihi)
+        //SONRADAN EKLENDİ KONTROL EDİLMELİ
+        harverstValues.put("company", harverst.SatisYeri)
+        harverstValues.put("price", harverst.SatisFiyati)
+        harverstValues.put("paymentDate", harverst.VadeTarihi.toString())
 
         //Eğer daha önce bu bahçe ismi kullanılmamış ise kayıt yapar
         if (isGardenExists(helper,garden.gardenName) == -1) {
@@ -65,7 +71,11 @@ class DatabaseOperations {
             val gardenName = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
             val weight_kg = cursor.getInt(cursor.getColumnIndexOrThrow("weight_kg"))
 
-            val tmp = TeaHarverst(year,month,day,season,gardenName, weight_kg)
+            /*
+                SATIŞ YERİ, SATIŞ FİYAT - VADE TARİHİ DEAFULT DEĞERLER KOYULDU ŞİMDİLİK.
+                DÜZELTİLECEK !!!!!!!!!!!!!!
+             */
+            val tmp = TeaHarverst(year,month,day,season,gardenName, weight_kg, "",0.0f,"null")
             harverst.add(tmp)
 
         }
