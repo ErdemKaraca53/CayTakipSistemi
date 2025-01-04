@@ -42,12 +42,9 @@ class ikinciFragment : Fragment() {
     ): View? {
         _binding = FragmentIkiniciBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        /*Uygulama başlatıldığında satış yeri seçimi devlet olarak ayarlı olduğu için
-           satış yeri girişini pasif hale getirmek gerekli
-        * */
-        binding.satisYeriEditText.isFocusable = false
-        binding.satisYeriEditText.setHint("DEVLET")
+        binding.satisYeriEditText.isEnabled = false
+        binding.satisYeriEditText.setHint("")
+        binding.satisYeriTextView.text = ""
 
         val calendar = Calendar.getInstance()
         val yil = calendar.get(Calendar.YEAR)
@@ -58,22 +55,23 @@ class ikinciFragment : Fragment() {
         binding.vadeTextView.text = "$tarih"
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0, "", 0.0f, "")
+        val hasat = TeaHarverst(0,0,0,0,"",0, "DEVLET", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
 
         binding.devletButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.satisYeriEditText.isFocusable = false
-                binding.satisYeriEditText.isFocusableInTouchMode = false
-                /*if(binding.cardView.getVisibility() == View.GONE) {
 
-                    //Kapanma sırasında animasyon ekliyor !!!
-                    //Çok hoşuma gitmedi ??
-                    //TransitionManager.beginDelayedTransition(binding.cardView, AutoTransition())
-                    binding.cardView.visibility = View.VISIBLE
-                }else {
-                    binding.cardView.visibility = View.VISIBLE;
-                }*/
+                /*
+                Bu 3 satırda devlet seçildiği için seçenek olarak
+                satış yeri edittext'i ve textView'ı gereksiz olduğu için
+                enable değerleri false yapılıyor. Böylece kullanıcı daha rahat kayıt işlemi yapabilecek.
+                Özel seçeneği seçildiği zaman bu işlemler geri alınmalı
+                 */
+                binding.satisYeriEditText.setHint("")
+                binding.satisYeriTextView.text = ""
+                binding.satisYeriEditText.isEnabled = false
+                //binding.satisYeriEditText.setText("Devlet")
+                Log.e("deneme",  binding.satisYeriEditText.text.toString())
 
                 val calendar = Calendar.getInstance()
                 val yil = calendar.get(Calendar.YEAR)
@@ -82,8 +80,8 @@ class ikinciFragment : Fragment() {
                 val tarih = "31/${(ay+2) % 12}/$yil"
 
                 binding.vadeTextView.text = "$tarih"
-                binding.satisYeriEditText.setHint("DEVLET")
-                binding.vadeTextView.setOnClickListener(null)
+
+               // binding.vadeTextView.setOnClickListener(null)
                 Toast.makeText(requireContext(), "Vade tarihi değiştirildi", Toast.LENGTH_SHORT).show()
                 hasat.SatisYeri = "Devlet"
             }
@@ -92,11 +90,13 @@ class ikinciFragment : Fragment() {
 
         binding.ozelButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.satisYeriEditText.isFocusable = true
-                binding.satisYeriEditText.isFocusableInTouchMode = true
-                binding.vadeTextView.text = "Tarih seçiniz"
                 binding.satisYeriEditText.setHint("Satış yerini giriniz")
-                hasat.SatisYeri = binding.satisYeriEditText.text.toString()
+                binding.satisYeriTextView.text = "Satış yeri"
+                binding.satisYeriEditText.isEnabled = true
+
+                binding.vadeTextView.text = "Tarih seçiniz"
+
+
                 binding.vadeTextView.setOnClickListener {
 
                     val calendar = Calendar.getInstance()
@@ -118,6 +118,9 @@ class ikinciFragment : Fragment() {
                     datePickerDialog.show()
 
                 }
+                val tarih = "31/${(ay+2) % 12}/$yil"
+
+                binding.vadeTextView.text = "$tarih"
 
             }
         }
@@ -201,7 +204,10 @@ class ikinciFragment : Fragment() {
                 if (editText.text.toString().trim().isEmpty()) {
                     // Eğer alan boşsa, text rengini kırmızı yap ve allFieldsFilled'ı false olarak ayarla
                     editText.setHintTextColor(Color.RED)
-                    allFieldsFilled = false
+                    if(editText.id != binding.satisYeriEditText.id) {
+                        allFieldsFilled = false
+                    }
+
                 } else {
                     // Alan doluysa varsayılan renk ayarını yap
                     editText.setHintTextColor(Color.GRAY) // Varsayılan renge göre düzenleyin
@@ -216,12 +222,13 @@ class ikinciFragment : Fragment() {
             tarla.gardenName = binding.tarlaEditText.text.toString().trim()
             hasat.season = binding.surumEditText.text.toString().toInt()
             hasat.weight_kg = binding.kgEditText.text.toString().toInt()
-            hasat.SatisYeri = binding.satisYeriEditText.text.toString()
 
             hasat.VadeTarihi = binding.vadeTextView.text.toString()
             hasat.SatisFiyati = binding.fiyatEditText.text.toString().toFloat()
 
-
+            if(binding.ozelButton.isChecked) {
+                hasat.SatisYeri = binding.satisYeriEditText.text.toString()
+            }
 
             Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()
             DatabaseOperations().add(dbHelper,tarla,hasat,requireContext())
