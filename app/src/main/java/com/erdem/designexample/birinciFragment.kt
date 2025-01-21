@@ -33,7 +33,7 @@ class birinciFragment : Fragment() {
         val bundle: birinciFragmentArgs by navArgs()
         val year = bundle.year
         val season = bundle.season
-
+        //
         Log.e("HATA", "year: $year, season:$season")
 
         val dataset = DatabaseOperations().readData(helper,year, season)
