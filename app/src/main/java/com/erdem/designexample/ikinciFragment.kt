@@ -228,6 +228,9 @@ class ikinciFragment : Fragment() {
 
             if(binding.ozelButton.isChecked) {
                 hasat.SatisYeri = binding.satisYeriEditText.text.toString()
+                //değiştirilen stringin bir kopyasını dönüyor. Bu yüzden bu şekilde kullanılmalı
+                hasat.SatisYeri = hasat.SatisYeri.replaceFirstChar { it.uppercase() }
+                Log.e("lipton", hasat.SatisYeri)
             }
 
             Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()
