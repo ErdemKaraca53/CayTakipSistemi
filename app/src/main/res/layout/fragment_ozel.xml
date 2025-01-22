@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".design.new_design">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/TarlaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Tarla giriniz"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/TarihTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/KgTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Kg giriniz111"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/KgEditText"
+            app:layout_constraintTop_toTopOf="@+id/TarlaTextView" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_custom"
+            android:hint=" Tarla giriniz"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/KgEditText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TarlaTextView"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.07"/>
+
+        <EditText
+            android:id="@+id/KgEditText"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_custom"
+            android:ems="10"
+            android:hint=" Kg giriniz"
+            android:inputType="text"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/autoCompleteTextView"
+            app:layout_constraintTop_toBottomOf="@+id/KgTextView"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintHeight_percent="0.07"/>
+
+        <TextView
+            android:id="@+id/TarihEditText"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_custom"
+            android:drawableEnd="@drawable/takvim_icon"
+            android:hint=""
+            android:padding="9dp"
+            android:text="31/02/2025"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TarihTextView"
+            app:layout_constraintWidth_percent="0.85"
+            app:layout_constraintHeight_percent="0.07"/>
+
+        <TextView
+            android:id="@+id/TarihTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Tarih giriniz"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/TarihEditText"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

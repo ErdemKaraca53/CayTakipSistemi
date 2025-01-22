@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/birinciFragment"
-        android:name="com.erdem.designexample.birinciFragment"
+        android:name="com.erdem.designexample.design.birinciFragment"
         android:label="fragment_birinci"
         tools:layout="@layout/fragment_birinci" >
         <argument
@@ -33,7 +33,7 @@
     </fragment>
     <dialog
         android:id="@+id/bottomSheetFragment"
-        android:name="com.erdem.designexample.bottomSheetFragment"
+        android:name="com.erdem.designexample.design.bottomSheetFragment"
         android:label="fragment_bottom_sheet2"
         tools:layout="@layout/fragment_bottom_sheet2" >
         <action
@@ -42,7 +42,7 @@
     </dialog>
     <dialog
         android:id="@+id/seasonSheetDialogFragment"
-        android:name="com.erdem.designexample.seasonSheetDialogFragment"
+        android:name="com.erdem.designexample.design.seasonSheetDialogFragment"
         android:label="fragment_season_sheet_dialog"
         tools:layout="@layout/fragment_season_sheet_dialog" >
         <action
@@ -55,7 +55,7 @@
     </dialog>
     <fragment
         android:id="@+id/new_design"
-        android:name="com.erdem.designexample.new_design"
+        android:name="com.erdem.designexample.design.new_design"
         android:label="fragment_new_design"
         tools:layout="@layout/fragment_new_design" />
 </navigation>

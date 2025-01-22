@@ -1,4 +1,4 @@
-package com.erdem.designexample
+package com.erdem.designexample.database
 
 import android.content.ContentValues
 import android.content.Context
@@ -7,7 +7,7 @@ import android.widget.Toast
 
 class DatabaseOperations {
 
-    fun add(helper:DatabaseHelper, garden:TeaGardens, harverst: TeaHarverst, context: Context){
+    fun add(helper: DatabaseHelper, garden: TeaGardens, harverst: TeaHarverst, context: Context){
 
         val db = helper.writableDatabase
 
@@ -52,7 +52,7 @@ class DatabaseOperations {
         //db.close()
     }
 
-    fun readData(helper:DatabaseHelper, year: Int, season: Int) : ArrayList<TeaHarverst> {
+    fun readData(helper: DatabaseHelper, year: Int, season: Int) : ArrayList<TeaHarverst> {
 
         val db = helper.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id " +

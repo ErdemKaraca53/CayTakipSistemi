@@ -1,12 +1,13 @@
-package com.erdem.designexample
+package com.erdem.designexample.design
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.erdem.designexample.R
 
-class seasonSheetDialogAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapter<seasonSheetDialogAdapter.ViewHolder>(){
+class bottomSheetAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapter<bottomSheetAdapter.ViewHolder>() {
 
     private lateinit var mListener: onItemClickListener
 
@@ -46,10 +47,9 @@ class seasonSheetDialogAdapter(private val dataSet: ArrayList<String>) : Recycle
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = dataSet[position] + ". sürgün"
+        viewHolder.textView.text = dataSet[position]
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }

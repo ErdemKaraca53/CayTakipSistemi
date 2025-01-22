@@ -1,6 +1,4 @@
-package com.erdem.designexample
-
-import java.util.Date
+package com.erdem.designexample.database
 
 data class TeaHarverst(
     var year: Int,

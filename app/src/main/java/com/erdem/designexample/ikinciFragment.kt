@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.icu.util.Calendar
-import android.icu.util.LocaleData
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -21,12 +20,11 @@ import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.database.TeaGardens
+import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentIkiniciBinding
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Date
-import java.util.Locale
 
 
 class ikinciFragment : Fragment() {

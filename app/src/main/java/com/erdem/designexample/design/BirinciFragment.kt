@@ -1,4 +1,4 @@
-package com.erdem.designexample
+package com.erdem.designexample.design
 
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.R
+import com.erdem.designexample.adapter.RvAdapter
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 
 

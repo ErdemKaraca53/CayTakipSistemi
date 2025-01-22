@@ -1,12 +1,12 @@
-package com.erdem.designexample
+package com.erdem.designexample.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.erdem.designexample.bottomSheetAdapter.onItemClickListener
+import com.erdem.designexample.R
+import com.erdem.designexample.database.TeaHarverst
 
 class RvAdapter(private val dataSet: ArrayList<TeaHarverst>) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
 
@@ -16,7 +16,7 @@ class RvAdapter(private val dataSet: ArrayList<TeaHarverst>) : RecyclerView.Adap
         fun onItemClick(position: Int)
     }
 
-    fun setOnClickListener(listener: com.erdem.designexample.RvAdapter.onItemClickListener) {
+    fun setOnClickListener(listener: onItemClickListener) {
         mListener = listener
     }
 

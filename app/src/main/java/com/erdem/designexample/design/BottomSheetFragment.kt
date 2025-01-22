@@ -1,16 +1,16 @@
-package com.erdem.designexample
+package com.erdem.designexample.design
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.R
 import com.erdem.designexample.databinding.FragmentBottomSheet2Binding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class bottomSheetFragment : BottomSheetDialogFragment() {
@@ -41,7 +41,9 @@ class bottomSheetFragment : BottomSheetDialogFragment() {
             override fun onItemClick(position: Int) {
 
                 val gecis = bottomSheetFragmentDirections.actionBottomSheetFragmentToSeasonSheetDialogFragment(dataset[position].toInt())
-                val navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment)
+                val navController = Navigation.findNavController(requireActivity(),
+                    R.id.navHostFragment
+                )
 
                 /*val tmp = ArrayList<String>(dataset) // Dataset'i tmp'ye kopyala
                 val newData = DatabaseOperations().readSeason(helper)
