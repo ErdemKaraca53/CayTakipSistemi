@@ -9,6 +9,8 @@
     <color name="editTextGray">#F0F5FA</color>
     <color name="editTextColor">#6B6E82</color>
     <color name="textViewColor">#32343E</color>
+    <color name="selected_tab_color">#FFFFFF</color>
+    <color name="default_tab_color">#00000000</color> <!-- Transparan -->
 
 
 </resources>

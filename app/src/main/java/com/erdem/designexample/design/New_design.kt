@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.erdem.designexample.R
 import com.erdem.designexample.adapter.ViewPagerAdapter
 import com.erdem.designexample.databinding.FragmentNewDesignBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class new_design : Fragment() {
@@ -30,7 +33,6 @@ class new_design : Fragment() {
                 1 -> tab.text = "OZEL"
             }
         }.attach()
-
         return view
     }
 

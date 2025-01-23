@@ -10,5 +10,4 @@
     <!-- Radio button sistemin rengini alıyordu bu kod vector assetin kendi rengini almasını sağladı -->
     <style name="RadioButton" parent="Theme.AppCompat.Light">
     </style>
-
 </resources>
