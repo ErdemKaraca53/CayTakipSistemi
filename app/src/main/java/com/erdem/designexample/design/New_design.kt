@@ -33,6 +33,38 @@ class new_design : Fragment() {
                 1 -> tab.text = "OZEL"
             }
         }.attach()
+
+        // İlk açıldığında seçilen tab'ın rengini değiştirmek
+        val firstTab = binding.tabLayout.getTabAt(0)
+        firstTab?.view?.setBackgroundColor(
+            ContextCompat.getColor(requireContext(), R.color.selected_tab_color)
+        )
+        //ikinci tabı defalut renk olarak ayarla
+        val lasTab = binding.tabLayout.getTabAt(1)
+        lasTab?.view?.setBackgroundColor(
+            ContextCompat.getColor(requireContext(), R.color.default_tab_color)
+        )
+
+
+        // Tab seçimi dinleyicisi
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                tab.view.setBackgroundColor(
+                    ContextCompat.getColor(requireContext(), R.color.selected_tab_color)
+                )
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                tab.view.setBackgroundColor(
+                    ContextCompat.getColor(requireContext(), R.color.default_tab_color)
+                )
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                // Tekrar seçilen tab için özel bir işlem yapmak istiyorsanız buraya yazabilirsiniz
+            }
+        })
+
         return view
     }
 
