@@ -42,7 +42,7 @@
             app:layout_constraintWidth_percent="0.4" />
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView"
+            android:id="@+id/TarlaEditText"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
@@ -71,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.07"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/autoCompleteTextView"
+            app:layout_constraintStart_toEndOf="@+id/TarlaEditText"
             app:layout_constraintTop_toBottomOf="@+id/KgTextView"
             app:layout_constraintWidth_percent="0.4" />
 
@@ -102,7 +102,7 @@
             android:text="Tarih giriniz"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/TarihEditText"
-            app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/TarlaEditText" />
 
         <TextView
             android:id="@+id/VadeTarihiTextView"
@@ -145,13 +145,14 @@
             app:layout_constraintTop_toTopOf="@+id/VadeTarihiTextView"
             app:layout_constraintWidth_percent="0.4" />
 
-        <EditText
+        <TextView
             android:id="@+id/SurumEditText"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/edit_text_custom"
             android:ems="10"
+            android:padding="8dp"
             android:hint="Sürüm giriniz"
             android:inputType="text"
             android:textAlignment="center"
@@ -203,7 +204,7 @@
             app:layout_constraintWidth_percent="0.4" />
 
         <EditText
-            android:id="@+id/textView14"
+            android:id="@+id/FiyatEdit"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
@@ -217,5 +218,16 @@
             app:layout_constraintStart_toStartOf="@+id/FiyatTextView"
             app:layout_constraintTop_toBottomOf="@+id/FiyatTextView"
             app:layout_constraintWidth_percent="0.4" />
+
+        <Button
+            android:id="@+id/KaydetOzelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Kaydet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SatisYeriEditText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@ data class TeaHarverst(
     var day: Int,
     var season: Int,
     var gardenName: String,
-    var weight_kg: Int,
+    var weight_kg: Float,
     var SatisYeri: String,
     var SatisFiyati: Float,
     var VadeTarihi: String

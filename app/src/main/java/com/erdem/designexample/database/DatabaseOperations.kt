@@ -69,7 +69,7 @@ class DatabaseOperations {
             val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
             val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
             val gardenName = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
-            val weight_kg = cursor.getInt(cursor.getColumnIndexOrThrow("weight_kg"))
+            val weight_kg = cursor.getFloat(cursor.getColumnIndexOrThrow("weight_kg"))
 
             /*
                 SATIŞ YERİ, SATIŞ FİYAT - VADE TARİHİ DEAFULT DEĞERLER KOYULDU ŞİMDİLİK.

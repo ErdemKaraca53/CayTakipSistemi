@@ -53,7 +53,7 @@ class ikinciFragment : Fragment() {
         binding.vadeTextView.text = "$tarih"
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0, "DEVLET", 0.0f, "")
+        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
 
         binding.devletButton.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -219,7 +219,7 @@ class ikinciFragment : Fragment() {
 
             tarla.gardenName = binding.tarlaEditText.text.toString().trim()
             hasat.season = binding.surumEditText.text.toString().toInt()
-            hasat.weight_kg = binding.kgEditText.text.toString().toInt()
+            hasat.weight_kg = binding.kgEditText.text.toString().toFloat()
 
             hasat.VadeTarihi = binding.vadeTextView.text.toString()
             hasat.SatisFiyati = binding.fiyatEditText.text.toString().toFloat()
