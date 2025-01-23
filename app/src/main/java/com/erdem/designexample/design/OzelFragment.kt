@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
 import com.erdem.designexample.R
@@ -43,14 +44,6 @@ class OzelFragment : Fragment() {
         val tarla = TeaGardens("")
         val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
-
-        val calendar = Calendar.getInstance()
-        val yil = calendar.get(Calendar.YEAR)
-        val ay = calendar.get(Calendar.MONTH)
-
-        val tarih = "31/${(ay+2) % 12}/$yil"
-
-        binding.VadeTarihiEdit.text = "$tarih"
 
         binding.TarlaEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -98,6 +91,34 @@ class OzelFragment : Fragment() {
             }, 100) // 100ms gecikme ile klavyenin kapanması için zaman tanıyoruz
         }
 
+        binding.VadeTarihiEdit.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val yil = calendar.get(Calendar.YEAR)
+            val ay = calendar.get(Calendar.MONTH)
+            val gun = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(requireContext(),
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                    val tarih = "$dayOfMonth/0${month+1}/$year"
+                    binding.VadeTarihiEdit.text = tarih
+
+                    hasat.day = dayOfMonth
+                    hasat.month = month+1
+                    hasat.year = year
+
+                    //Toast.makeText(context, binding.textView6.text, Toast.LENGTH_SHORT).show()
+
+                },yil, ay, gun)
+
+            datePickerDialog.setTitle("Tarih seçiniz")
+            datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "AYARLA", datePickerDialog)
+            datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "İPTAL", datePickerDialog)
+
+            datePickerDialog.show()
+            binding.VadeTarihiEdit.setTextColor(Color.BLACK)
+        }
+
         binding.TarihEditText.setOnClickListener {
 
             val calendar = Calendar.getInstance()
@@ -139,14 +160,14 @@ class OzelFragment : Fragment() {
             )
             var allFieldsFilled = true
 
-            if(binding.TarihTextView.text.toString().trim() == "Tarih seçiniz") {
+            if(binding.TarihEditText.text.toString().trim() == "Tarih seçiniz") {
                 allFieldsFilled = false
-                binding.TarihTextView.setTextColor(Color.RED)
+                binding.TarihEditText.setTextColor(Color.RED)
             }
-            Log.e("tarih", binding.VadeTarihiTextView.text.toString().trim())
-            if(binding.VadeTarihiTextView.text.toString().trim() == "Tarih seçiniz") {
+            Log.e("tarih", binding.VadeTarihiEdit.text.toString().trim())
+            if(binding.VadeTarihiEdit.text.toString().trim() == "Tarih seçiniz") {
                 allFieldsFilled = false
-                binding.VadeTarihiTextView.setTextColor(Color.RED)
+                binding.VadeTarihiEdit.setTextColor(Color.RED)
             }
 
 
@@ -194,3 +215,4 @@ class OzelFragment : Fragment() {
     }
 
 }
+
