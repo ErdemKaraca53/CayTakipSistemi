@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.erdem.designexample.rapor
 
 class DatabaseOperations {
 
@@ -83,6 +84,27 @@ class DatabaseOperations {
         return harverst
     }
 
+    fun GetInfoYear(databaseHelper: DatabaseHelper) : ArrayList<rapor>{
+
+        val db = databaseHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT year, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                                        " FROM TeaHarverst GROUP BY year", null)
+
+        val raporList = ArrayList<rapor>()
+
+        while (cursor.moveToNext()) {
+
+            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
+            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
+
+            val rapor = rapor(year, total_weight, total_revenue)
+
+            raporList.add(rapor)
+            Log.e("Rapor", rapor.toString())
+        }
+        return raporList
+    }
 
 
     //Eğer girilen bahçe ismi daha önce kullanılmış ise id değeri döner

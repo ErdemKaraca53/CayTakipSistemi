@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.database.TeaHarverst
+import com.erdem.designexample.rapor
 
-class RvAdapter(private val dataSet: ArrayList<TeaHarverst>) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
+class RvAdapter(private val dataSet: ArrayList<rapor>) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
 
     private lateinit var mListener: onItemClickListener
 
@@ -46,9 +47,8 @@ class RvAdapter(private val dataSet: ArrayList<TeaHarverst>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.yıl.text = dataSet[position].year.toString()
-        holder.ToplamKg.text = "999 kg"
-        holder.ToplamKg.text = "999 kg"
-        holder.ToplamGelir.text = "${dataSet[position].weight_kg.toString()} TL"
+        holder.ToplamKg.text = dataSet[position].total_weight.toString() + " KG"
+        holder.ToplamGelir.text = "${dataSet[position].total_revenue} TL"
     }
 
 }

@@ -40,7 +40,7 @@ class birinciFragment : Fragment() {
         //
         Log.e("HATA", "year: $year, season:$season")
 
-        val dataset = DatabaseOperations().readData(helper,year, season)
+        val dataset = DatabaseOperations().GetInfoYear(helper)
         val customAdapter = RvAdapter(dataset)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -49,6 +49,7 @@ class birinciFragment : Fragment() {
         binding.filterActionButton.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.bottomSheetFragment)
         }
+
 
         return view
     }
