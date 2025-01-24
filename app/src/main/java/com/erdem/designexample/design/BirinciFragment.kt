@@ -41,7 +41,7 @@ class birinciFragment : Fragment() {
         Log.e("HATA", "year: $year, season:$season")
 
         val dataset = DatabaseOperations().GetInfoYear(helper)
-        val customAdapter = RvAdapter(dataset)
+        val customAdapter = RvAdapter(dataset, requireContext())
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = customAdapter

@@ -10,24 +10,23 @@
     >
 
 
-
     <androidx.cardview.widget.CardView
+        android:id="@+id/RecyclerviewCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:layout_gravity="center_horizontal"
-        android:focusable="true"
-        android:stateListAnimator="@anim/animation"
-        android:foreground="?attr/selectableItemBackground"
+        android:backgroundTint="@color/white"
         android:clickable="true"
-        app:cardCornerRadius="15dp"
-       >
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:stateListAnimator="@anim/animation"
+        app:cardCornerRadius="15dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="15dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:id="@+id/YılTextView"
