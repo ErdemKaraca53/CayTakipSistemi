@@ -1,4 +1,4 @@
-package com.erdem.designexample
+package com.erdem.designexample.design
 
 import android.R
 import android.app.DatePickerDialog

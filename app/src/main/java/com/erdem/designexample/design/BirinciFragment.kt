@@ -1,19 +1,16 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.R
-import com.erdem.designexample.adapter.RvAdapter
+import com.erdem.designexample.adapter.YearRvAdapter
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 
 
@@ -34,15 +31,10 @@ class birinciFragment : Fragment() {
 
         val helper = DatabaseHelper(requireContext())
 
-        val bundle: birinciFragmentArgs by navArgs()
-        val year = bundle.year
-        val season = bundle.season
-        //
-        Log.e("HATA", "year: $year, season:$season")
 
         val dataset = DatabaseOperations().GetInfoYear(helper)
-        val customAdapter = RvAdapter(dataset, requireContext())
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        val customAdapter = YearRvAdapter(dataset, requireContext())
+        val recyclerView: RecyclerView = view.findViewById(R.id.YılRecyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = customAdapter
 

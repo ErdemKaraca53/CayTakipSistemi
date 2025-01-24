@@ -135,7 +135,7 @@
             app:layout_constraintWidth_percent="0.4" />
 
         <TextView
-            android:id="@+id/SurumTextView"
+            android:id="@+id/YılTextView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/plus_jakarta_sans"
@@ -159,8 +159,8 @@
             android:textAlignment="center"
             android:textSize="16sp"
             app:layout_constraintHeight_percent="0.07"
-            app:layout_constraintStart_toStartOf="@+id/SurumTextView"
-            app:layout_constraintTop_toBottomOf="@+id/SurumTextView"
+            app:layout_constraintStart_toStartOf="@+id/YılTextView"
+            app:layout_constraintTop_toBottomOf="@+id/YılTextView"
             app:layout_constraintWidth_percent="0.4" />
 
         <TextView

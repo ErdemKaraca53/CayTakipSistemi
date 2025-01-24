@@ -16,14 +16,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
-import com.erdem.designexample.R
-import com.erdem.designexample.clearTextFields
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentDevletBinding
-import com.erdem.designexample.hideKeyboard
 
 
 class DevletFragment : Fragment() {

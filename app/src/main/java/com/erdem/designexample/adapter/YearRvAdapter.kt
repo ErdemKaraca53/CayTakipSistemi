@@ -1,18 +1,18 @@
 package com.erdem.designexample.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
-import com.erdem.designexample.rapor
+import com.erdem.designexample.YılRapor
 
-class RvAdapter(private val dataSet: ArrayList<rapor>, val context: Context) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
+class YearRvAdapter(private val dataSet: ArrayList<YılRapor>, val context: Context) : RecyclerView.Adapter<YearRvAdapter.ViewHolder>() {
 
     private lateinit var mListener: onItemClickListener
 
@@ -33,15 +33,15 @@ class RvAdapter(private val dataSet: ArrayList<rapor>, val context: Context) : R
         init {
             // Define click listener for the ViewHolder's View
             yıl = view.findViewById(R.id.YılTextView)
-            ToplamKg = view.findViewById(R.id.ToplamKgTextView)
-            ToplamGelir = view.findViewById(R.id.ToplamGelirTextView)
-            card = view.findViewById(R.id.RecyclerviewCard)
+            ToplamKg = view.findViewById(R.id.YılToplamKgTextView)
+            ToplamGelir = view.findViewById(R.id.YılToplamGelirTextView)
+            card = view.findViewById(R.id.CardView)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view_design, parent, false)
+            .inflate(R.layout.year_card_view_design, parent, false)
 
         return ViewHolder(view)
     }
@@ -57,7 +57,8 @@ class RvAdapter(private val dataSet: ArrayList<rapor>, val context: Context) : R
 
         //sürüm sayfasına geçiş yapılacak.
         holder.card.setOnClickListener {
-            //Navigation.findNavController(it).navigate(R.id.bottomSheetFragment)
+            Log.e("Hata", "geçiş yapıldı")
+            Navigation.findNavController(it).navigate(R.id.action_birinciFragment_to_surumFragment)
         }
 
     }

@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.erdem.designexample.rapor
+import com.erdem.designexample.YılRapor
 
 class DatabaseOperations {
 
@@ -84,13 +84,13 @@ class DatabaseOperations {
         return harverst
     }
 
-    fun GetInfoYear(databaseHelper: DatabaseHelper) : ArrayList<rapor>{
+    fun GetInfoYear(databaseHelper: DatabaseHelper) : ArrayList<YılRapor>{
 
         val db = databaseHelper.readableDatabase
         val cursor = db.rawQuery("SELECT year, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
                                         " FROM TeaHarverst GROUP BY year", null)
 
-        val raporList = ArrayList<rapor>()
+        val yılRaporList = ArrayList<YılRapor>()
 
         while (cursor.moveToNext()) {
 
@@ -98,12 +98,12 @@ class DatabaseOperations {
             val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
             val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
 
-            val rapor = rapor(year, total_weight, total_revenue)
+            val YılRapor = YılRapor(year, total_weight, total_revenue)
 
-            raporList.add(rapor)
-            Log.e("Rapor", rapor.toString())
+            yılRaporList.add(YılRapor)
+            Log.e("Rapor", YılRapor.toString())
         }
-        return raporList
+        return yılRaporList
     }
 
 

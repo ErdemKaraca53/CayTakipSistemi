@@ -14,11 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
-import com.erdem.designexample.R
-import com.erdem.designexample.clearTextFields
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.TeaGardens
