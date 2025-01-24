@@ -18,9 +18,6 @@
             android:name="season"
             app:argType="integer"
             android:defaultValue="3" />
-        <action
-            android:id="@+id/action_birinciFragment_to_bottomSheetFragment"
-            app:destination="@id/bottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/ikinciFragment"
@@ -31,28 +28,6 @@
             android:name="bahce"
             app:argType="string" />
     </fragment>
-    <dialog
-        android:id="@+id/bottomSheetFragment"
-        android:name="com.erdem.designexample.design.bottomSheetFragment"
-        android:label="fragment_bottom_sheet2"
-        tools:layout="@layout/fragment_bottom_sheet2" >
-        <action
-            android:id="@+id/action_bottomSheetFragment_to_seasonSheetDialogFragment"
-            app:destination="@id/seasonSheetDialogFragment" />
-    </dialog>
-    <dialog
-        android:id="@+id/seasonSheetDialogFragment"
-        android:name="com.erdem.designexample.design.seasonSheetDialogFragment"
-        android:label="fragment_season_sheet_dialog"
-        tools:layout="@layout/fragment_season_sheet_dialog" >
-        <action
-            android:id="@+id/action_seasonSheetDialogFragment_to_birinciFragment"
-            app:destination="@id/birinciFragment" />
-        <argument
-            android:name="year"
-            app:argType="integer"
-            android:defaultValue="0" />
-    </dialog>
     <fragment
         android:id="@+id/new_design"
         android:name="com.erdem.designexample.design.new_design"

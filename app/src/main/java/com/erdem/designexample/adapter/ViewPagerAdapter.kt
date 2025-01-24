@@ -6,8 +6,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.erdem.designexample.design.DevletFragment
 import com.erdem.designexample.design.OzelFragment
-import com.erdem.designexample.design.bottomSheetFragment
-import com.erdem.designexample.design.new_design
 
 class ViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 

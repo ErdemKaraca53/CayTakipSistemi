@@ -46,11 +46,6 @@ class birinciFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = customAdapter
 
-        binding.filterActionButton.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.bottomSheetFragment)
-        }
-
-
         return view
     }
 

@@ -57,7 +57,7 @@ class RvAdapter(private val dataSet: ArrayList<rapor>, val context: Context) : R
 
         //sürüm sayfasına geçiş yapılacak.
         holder.card.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.bottomSheetFragment)
+            //Navigation.findNavController(it).navigate(R.id.bottomSheetFragment)
         }
 
     }
