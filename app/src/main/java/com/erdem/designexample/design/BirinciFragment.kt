@@ -31,6 +31,7 @@ class birinciFragment : Fragment() {
 
         val helper = DatabaseHelper(requireContext())
 
+        val bundle = Bundle()
 
         val dataset = DatabaseOperations().GetInfoYear(helper)
         val customAdapter = YearRvAdapter(dataset, requireContext())
