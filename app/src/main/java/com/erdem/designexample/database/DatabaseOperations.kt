@@ -84,6 +84,7 @@ class DatabaseOperations {
     }
 
 
+
     //Eğer girilen bahçe ismi daha önce kullanılmış ise id değeri döner
     //Eğer bahçe ismi daha önce kullanılmamış ise -1 değerini döner
     fun isGardenExists(helper: DatabaseHelper, gardenName: String) : Int {

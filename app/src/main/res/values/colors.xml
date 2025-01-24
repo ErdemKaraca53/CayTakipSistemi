@@ -11,5 +11,7 @@
     <color name="textViewColor">#32343E</color>
     <color name="selected_tab_color">#EFF0F6</color>
     <color name="default_tab_color">#FFFFFF</color> <!-- Transparan -->
+    <color name="recyclerViewGray">#979797</color>
+    <color name="recyclerViewBlue">#3629B7</color>
 
 </resources>

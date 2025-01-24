@@ -22,17 +22,14 @@ class RvAdapter(private val dataSet: ArrayList<TeaHarverst>) : RecyclerView.Adap
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val bahce: TextView
-        val surum: TextView
         val yıl: TextView
-        val kg: TextView
-
+        val ToplamKg: TextView
+        val ToplamGelir: TextView
         init {
             // Define click listener for the ViewHolder's View
-            bahce = view.findViewById(R.id.gardenTextview)
-            surum = view.findViewById(R.id.seasonTextview)
-            yıl = view.findViewById(R.id.yearTextview)
-            kg = view.findViewById(R.id.weightTextview)
+            yıl = view.findViewById(R.id.YılTextView)
+            ToplamKg = view.findViewById(R.id.ToplamKgTextView)
+            ToplamGelir = view.findViewById(R.id.ToplamGelirTextView)
         }
     }
 
@@ -48,10 +45,10 @@ class RvAdapter(private val dataSet: ArrayList<TeaHarverst>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bahce.text = dataSet[position].gardenName
         holder.yıl.text = dataSet[position].year.toString()
-        holder.surum.text = "${dataSet[position].season.toString()}. sürüm"
-        holder.kg.text = "Ağırlık: ${dataSet[position].weight_kg.toString()} kg"
+        holder.ToplamKg.text = "999 kg"
+        holder.ToplamKg.text = "999 kg"
+        holder.ToplamGelir.text = "${dataSet[position].weight_kg.toString()} TL"
     }
 
 }
