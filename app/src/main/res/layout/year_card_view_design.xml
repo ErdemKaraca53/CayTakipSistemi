@@ -17,7 +17,9 @@
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@color/white"
         android:clickable="true"
+        android:layout_margin="16dp"
         android:focusable="true"
+        app:cardElevation="6dp"
         android:foreground="?attr/selectableItemBackground"
         android:stateListAnimator="@anim/animation"
         app:cardCornerRadius="15dp">
@@ -26,29 +28,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:background="@drawable/card_view_gradient">
 
             <TextView
                 android:id="@+id/YılTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_width="68dp"
+                android:layout_height="25dp"
                 android:text="2025"
                 android:textAlignment="viewStart"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.4"
-                tools:layout_editor_absoluteY="10dp" />
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/cardView3"
+                app:layout_constraintWidth_percent="0.4" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="97dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="42dp"
                 android:text="Toplam miktar"
                 android:textColor="@color/recyclerViewGray"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardView3"
                 app:layout_constraintTop_toBottomOf="@+id/YılTextView"
                 app:layout_constraintWidth_percent="0.28" />
 
@@ -56,32 +58,51 @@
                 android:id="@+id/YılToplamKgTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="9999kg"
                 android:textColor="@color/recyclerViewBlue"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toTopOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
                 app:layout_constraintWidth_percent="0.2" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="83dp"
                 android:layout_height="19dp"
+                android:layout_marginStart="15dp"
                 android:text="Toplam gelir"
                 android:textColor="@color/recyclerViewGray"
-                app:layout_constraintEnd_toStartOf="@+id/YılToplamGelirTextView"
-                app:layout_constraintTop_toTopOf="@+id/YılToplamKgTextView"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4"
                 app:layout_constraintWidth_percent="0.28" />
 
             <TextView
                 android:id="@+id/YılToplamGelirTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="3dp"
+                android:layout_width="87dp"
+                android:layout_height="17dp"
                 android:text="200000"
                 android:textColor="@color/recyclerViewBlue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView9"
+                app:layout_constraintStart_toStartOf="@+id/textView9"
+                app:layout_constraintTop_toTopOf="@+id/YılToplamKgTextView"
                 app:layout_constraintWidth_percent="0.2" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="65dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/green_tea" />
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
