@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.erdem.designexample.SurumRapor
 import com.erdem.designexample.YılRapor
 
 class DatabaseOperations {
@@ -101,9 +102,32 @@ class DatabaseOperations {
             val YılRapor = YılRapor(year, total_weight, total_revenue)
 
             yılRaporList.add(YılRapor)
-            Log.e("Rapor", YılRapor.toString())
         }
+        cursor.close()
         return yılRaporList
+    }
+
+    fun GetInfoSeason(databaseHelper: DatabaseHelper, year: Int) : ArrayList<SurumRapor>{
+
+        val db = databaseHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                " FROM TeaHarverst WHERE year = ? GROUP BY season", arrayOf(year.toString())
+        )
+
+        val SurumRaporList = ArrayList<SurumRapor>()
+
+        while (cursor.moveToNext()) {
+
+            val surum = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
+            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
+            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
+
+            val SurumRapor = SurumRapor(surum, total_weight, total_revenue)
+
+            SurumRaporList.add(SurumRapor)
+        }
+        cursor.close()
+        return SurumRaporList
     }
 
 

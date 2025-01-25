@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,12 +30,18 @@ class SurumFragment : Fragment() {
         val view = binding.root
 
         val helper = DatabaseHelper(requireContext())
+        val year = arguments?.getInt("yıl")
 
-        val dataset = DatabaseOperations().GetInfoYear(helper)
-        //val customAdapter = SurumRvAdapter(dataset, requireContext())
+
+
+        val dataset = DatabaseOperations().GetInfoSeason(helper, year!!)
+
+        val customAdapter = SurumRvAdapter(dataset)
         val recyclerView: RecyclerView = view.findViewById(R.id.SurumRecyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        //recyclerView.adapter = customAdapter
+        recyclerView.adapter = customAdapter
+
+
 
 
         return view

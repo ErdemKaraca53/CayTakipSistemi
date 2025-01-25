@@ -28,13 +28,13 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.fragment_surum, viewGroup, false)
+            .inflate(R.layout.surum_card_view, viewGroup, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.yıl.text = dataSet[position].surum.toString()
+        viewHolder.yıl.text = "${dataSet[position].surum}. sürgün"
         viewHolder.ToplamKg.text = dataSet[position].toplam_kg.toString() + " KG"
         viewHolder.ToplamGelir.text = "${dataSet[position].toplam_gelir} TL"
 

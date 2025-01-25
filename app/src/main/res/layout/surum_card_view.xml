@@ -27,19 +27,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/SurumTextView"
+            app:layout_constraintTop_toBottomOf="@+id/SurumTextView">
 
             <TextView
                 android:id="@+id/SurumTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="2025"
                 android:textAlignment="viewStart"
                 android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.4"
-                tools:layout_editor_absoluteY="10dp" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_percent="0.4" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -47,8 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:text="AAAAAA"
+                android:text="Toplam KG:"
                 android:textColor="@color/recyclerViewGray"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SurumTextView"
                 app:layout_constraintWidth_percent="0.28" />
@@ -67,7 +74,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="83dp"
                 android:layout_height="19dp"
-                android:text="Toplam gelir"
+                android:text="Toplam gelir:"
                 android:textColor="@color/recyclerViewGray"
                 app:layout_constraintEnd_toStartOf="@+id/SurumToplamGelirTextView"
                 app:layout_constraintTop_toTopOf="@+id/SurumToplamKgTextview"
