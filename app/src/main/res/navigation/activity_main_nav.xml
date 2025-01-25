@@ -45,5 +45,13 @@
             android:name="yıl"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_surumFragment_to_bahceFragment"
+            app:destination="@id/bahceFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/bahceFragment"
+        android:name="com.erdem.designexample.design.BahceFragment"
+        android:label="fragment_bahce"
+        tools:layout="@layout/fragment_bahce" />
 </navigation>

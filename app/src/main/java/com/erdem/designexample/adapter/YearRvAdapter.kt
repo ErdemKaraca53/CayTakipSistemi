@@ -2,17 +2,15 @@ package com.erdem.designexample.adapter
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
-import com.erdem.designexample.YılRapor
+import com.erdem.designexample.dataClass.YılRapor
 
 class YearRvAdapter(private val dataSet: ArrayList<YılRapor>, val context: Context) : RecyclerView.Adapter<YearRvAdapter.ViewHolder>() {
 

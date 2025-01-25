@@ -4,8 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.erdem.designexample.SurumRapor
-import com.erdem.designexample.YılRapor
+import com.erdem.designexample.dataClass.SurumRapor
+import com.erdem.designexample.dataClass.YılRapor
 
 class DatabaseOperations {
 
