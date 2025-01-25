@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.erdem.designexample.dataClass.BahceRapor
 import com.erdem.designexample.dataClass.SurumRapor
 import com.erdem.designexample.dataClass.YılRapor
 
@@ -128,6 +129,30 @@ class DatabaseOperations {
         }
         cursor.close()
         return SurumRaporList
+    }
+
+    fun GetInfoGarden(databaseHelper: DatabaseHelper, year: Int, season: Int) : ArrayList<BahceRapor>{
+
+        val db = databaseHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT gardenName, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
+                "WHERE year = ? AND season = ? GROUP BY season", arrayOf(year.toString(), season.toString())
+        )
+
+        val BahceRaporList = ArrayList<BahceRapor>()
+
+        while (cursor.moveToNext()) {
+
+            val bahce = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
+            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
+            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
+
+            val BahceRapor = BahceRapor(bahce, total_weight, total_revenue)
+
+            BahceRaporList.add(BahceRapor)
+        }
+        cursor.close()
+        return BahceRaporList
     }
 
 

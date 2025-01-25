@@ -1,15 +1,18 @@
 package com.erdem.designexample.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.erdem.designexample.R
+import com.erdem.designexample.dataClass.BahceRapor
 
-class BahceRvAdapter() : RecyclerView.Adapter<BahceRvAdapter.ViewHolder>() {
+class BahceRvAdapter(val dataSet: ArrayList<BahceRapor>) : RecyclerView.Adapter<BahceRvAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -38,8 +41,9 @@ class BahceRvAdapter() : RecyclerView.Adapter<BahceRvAdapter.ViewHolder>() {
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
+        viewHolder.BahceIsmi.text = dataSet[position].bahceIsmi.toString()
+        viewHolder.ToplamKg.text = dataSet[position].ToplamKg.toString() + " KG"
+        viewHolder.ToplamGelir.text = "${dataSet[position].ToplamGelir} TL"
 
     }
 
