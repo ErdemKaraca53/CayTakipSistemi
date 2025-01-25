@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.erdem.designexample.R
 import com.erdem.designexample.databinding.FragmentBahceBinding
 
@@ -20,6 +21,10 @@ class BahceFragment : Fragment() {
     ): View? {
         _binding = FragmentBahceBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val year = arguments?.getInt("yıl")
+        val surum = arguments?.getInt("surum")
+
         return view
     }
 

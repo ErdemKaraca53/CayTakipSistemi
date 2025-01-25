@@ -10,14 +10,6 @@
         android:name="com.erdem.designexample.design.birinciFragment"
         android:label="fragment_birinci"
         tools:layout="@layout/fragment_birinci" >
-        <argument
-            android:name="year"
-            app:argType="integer"
-            android:defaultValue="3" />
-        <argument
-            android:name="season"
-            app:argType="integer"
-            android:defaultValue="3" />
         <action
             android:id="@+id/action_birinciFragment_to_surumFragment"
             app:destination="@id/surumFragment" />
