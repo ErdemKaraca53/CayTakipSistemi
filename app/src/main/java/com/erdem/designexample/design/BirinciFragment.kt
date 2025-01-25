@@ -32,7 +32,7 @@ class birinciFragment : Fragment() {
         val helper = DatabaseHelper(requireContext())
 
         val dataset = DatabaseOperations().GetInfoYear(helper)
-        val customAdapter = YearRvAdapter(dataset, requireContext())
+        val customAdapter = YearRvAdapter(dataset)
         val recyclerView: RecyclerView = view.findViewById(R.id.YılRecyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = customAdapter

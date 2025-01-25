@@ -41,10 +41,6 @@
         android:name="com.erdem.designexample.design.SurumFragment"
         android:label="fragment_surum"
         tools:layout="@layout/fragment_surum" >
-        <argument
-            android:name="yıl"
-            app:argType="integer"
-            android:defaultValue="0" />
         <action
             android:id="@+id/action_surumFragment_to_bahceFragment"
             app:destination="@id/bahceFragment" />

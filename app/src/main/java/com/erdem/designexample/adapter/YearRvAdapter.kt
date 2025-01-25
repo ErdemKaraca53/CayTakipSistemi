@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.YılRapor
 
-class YearRvAdapter(private val dataSet: ArrayList<YılRapor>, val context: Context) : RecyclerView.Adapter<YearRvAdapter.ViewHolder>() {
+class YearRvAdapter(private val dataSet: ArrayList<YılRapor>) : RecyclerView.Adapter<YearRvAdapter.ViewHolder>() {
 
     private lateinit var mListener: onItemClickListener
 

@@ -1,5 +1,6 @@
 package com.erdem.designexample.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,8 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
         }
     }
 
+
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.surum_card_view, viewGroup, false)
@@ -38,9 +41,10 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
         viewHolder.Surum.text = "${dataSet[position].surum}. sürgün"
         viewHolder.ToplamKg.text = dataSet[position].toplam_kg.toString() + " KG"
         viewHolder.ToplamGelir.text = "${dataSet[position].toplam_gelir} TL"
-
         //sürüm sayfasına geçiş yapılacak.
         viewHolder.card.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("yıl", dataSet[position].year)
             Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment)
         }
     }

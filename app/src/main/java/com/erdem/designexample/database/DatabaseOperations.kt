@@ -122,7 +122,7 @@ class DatabaseOperations {
             val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
             val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
 
-            val SurumRapor = SurumRapor(surum, total_weight, total_revenue)
+            val SurumRapor = SurumRapor(surum, total_weight, total_revenue, year)
 
             SurumRaporList.add(SurumRapor)
         }
