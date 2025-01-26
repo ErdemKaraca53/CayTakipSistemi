@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
@@ -30,12 +31,14 @@ class YearRvAdapter(private val dataSet: ArrayList<YılRapor>) : RecyclerView.Ad
         val ToplamKg: TextView
         val ToplamGelir: TextView
         val card : CardView
+        val DetayButton : Button
         init {
             // Define click listener for the ViewHolder's View
             yıl = view.findViewById(R.id.YılTextView)
             ToplamKg = view.findViewById(R.id.YılToplamKgTextView)
             ToplamGelir = view.findViewById(R.id.YılToplamGelirTextView)
             card = view.findViewById(R.id.CardView)
+            DetayButton = view.findViewById(R.id.YılDetayButton)
         }
     }
 
@@ -57,6 +60,12 @@ class YearRvAdapter(private val dataSet: ArrayList<YılRapor>) : RecyclerView.Ad
 
         //sürüm sayfasına geçiş yapılacak.
         holder.card.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("yıl", dataSet[position].year)
+            Navigation.findNavController(it).navigate(R.id.action_birinciFragment_to_surumFragment, bundle)
+        }
+
+        holder.DetayButton.setOnClickListener{
             val bundle = Bundle()
             bundle.putInt("yıl", dataSet[position].year)
             Navigation.findNavController(it).navigate(R.id.action_birinciFragment_to_surumFragment, bundle)

@@ -35,12 +35,13 @@
                 android:id="@+id/YılTextView"
                 android:layout_width="68dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="144dp"
+                android:layout_marginStart="12dp"
                 android:text="2025"
                 android:textAlignment="viewStart"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintHorizontal_bias="0.012"
+                app:layout_constraintStart_toEndOf="@+id/cardView3"
                 app:layout_constraintTop_toTopOf="@+id/cardView3"
                 app:layout_constraintWidth_percent="0.4" />
 
@@ -112,6 +113,17 @@
                     android:layout_height="60dp"
                     app:srcCompat="@drawable/green_tea" />
             </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/YılDetayButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_button_design"
+                android:text="Detay"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

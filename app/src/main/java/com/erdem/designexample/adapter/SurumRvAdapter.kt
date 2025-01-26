@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
@@ -19,13 +20,14 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
         val ToplamKg: TextView
         val ToplamGelir: TextView
         val card : CardView
-
+        val DetayButton : Button
         init {
             // Define click listener for the ViewHolder's View
             Surum = view.findViewById(R.id.SurumTextView)
             ToplamKg = view.findViewById(R.id.SurumToplamKgTextview)
             ToplamGelir = view.findViewById(R.id.SurumToplamGelirTextView)
             card = view.findViewById(R.id.SurumCardView)
+            DetayButton = view.findViewById(R.id.SurumDetayButton)
         }
     }
 
@@ -54,6 +56,14 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
             bundle.putInt("surum", dataSet[position].surum)
             Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment, bundle)
         }
+
+        viewHolder.DetayButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("yıl", dataSet[position].year)
+            bundle.putInt("surum", dataSet[position].surum)
+            Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment, bundle)
+        }
+
     }
 
     override fun getItemCount() = dataSet.size
