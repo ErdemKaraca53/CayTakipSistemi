@@ -3,6 +3,7 @@ package com.erdem.designexample.adapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -44,6 +45,10 @@ class BahceRvAdapter(val dataSet: ArrayList<BahceRapor>) : RecyclerView.Adapter<
         viewHolder.BahceIsmi.text = dataSet[position].bahceIsmi.toString()
         viewHolder.ToplamKg.text = dataSet[position].ToplamKg.toString() + " KG"
         viewHolder.ToplamGelir.text = "${dataSet[position].ToplamGelir} TL"
+
+        if (position == dataSet.lastIndex) {
+            viewHolder.itemView.visibility = GONE
+        }
 
     }
 

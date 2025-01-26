@@ -127,6 +127,12 @@ class DatabaseOperations {
 
             SurumRaporList.add(SurumRapor)
         }
+        //Recyclerview son elemanı bottom app bar ile çakışıyordu.
+        //Bunu engellemek için fazladan bir elaman koyuldu listeye.
+        //Recyclerview içerisinde son eleman pasif hale getiriliyor. bu sayede çakışma olmuyor görüntüler arasında
+        val tmp = SurumRapor(0,0.0f,0.0f,0)
+        SurumRaporList.add(tmp)
+
         cursor.close()
         return SurumRaporList
     }
@@ -151,6 +157,9 @@ class DatabaseOperations {
 
             BahceRaporList.add(BahceRapor)
         }
+
+        val tmp = BahceRapor("",0.0f, 0.0f)
+        BahceRaporList.add(tmp)
         cursor.close()
         return BahceRaporList
     }

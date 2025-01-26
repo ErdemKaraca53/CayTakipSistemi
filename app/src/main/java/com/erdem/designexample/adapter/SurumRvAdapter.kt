@@ -3,6 +3,7 @@ package com.erdem.designexample.adapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -41,6 +42,11 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
         viewHolder.Surum.text = "${dataSet[position].surum}. sürgün"
         viewHolder.ToplamKg.text = dataSet[position].toplam_kg.toString() + " KG"
         viewHolder.ToplamGelir.text = "${dataSet[position].toplam_gelir} TL"
+
+        if (position == dataSet.lastIndex) {
+            viewHolder.itemView.visibility = GONE
+        }
+
         //sürüm sayfasına geçiş yapılacak.
         viewHolder.card.setOnClickListener {
             val bundle = Bundle()
