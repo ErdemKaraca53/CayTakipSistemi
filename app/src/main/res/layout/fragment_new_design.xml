@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@drawable/card_view_gradient"
     tools:context=".design.new_design">
 
     <androidx.cardview.widget.CardView
@@ -41,6 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="1"
                 app:tabSelectedTextColor="@color/black"
+                android:background="@drawable/card_view_gradient"
                 >
 
 
