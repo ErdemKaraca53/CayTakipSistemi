@@ -191,7 +191,7 @@ class OzelFragment : Fragment() {
             hasat.season = binding.SurumEditText.text.toString().toInt()
             hasat.weight_kg = binding.KgEditText.text.toString().toFloat()
 
-            hasat.VadeTarihi = binding.VadeTarihiTextView.text.toString()
+            hasat.VadeTarihi = binding.VadeTarihiEdit.text.toString()
             hasat.SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
 
             Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()

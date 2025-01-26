@@ -24,9 +24,6 @@ class DatabaseOperations {
         harverstValues.put("season", harverst.season)
         harverstValues.put("weight_kg", harverst.weight_kg)
 
-        Log.e("deneme",harverst.SatisYeri)
-        Log.e("deneme",harverst.SatisFiyati.toString())
-        Log.e("deneme",harverst.VadeTarihi)
         //SONRADAN EKLENDİ KONTROL EDİLMELİ
         harverstValues.put("company", harverst.SatisYeri)
         harverstValues.put("price", harverst.SatisFiyati)
@@ -41,15 +38,30 @@ class DatabaseOperations {
             db.insertOrThrow("TeaHarverst", null, harverstValues)
 
         } else {
-            if (!checkSeasonAndYear(helper, harverst.year, harverst.season, isGardenExists(helper, garden.gardenName))) {
+            if (!checkSeasonAndYear(helper, harverst.year, harverst.season, isGardenExists(helper, garden.gardenName), harverst.VadeTarihi)) {
                 harverstValues.put("garden_id", isGardenExists(helper,garden.gardenName))
                 db.insertOrThrow("TeaHarverst", null, harverstValues)
             } else {
-                Toast.makeText(context, "Kayıt mevcut", Toast.LENGTH_SHORT).show()
+                Log.e("hata", harverst.VadeTarihi)
+                val db = helper.writableDatabase
+                val updateQuery = """
+                                UPDATE TeaHarverst
+                                SET weight_kg = weight_kg + ?
+                                WHERE year = ? AND season = ? AND garden_id = ? AND paymentDate = ?
+                            """
+                val statement = db.compileStatement(updateQuery)
+
+                // Parametreleri bağla
+                statement.bindDouble(1, harverst.weight_kg.toDouble()) // İlk "?" -> weight_kg
+                statement.bindString(2, harverst.year.toString()) // İkinci "?" -> year
+                statement.bindString(3, harverst.season.toString()) // Üçüncü "?" -> season
+                statement.bindLong(4, isGardenExists(helper, garden.gardenName).toLong()) // Dördüncü "?" -> garden_id
+                statement.bindString(5, harverst.VadeTarihi) // Beşinci "?" -> paymentDate
+
+                // Sorguyu çalıştır
+                statement.execute()
             }
         }
-
-        checkSeasonAndYear(helper,harverst.year, harverst.season, isGardenExists(helper,garden.gardenName))
 
         //db.execSQL("DELETE FROM TeaGardens")
         //db.close()
@@ -185,22 +197,21 @@ class DatabaseOperations {
     //TRUE --> Verilen yıl ve sezon içinde bahçenin kaydı var
     //FALSE  --> Verilen yıl ve sezon içinde bahçenin kaydı yok
 
-    fun checkSeasonAndYear(helper: DatabaseHelper, year: Int, season:Int, garden_id:Int) :Boolean{
+    fun checkSeasonAndYear(helper: DatabaseHelper, year: Int, season:Int, garden_id:Int, paymentDate:String) :Boolean{
 
         val db = helper.readableDatabase
-        val cursor = db.rawQuery("SELECT id FROM TeaHarverst WHERE season = ? AND year = ? AND garden_id = ? ",
-                                arrayOf(season.toString(), year.toString(), garden_id.toString() ))
+        val cursor = db.rawQuery("SELECT id FROM TeaHarverst " +
+                                "WHERE season = ? AND year = ? AND garden_id = ? AND paymentDate = ?",
+                                arrayOf(season.toString(), year.toString(), garden_id.toString(), paymentDate))
 
         cursor.use {
             // Eğer sonuç bulunursa true döndür, aksi takdirde false
             return if (cursor.moveToNext()) {
-                val tmp = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
                 cursor.close()
                 db.close()
                 true
             } else {
                 cursor.close()
-
                 false
             }
         }

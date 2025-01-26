@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DatabaseHelper(contex:Context) : SQLiteOpenHelper(contex, "db", null, 15) {
+class DatabaseHelper(contex:Context) : SQLiteOpenHelper(contex, "db", null, 17) {
 
 
     //onCreate veritabanı üzerindeki tabloların tanımlandığı yer
