@@ -221,12 +221,13 @@
             app:layout_constraintTop_toBottomOf="@+id/FiyatTextView"
             app:layout_constraintWidth_percent="0.4" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/KaydetOzelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Kaydet"
+            android:background="@drawable/custom_button_design"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
