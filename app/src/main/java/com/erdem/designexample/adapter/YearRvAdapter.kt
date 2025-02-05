@@ -68,7 +68,7 @@ class YearRvAdapter(private val dataSet: ArrayList<YılRapor>) : RecyclerView.Ad
         holder.DetayButton.setOnClickListener{
             val bundle = Bundle()
             bundle.putInt("yıl", dataSet[position].year)
-            //Navigation.findNavController(it).navigate(R.id.action_birinciFragment_to_surumFragment, bundle)
+            //4Navigation.findNavController(it).navigate(R.id.action_birinciFragment_to_surumFragment, bundle)
         }
 
     }
