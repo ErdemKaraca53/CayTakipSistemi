@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.R
-import com.erdem.designexample.adapter.YearRvAdapter
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 
 
@@ -28,15 +27,6 @@ class birinciFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        val helper = DatabaseHelper(requireContext())
-
-        val dataset = DatabaseOperations().GetInfoYear(helper)
-        val customAdapter = YearRvAdapter(dataset)
-        val recyclerView: RecyclerView = view.findViewById(R.id.YılRecyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = customAdapter
-
         return view
     }
 
