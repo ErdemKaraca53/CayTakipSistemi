@@ -54,14 +54,14 @@ class SurumRvAdapter(private val dataSet: ArrayList<SurumRapor>) : RecyclerView.
             val bundle = Bundle()
             bundle.putInt("yıl", dataSet[position].year)
             bundle.putInt("surum", dataSet[position].surum)
-            Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment, bundle)
+            //Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment, bundle)
         }
 
         viewHolder.DetayButton.setOnClickListener {
             val bundle = Bundle()
             bundle.putInt("yıl", dataSet[position].year)
             bundle.putInt("surum", dataSet[position].surum)
-            Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment, bundle)
+            //Navigation.findNavController(it).navigate(R.id.action_surumFragment_to_bahceFragment, bundle)
         }
 
     }

@@ -6,15 +6,6 @@
     app:startDestination="@id/new_design">
 
     <fragment
-        android:id="@+id/birinciFragment"
-        android:name="com.erdem.designexample.design.birinciFragment"
-        android:label="fragment_birinci"
-        tools:layout="@layout/fragment_birinci" >
-        <action
-            android:id="@+id/action_birinciFragment_to_surumFragment"
-            app:destination="@id/surumFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/ikinciFragment"
         android:name="com.erdem.designexample.design.ikinciFragment"
         android:label="fragment_ikinici"
@@ -28,18 +19,4 @@
         android:name="com.erdem.designexample.design.new_design"
         android:label="fragment_new_design"
         tools:layout="@layout/fragment_new_design" />
-    <fragment
-        android:id="@+id/surumFragment"
-        android:name="com.erdem.designexample.design.SurumFragment"
-        android:label="fragment_surum"
-        tools:layout="@layout/fragment_surum" >
-        <action
-            android:id="@+id/action_surumFragment_to_bahceFragment"
-            app:destination="@id/bahceFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bahceFragment"
-        android:name="com.erdem.designexample.design.BahceFragment"
-        android:label="fragment_bahce"
-        tools:layout="@layout/fragment_bahce" />
 </navigation>
