@@ -4,4 +4,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".design.birinciFragment"/>
+    app:layoutDescription="@xml/fragment_birinci_scene2"
+    tools:context=".design.birinciFragment" />

@@ -18,5 +18,14 @@
         android:id="@+id/new_design"
         android:name="com.erdem.designexample.design.new_design"
         android:label="fragment_new_design"
-        tools:layout="@layout/fragment_new_design" />
+        tools:layout="@layout/fragment_new_design" >
+        <action
+            android:id="@+id/action_new_design_to_birinciFragment"
+            app:destination="@id/birinciFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/birinciFragment"
+        android:name="com.erdem.designexample.design.birinciFragment"
+        android:label="fragment_birinci"
+        tools:layout="@layout/fragment_birinci" />
 </navigation>
