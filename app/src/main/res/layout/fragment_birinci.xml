@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/fragment_birinci_scene2"
-    tools:context=".design.birinciFragment" >
+    tools:context=".design.birinciFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -28,14 +28,49 @@
         android:id="@+id/yilSecimSpinner"
         android:layout_width="0dp"
         android:layout_height="30dp"
+        android:layout_margin="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="21dp"
+        android:layout_marginEnd="22dp"
+        android:background="@drawable/style_spinner"
+        android:dropDownSelector="@drawable/style_spinner"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintWidth_percent="0.25"
-        android:background="@drawable/style_spinner"
-        android:layout_margin="16dp"
-        android:spinnerMode="dropdown"
-        android:dropDownSelector="@drawable/style_spinner"/>
+        app:layout_constraintWidth_percent="0.25" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/yilSecimSpinner"
+        app:layout_constraintTop_toTopOf="@+id/yilSecimSpinner">
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="7dp"
+            android:background="@drawable/radio_button_background_selector"
+            android:text="Devlet" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="7dp"
+            android:text="Özel" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="7dp"
+            android:text="Toplam" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

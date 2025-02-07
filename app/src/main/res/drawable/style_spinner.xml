@@ -4,11 +4,11 @@
         <layer-list>
             <item>
                 <shape android:shape="rectangle">
-                    <solid android:color="#E1FFBB" />
+                    <solid android:color="@color/spinnerColor" />
                     <padding android:right="15dp"
                         android:left="15dp" />
                     <corners android:radius="4dp" />
-                    <stroke android:width="1px" android:color="@color/spinnerColor"/>
+                    <stroke android:width="1px" android:color="@color/spinnerStrokeColor"/>
                 </shape>
             </item>
 
