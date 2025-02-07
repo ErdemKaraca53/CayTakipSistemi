@@ -16,11 +16,22 @@
         android:paddingTop="35dp"
         android:text="2025 YILI RAPOR"
         android:textAlignment="center"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.22"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/yilSecimSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="21dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintWidth_percent="0.25" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
