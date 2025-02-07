@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,11 +30,13 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.yilSecimSpinner.dropDownVerticalOffset = 65
         val tmp : ArrayList<String> = ArrayList()
 
-        tmp.add("123")
-        tmp.add("asd")
-        tmp.add("xxx")
+        tmp.add("2025")
+        tmp.add("2024")
+        tmp.add("2023")
+        tmp.sort()
 
         val adapter = spinnerAdapter(requireContext(), tmp)
         binding.yilSecimSpinner.adapter = adapter
