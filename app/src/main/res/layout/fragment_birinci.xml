@@ -7,69 +7,81 @@
     app:layoutDescription="@xml/fragment_birinci_scene2"
     tools:context=".design.birinciFragment">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/textview_background"
-        android:fontFamily="@font/sen"
-        android:paddingTop="35dp"
-        android:text="2025 YILI RAPOR"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.22"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/yilSecimSpinner"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/YilSecimMenu"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="22dp"
-        android:background="@drawable/style_spinner"
-        android:dropDownSelector="@drawable/style_spinner"
-        android:spinnerMode="dropdown"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="100dp"
+        android:hint="Yıl"
+        android:textColorHint="@color/black"
+        app:boxBackgroundColor="#E9FFBF"
+        app:boxStrokeColor="#E9FFBF"
+        app:endIconTint="@color/black"
+        app:hintTextColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.3"
+        android:elevation="4dp">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginEnd="12dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/YilSecimMenu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/yilSecimSpinner"
-        app:layout_constraintTop_toTopOf="@+id/yilSecimSpinner">
 
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingRight="7dp"
-            android:text="Devlet" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/YilSecimMenu"
+        app:layout_constraintTop_toTopOf="@+id/YilSecimMenu">
 
         <RadioButton
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingRight="7dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:background="@drawable/radio_button_selector"
+            android:button="@null"
+            android:elevation="4dp"
+            android:padding="6dp"
+            android:text="Devlet" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radio_button_selector"
+            android:button="@null"
+            android:elevation="4dp"
+            android:padding="6dp"
             android:text="Özel" />
 
         <RadioButton
             android:id="@+id/radioButton3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="7dp"
+            android:layout_margin="6dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/radio_button_selector"
+            android:button="@null"
+            android:elevation="4dp"
+            android:padding="6dp"
             android:text="Toplam" />
     </RadioGroup>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

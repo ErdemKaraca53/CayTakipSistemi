@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.size
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.erdem.designexample.database.DatabaseHelper
-import com.erdem.designexample.database.DatabaseOperations
-import com.erdem.designexample.R
 import com.erdem.designexample.databinding.FragmentBirinciBinding
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 
 class birinciFragment : Fragment() {
@@ -28,6 +24,10 @@ class birinciFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val items = arrayOf("2020", "2020", "2020", "2020")
+        (binding.YilSecimMenu.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(items)
+
 
         return view
     }
