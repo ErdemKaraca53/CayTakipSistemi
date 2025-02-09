@@ -5,8 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/fragment_birinci_scene2"
-    tools:context=".design.birinciFragment">
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".design.birinciFragment"/>
