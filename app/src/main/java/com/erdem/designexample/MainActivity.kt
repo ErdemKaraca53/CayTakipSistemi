@@ -2,20 +2,13 @@ package com.erdem.designexample
 
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Insets
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.erdem.designexample.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
 
