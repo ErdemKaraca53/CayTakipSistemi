@@ -16,6 +16,8 @@
     <color name="TextViewGreen">#9DC08B</color>
     <color name="spinnerStrokeColor">#009990</color>
     <color name="spinnerColor">#E1FFBB</color>
+    <color name="radio_gruop">#E1FFBB</color>
+    <color name="radio_gruop_stroke">#009990</color>
 
 
 </resources>
