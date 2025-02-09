@@ -12,7 +12,6 @@ import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.R
 import com.erdem.designexample.databinding.FragmentBirinciBinding
-import spinnerAdapter
 
 
 class birinciFragment : Fragment() {
@@ -29,17 +28,6 @@ class birinciFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        binding.yilSecimSpinner.dropDownVerticalOffset = 65
-        val tmp : ArrayList<String> = ArrayList()
-
-        tmp.add("2025")
-        tmp.add("2024")
-        tmp.add("2023")
-        tmp.sort()
-
-        val adapter = spinnerAdapter(requireContext(), tmp)
-        binding.yilSecimSpinner.adapter = adapter
 
 
         return view
