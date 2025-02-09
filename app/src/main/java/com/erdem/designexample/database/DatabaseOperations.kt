@@ -28,7 +28,7 @@ class DatabaseOperations {
         harverstValues.put("company", harverst.SatisYeri)
         harverstValues.put("price", harverst.SatisFiyati)
         harverstValues.put("paymentDate", harverst.VadeTarihi.toString())
-
+    //
         //Eğer daha önce bu bahçe ismi kullanılmamış ise kayıt yapar
         if (isGardenExists(helper,garden.gardenName) == -1) {
 
