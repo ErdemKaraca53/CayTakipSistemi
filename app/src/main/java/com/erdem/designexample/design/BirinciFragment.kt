@@ -29,7 +29,6 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
         return view
     }
 
