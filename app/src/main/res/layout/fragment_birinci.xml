@@ -84,12 +84,16 @@
     </RadioGroup>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bahceSecimRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup2"
         app:layout_constraintHeight_percent="0.1"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="109dp"
-        android:orientation="horizontal"/>
+        app:layout_constraintStart_toStartOf="@+id/YilSecimMenu"
+        app:layout_constraintTop_toBottomOf="@+id/YilSecimMenu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
