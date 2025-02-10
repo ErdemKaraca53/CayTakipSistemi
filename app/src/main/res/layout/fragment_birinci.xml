@@ -14,7 +14,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
+        android:elevation="4dp"
         android:hint="Yıl"
         android:textColorHint="@color/black"
         app:boxBackgroundColor="#E9FFBF"
@@ -25,8 +26,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3"
-        android:elevation="4dp">
+        app:layout_constraintWidth_percent="0.3">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
@@ -82,6 +82,14 @@
             android:padding="6dp"
             android:text="Toplam" />
     </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.1"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="109dp"
+        android:orientation="horizontal"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
