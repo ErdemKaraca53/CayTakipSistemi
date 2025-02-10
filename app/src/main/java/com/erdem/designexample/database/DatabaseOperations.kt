@@ -273,8 +273,28 @@ class DatabaseOperations {
             gardens.add(tmp)
 
         }
+        cursor.close()
         return gardens
     }
+
+    fun readGardenName(helper: DatabaseHelper) :ArrayList<String> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT gardenName FROM TeaGardens", null)
+
+        var gardens = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
+
+            gardens.add(tmp)
+
+        }
+        cursor.close()
+        return gardens
+    }
+
+
 
 
 

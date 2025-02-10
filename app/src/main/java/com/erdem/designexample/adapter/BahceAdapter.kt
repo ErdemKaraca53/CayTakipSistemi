@@ -36,17 +36,17 @@ class BahceAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceA
 
         // Seçili elemanı kontrol edip arka plan rengini değiştir
         if (position == lastSelectPosition) {
-            viewHolder.card.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
+            viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
             Log.e("bilgi", "Yeni seçim değişildi")
         } else {
-            viewHolder.card.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
+            viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
             Log.e("bilgi", "Eski seçim değişildi")
         }
 
         viewHolder.card.setOnClickListener {
             val previousPosition = lastSelectPosition
             lastSelectPosition = viewHolder.adapterPosition
-            Log.e("bilgi", "Tıklanıldı")
+            Log.e("bilgi", dataSet[position])
             // Önceki seçili elemanı güncelle
             notifyItemChanged(previousPosition)
             // Yeni seçili elemanı güncelle

@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.adapter.BahceAdapter
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
@@ -27,25 +29,24 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val dataset = ArrayList<String>()
+        val helper = DatabaseHelper(requireContext())
+        val bahceDataSet = DatabaseOperations().readGardenName(helper)
 
-        dataset.add("AAAAAA")
-        dataset.add("BB")
-        dataset.add("CCAA")
-        dataset.add("AA")
-        dataset.add("BB")
-        dataset.add("CCAA")
-        dataset.add("AA")
-        dataset.add("BB")
-        dataset.add("CC")
-
-        val customAdapter = BahceAdapter(dataset)
+        bahceDataSet.add(0,"TÜMÜ")
+        val customAdapter = BahceAdapter(bahceDataSet)
 
         binding.bahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.bahceSecimRecyclerView.adapter = customAdapter
 
+        helper.close()
+
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
