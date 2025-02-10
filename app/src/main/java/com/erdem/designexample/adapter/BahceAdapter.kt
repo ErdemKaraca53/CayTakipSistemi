@@ -30,7 +30,7 @@ class BahceAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceA
 
         return ViewHolder(view)
     }
-
+    //
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = dataSet[position]
 
