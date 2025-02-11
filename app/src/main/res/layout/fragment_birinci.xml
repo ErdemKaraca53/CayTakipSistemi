@@ -79,7 +79,7 @@
                 app:layout_constraintWidth_percent="0.70">
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/DevletRadio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
@@ -92,7 +92,7 @@
                     android:textAlignment="center" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/ÖzelRadio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
@@ -106,7 +106,7 @@
                     android:textAlignment="center" />
 
                 <RadioButton
-                    android:id="@+id/radioButton3"
+                    android:id="@+id/ToplamRadio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
