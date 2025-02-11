@@ -84,11 +84,11 @@ class birinciFragment : Fragment() {
 
         // Pasta grafiğinin merkezindeki boşluk (delik) yarıçapını belirliyoruz (0-100 arası değer alır).
         // 0 değeri merkezi tamamen kapatır, 100 değeri grafiğin tamamını boş yapar.
-        binding.pieChart.holeRadius = 58f
+        binding.pieChart.holeRadius = 10f
 
         // Şeffaf dairenin yarıçapını belirliyoruz (holeRadius'tan büyük olmalıdır).
         // Bu, merkezde delik etrafında hafif saydam bir halka oluşturur.
-        binding.pieChart.transparentCircleRadius = 61f
+        binding.pieChart.transparentCircleRadius = 10f
 
         // Pasta grafiğinin merkezinde metin gösterilip gösterilmeyeceğini belirliyoruz.
         // true olarak ayarlandığında, merkezde belirlenen bir yazı gösterilir.
@@ -99,7 +99,6 @@ class birinciFragment : Fragment() {
         // Pasta grafiğinin başlangıç açısını belirliyoruz (derece cinsinden).
         // 0 derece grafiği standart konumda başlatır, 150f ile biraz döndürerek başlatıyoruz.
         binding.pieChart.setRotationAngle(0f)
-
         // enable rotation of the pieChart by touch
         // Kullanıcının pasta grafiğini dokunarak döndürebilmesini sağlıyoruz.
         binding.pieChart.isRotationEnabled = true
@@ -126,6 +125,8 @@ class birinciFragment : Fragment() {
         entries.add(PieEntry(20f, "2. Sürgün")) // %20'lik dilim
         entries.add(PieEntry(10f, "3. Sürgün")) // %10'luk dilim
 
+        binding.pieChart.setEntryLabelColor(Color.BLACK)
+
         // on below line we are setting pie data set
         val dataSet = PieDataSet(entries, "")
         binding.pieChart.legend.isEnabled = true
@@ -133,9 +134,9 @@ class birinciFragment : Fragment() {
         binding.pieChart.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         binding.pieChart.legend.textSize = 15f
 
+
         // on below line we are setting icons.
         dataSet.setDrawIcons(false)
-
         // on below line we are setting slice for pie
         // Pasta grafiğindeki dilimler arasına boşluk ekliyoruz (5f piksel).
         // Bu, dilimler arasındaki ayrımı daha belirgin hale getirir.
@@ -173,7 +174,7 @@ class birinciFragment : Fragment() {
         data.setValueTypeface(Typeface.DEFAULT_BOLD)
 
         // Dilim üzerindeki yazıların rengini beyaz yapıyoruz.
-        data.setValueTextColor(Color.WHITE)
+        data.setValueTextColor(Color.BLACK)
 
         // Oluşturduğumuz veriyi pasta grafiğine atıyoruz.
         binding.pieChart.setData(data)
