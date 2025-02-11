@@ -8,23 +8,11 @@
     tools:context=".design.birinciFragment">
 
 
-    <TextView
-        android:id="@+id/baslikTextView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/textview_background"
-        android:padding="50dp"
-        android:text="2025 YILI RAPOR"
-        android:textAlignment="center"
-        app:layout_constraintHeight_percent="0.2"
-        tools:layout_editor_absoluteX="119dp" />
-
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/baslikTextView"
         tools:layout_editor_absoluteX="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,10 +20,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/baslikTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/textview_background"
+                android:gravity="center"
+                android:text="2025 YILI RAPOR"
+                android:textAlignment="center"
+                app:layout_constraintHeight_percent="0.2"
+                tools:layout_editor_absoluteX="119dp"
+                tools:layout_editor_absoluteY="2dp" />
+
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
+                android:layout_marginBottom="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/cardView2"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
@@ -62,12 +64,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/radio_button_selector"
                 android:drawableEnd="@drawable/dropdown_icon"
                 android:text="2020"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/baslikTextView"
                 app:layout_constraintWidth_percent="0.2" />
 
             <RadioGroup
@@ -122,7 +124,6 @@
                     android:text="Toplam"
                     android:textAlignment="center" />
             </RadioGroup>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
