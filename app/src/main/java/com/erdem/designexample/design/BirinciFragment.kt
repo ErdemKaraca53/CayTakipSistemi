@@ -21,6 +21,8 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.MPPointF
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 
 class birinciFragment : Fragment() {
 
@@ -93,6 +95,8 @@ class birinciFragment : Fragment() {
         }
     }
 
+
+
     // Seçilen Kategoriye Göre Pasta Grafiğini Güncelleyen Fonksiyon
     private fun loadPieChartData(type: String) {
         val entries = ArrayList<PieEntry>()
@@ -145,4 +149,7 @@ class birinciFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }
