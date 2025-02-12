@@ -41,8 +41,7 @@ class birinciFragment : Fragment() {
         bahceDataSet.add(0, "TÜMÜ")
         val customAdapter = BahceAdapter(bahceDataSet)
 
-        binding.bahceSecimRecyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        /*binding.bahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.bahceSecimRecyclerView.adapter = customAdapter
 
         helper.close()
@@ -60,11 +59,11 @@ class birinciFragment : Fragment() {
                 R.id.ÖzelRadio -> loadPieChartData("Özel")
                 R.id.ToplamRadio -> loadPieChartData("Tümü")
             }
-        }
+        }*/
 
         return view
     }
-
+/*
     // Pasta Grafiği Temel Ayarlarını Yapan Fonksiyon
     private fun setupPieChart() {
         binding.pieChart.apply {
@@ -139,6 +138,8 @@ class birinciFragment : Fragment() {
         binding.pieChart.invalidate()  // Grafiği yeniden çiz
         binding.pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
+
+ */
 
     override fun onDestroyView() {
         super.onDestroyView()

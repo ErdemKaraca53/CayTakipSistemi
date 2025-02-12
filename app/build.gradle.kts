@@ -53,4 +53,5 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation (libs.androidx.constraintlayout.v220)
     implementation(libs.mpandroidchart)
+    implementation(libs.material.v1110)
 }
