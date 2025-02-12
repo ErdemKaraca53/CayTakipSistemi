@@ -36,6 +36,10 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.YilBottomSheetButon.setOnClickListener {
+            ItemListDialogFragment.newInstance(30).show(parentFragmentManager, "dialog")
+        }
+
         // Veri tabanından verileri al
         /*val helper = DatabaseHelper(requireContext())
         val bahceDataSet = DatabaseOperations().readGardenName(helper)
