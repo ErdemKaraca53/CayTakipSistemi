@@ -37,13 +37,14 @@ class birinciFragment : Fragment() {
         val view = binding.root
 
         // Veri tabanından verileri al
-        val helper = DatabaseHelper(requireContext())
+        /*val helper = DatabaseHelper(requireContext())
         val bahceDataSet = DatabaseOperations().readGardenName(helper)
 
         bahceDataSet.add(0, "TÜMÜ")
         val customAdapter = BahceAdapter(bahceDataSet)
 
-        /*binding.bahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        binding.bahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.bahceSecimRecyclerView.adapter = customAdapter
 
         helper.close()
@@ -65,6 +66,7 @@ class birinciFragment : Fragment() {
 
         return view
     }
+
 /*
     // Pasta Grafiği Temel Ayarlarını Yapan Fonksiyon
     private fun setupPieChart() {
