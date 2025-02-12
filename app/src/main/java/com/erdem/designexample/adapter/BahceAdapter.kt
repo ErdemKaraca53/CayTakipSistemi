@@ -16,34 +16,31 @@ class BahceAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceA
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
-        val card: CardView
 
         init {
-            textView = view.findViewById(R.id.BahceRecyclerViewTextView)
-            card = view.findViewById(R.id.BahceRecyclerViewCardView)
+            textView = view.findViewById(R.id.recyclerViewTextView)
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.recycler_view_card, viewGroup, false)
+            .inflate(R.layout.fragment_item_list_dialog_list_dialog_item, viewGroup, false)
 
         return ViewHolder(view)
     }
     //
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = dataSet[position]
-
         // Seçili elemanı kontrol edip arka plan rengini değiştir
         if (position == lastSelectPosition) {
-            viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
+            //viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
             Log.e("bilgi", "Yeni seçim değişildi")
         } else {
-            viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
+            //viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
             Log.e("bilgi", "Eski seçim değişildi")
         }
 
-        viewHolder.card.setOnClickListener {
+        /*viewHolder.card.setOnClickListener {
             val previousPosition = lastSelectPosition
             lastSelectPosition = viewHolder.adapterPosition
             Log.e("bilgi", dataSet[position])
@@ -51,7 +48,7 @@ class BahceAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceA
             notifyItemChanged(previousPosition)
             // Yeni seçili elemanı güncelle
             notifyItemChanged(lastSelectPosition)
-        }
+        }*/
     }
 
 

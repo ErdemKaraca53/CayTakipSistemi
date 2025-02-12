@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.erdem.designexample.R
+import com.erdem.designexample.adapter.BahceAdapter
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogItemBinding
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogBinding
 
@@ -45,14 +48,26 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.list.layoutManager = LinearLayoutManager(context)
-        binding.list.adapter = arguments?.getInt(ARG_ITEM_COUNT)?.let { ItemAdapter(it) }
+        val helper = DatabaseHelper(requireContext())
+        val bahceDataSet = DatabaseOperations().readGardenName(helper)
+
+        bahceDataSet.add(0, "TÜMÜ")
+        val customAdapter = BahceAdapter(bahceDataSet)
+
+
+        binding.list.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.list.adapter = customAdapter
+
+        helper.close()
+
+    //binding.list.adapter = arguments?.getInt(ARG_ITEM_COUNT)?.let { ItemAdapter(it) }
 
     }
 
     private inner class ViewHolder internal constructor(binding: FragmentItemListDialogListDialogItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        val text: TextView = binding.text
+        val text: TextView = binding.recyclerViewTextView
     }
 
     private inner class ItemAdapter(private val mItemCount: Int) :
