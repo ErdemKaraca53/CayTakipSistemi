@@ -48,6 +48,12 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
 
     override fun onItemClick(data: String) {
         Toast.makeText(requireContext(), data, Toast.LENGTH_SHORT).show()
+
+        val fragment = birinciFragment()
+        val bundle = Bundle()
+        bundle.putString("tarih", data)
+        fragment.arguments = bundle
+
         this.dismiss() //BottomSheetFragmentı kapatacak.
     }
 

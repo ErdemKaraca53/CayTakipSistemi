@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 
@@ -21,6 +22,8 @@ class birinciFragment : Fragment() {
 
         binding.YilBottomSheetButon.setOnClickListener {
             ItemListDialogFragment.newInstance(30).show(parentFragmentManager, "dialog")
+            val value = arguments?.getString("tarih")
+            Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
         }
 
         // Veri tabanından verileri al
