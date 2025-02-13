@@ -23,7 +23,7 @@ class birinciFragment : Fragment() {
         binding.YilBottomSheetButon.setOnClickListener {
             ItemListDialogFragment.newInstance(30).show(parentFragmentManager, "dialog")
             val value = arguments?.getString("tarih")
-            Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), value, Toast.LENGTH_SHORT).show()
         }
 
         // Veri tabanından verileri al

@@ -47,7 +47,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     }
 
     override fun onItemClick(data: String) {
-        Toast.makeText(requireContext(), data, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), data, Toast.LENGTH_SHORT).show()
 
         val fragment = birinciFragment()
         val bundle = Bundle()
