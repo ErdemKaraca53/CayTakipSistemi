@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 
-class BahceAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceAdapter.ViewHolder>() {
+class TarihAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<TarihAdapter.ViewHolder>() {
 
     private var lastSelectPosition: Int = -1
 

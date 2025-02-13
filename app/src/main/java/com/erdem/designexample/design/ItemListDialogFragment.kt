@@ -8,8 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.erdem.designexample.R
-import com.erdem.designexample.adapter.BahceAdapter
+import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogItemBinding
@@ -49,10 +48,10 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.list.layoutManager = LinearLayoutManager(context)
         val helper = DatabaseHelper(requireContext())
-        val bahceDataSet = DatabaseOperations().readGardenName(helper)
+        val bahceDataSet = DatabaseOperations().readYear(helper)
 
         bahceDataSet.add(0, "TÜMÜ")
-        val customAdapter = BahceAdapter(bahceDataSet)
+        val customAdapter = TarihAdapter(bahceDataSet)
 
 
         binding.list.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
