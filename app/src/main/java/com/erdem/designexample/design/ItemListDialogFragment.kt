@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -27,7 +28,7 @@ const val ARG_ITEM_COUNT = "item_count"
  *    ItemListDialogFragment.newInstance(30).show(supportFragmentManager, "dialog")
  * </pre>
  */
-class ItemListDialogFragment : BottomSheetDialogFragment() {
+class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.RecyclerViewEvent {
 
     private var _binding: FragmentItemListDialogListDialogBinding? = null
 
@@ -45,13 +46,18 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
 
     }
 
+    override fun onItemClick(data: String) {
+        Toast.makeText(requireContext(), data, Toast.LENGTH_SHORT).show()
+        this.dismiss() //BottomSheetFragmentı kapatacak.
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.list.layoutManager = LinearLayoutManager(context)
         val helper = DatabaseHelper(requireContext())
         val bahceDataSet = DatabaseOperations().readYear(helper)
 
         bahceDataSet.add(0, "TÜMÜ")
-        val customAdapter = TarihAdapter(bahceDataSet)
+        val customAdapter = TarihAdapter(bahceDataSet, this)
 
 
         binding.list.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -109,4 +115,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

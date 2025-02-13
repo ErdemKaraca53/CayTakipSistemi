@@ -8,19 +8,31 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 
-class TarihAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<TarihAdapter.ViewHolder>() {
+class TarihAdapter(val dataSet: ArrayList<String>,
+                    private val listener: RecyclerViewEvent) : RecyclerView.Adapter<TarihAdapter.ViewHolder>() {
 
     private var lastSelectPosition: Int = -1
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val textView: TextView
 
         init {
             textView = view.findViewById(R.id.recyclerViewTextView)
+            view.setOnClickListener(this)
         }
+
+        override fun onClick(v: View?) {
+            val position = bindingAdapterPosition
+
+            if(position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(dataSet[position])
+            }
+
+        }
+
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int, ): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.fragment_item_list_dialog_list_dialog_item, viewGroup, false)
 
@@ -53,5 +65,8 @@ class TarihAdapter(val dataSet: ArrayList<String>) : RecyclerView.Adapter<TarihA
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
+    interface RecyclerViewEvent {
+        fun onItemClick(data: String)
+    }
 
 }
