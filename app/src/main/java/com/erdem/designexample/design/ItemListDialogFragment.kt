@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.erdem.designexample.R
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -19,15 +19,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 //Fragment'ı başlatırken kaç adet öğe gösterileceği newInstance(itemCount: Int) metodu ile belirlenir.
 const val ARG_ITEM_COUNT = "item_count"
 
-/**
- *
- * A fragment that shows a list of items as a modal bottom sheet.
- *
- * You can show this modal bottom sheet from your activity like this:
- * <pre>
- *    ItemListDialogFragment.newInstance(30).show(supportFragmentManager, "dialog")
- * </pre>
- */
 class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.RecyclerViewEvent {
 
     private var _binding: FragmentItemListDialogListDialogBinding? = null
@@ -56,16 +47,42 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.list.layoutManager = LinearLayoutManager(context)
+
         val helper = DatabaseHelper(requireContext())
-        val bahceDataSet = DatabaseOperations().readYear(helper)
 
-        bahceDataSet.add(0, "TÜMÜ")
-        val customAdapter = TarihAdapter(bahceDataSet, this)
+        val TarihDataSet = DatabaseOperations().readYear(helper)
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        val TarihAdapter = TarihAdapter(TarihDataSet, this)
+        binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.TarihSecimRecyclerView.adapter = TarihAdapter
+
+        val BahceDataSet = DatabaseOperations().readGardenName(helper)
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
+        BahceDataSet.add("asdasd")
 
 
-        binding.list.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.list.adapter = customAdapter
+        val BahceAdapter = TarihAdapter(BahceDataSet, this)
+        binding.BahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.BahceSecimRecyclerView.adapter = BahceAdapter
 
         helper.close()
 
@@ -113,6 +130,14 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
                 }
             }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.let {
+            val bottomSheet = dialog?.findViewById<View>(R.id.list)
+            bottomSheet?.layoutParams?.height = 1200  // İstediğin yükseklik (px cinsinden)
+        }
     }
 
     override fun onDestroyView() {
