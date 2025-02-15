@@ -1,22 +1,18 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
-import com.erdem.designexample.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
-import com.erdem.designexample.databinding.FragmentItemListDialogListDialogItemBinding
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogBinding
+import com.erdem.designexample.databinding.FragmentItemListDialogListDialogItemBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 // TODO: Customize parameter argument names
 //Fragment'ı başlatırken kaç adet öğe gösterileceği newInstance(itemCount: Int) metodu ile belirlenir.
