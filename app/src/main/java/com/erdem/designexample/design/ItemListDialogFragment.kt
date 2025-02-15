@@ -68,9 +68,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         binding.BahceSecimRecyclerView.adapter = BahceAdapter
 
         helper.close()
-
-    //binding.list.adapter = arguments?.getInt(ARG_ITEM_COUNT)?.let { ItemAdapter(it) }
-
     }
 
     private inner class ViewHolder internal constructor(binding: FragmentItemListDialogListDialogItemBinding) :
