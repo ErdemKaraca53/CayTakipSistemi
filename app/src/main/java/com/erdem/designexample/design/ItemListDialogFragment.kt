@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
@@ -54,7 +55,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         //Bu satırlar olmadan önce sadece bir tanesi kaydırılabiliyordu
         binding.BahceSecimRecyclerView.isNestedScrollingEnabled = false
         binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
-
         val TarihDataSet = DatabaseOperations().readYear(helper)
 
         val TarihAdapter = TarihAdapter(TarihDataSet, this)
