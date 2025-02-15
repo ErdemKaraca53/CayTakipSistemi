@@ -7,18 +7,45 @@
     android:background="@color/white"
     tools:context=".design.birinciFragment">
 
+
     <Button
         android:id="@+id/YilBottomSheetButon"
-        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="100dp"
-        android:text="Yıl"
+        android:text="Tarih"
+        android:textColor="@color/black"
         app:icon="@drawable/dropdown_icon"
         app:iconGravity="end"
+        app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BahceBottomSheetButton"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintWidth_percent="0.4"
+        app:rippleColor="#E9FFBF"
+        app:strokeColor="#B3D9FF" />
+
+    <Button
+        android:id="@+id/BahceBottomSheetButton"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:text="Bahçe"
+        android:textColor="@color/black"
+        app:icon="@drawable/dropdown_icon"
+        app:iconGravity="end"
+        app:iconTint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/YilBottomSheetButon"
+        app:layout_constraintTop_toTopOf="@+id/YilBottomSheetButon"
+        app:layout_constraintWidth_percent="0.4"
+        app:rippleColor="#E9FFBF"
+        app:strokeColor="#B3D9FF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
