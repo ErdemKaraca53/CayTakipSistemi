@@ -1,6 +1,7 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import com.erdem.designexample.R
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -36,6 +39,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     // onDestroyView.
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,12 +51,10 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     }
 
     override fun onItemClick(data: String) {
-        //Toast.makeText(requireContext(), data, Toast.LENGTH_SHORT).show()
 
-        val fragment = birinciFragment()
-        val bundle = Bundle()
-        bundle.putString("tarih", data)
-        fragment.arguments = bundle
+        val result = Bundle()
+        result.putString("tarih", data)
+        parentFragmentManager.setFragmentResult("requestKey", result)
 
         this.dismiss() //BottomSheetFragmentı kapatacak.
     }

@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 
 class birinciFragment : Fragment() {
 
     private var _binding: FragmentBirinciBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -134,6 +136,17 @@ class birinciFragment : Fragment() {
     }
 
  */
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        parentFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) { _, bundle ->
+            val tarih = bundle.getString("tarih")
+            binding.YilBottomSheetButon.text = tarih ?: "Varsayılan Değer"
+        }
+
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
