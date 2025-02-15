@@ -56,42 +56,12 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
 
         val TarihDataSet = DatabaseOperations().readYear(helper)
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("123")
-        TarihDataSet.add("444")
+
         val TarihAdapter = TarihAdapter(TarihDataSet, this)
         binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.TarihSecimRecyclerView.adapter = TarihAdapter
 
         val BahceDataSet = DatabaseOperations().readGardenName(helper)
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-
 
         val BahceAdapter = BahceAdapter(BahceDataSet)
         binding.BahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
