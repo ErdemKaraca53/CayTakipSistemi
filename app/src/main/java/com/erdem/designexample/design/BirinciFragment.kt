@@ -24,6 +24,7 @@ class birinciFragment : Fragment() {
             ItemListDialogFragment.newInstance(30).show(parentFragmentManager, "dialog")
         }
 
+
         // Veri tabanından verileri al
         /*val helper = DatabaseHelper(requireContext())
         val bahceDataSet = DatabaseOperations().readGardenName(helper)
