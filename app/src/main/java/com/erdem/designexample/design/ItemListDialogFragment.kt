@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
+import com.erdem.designexample.adapter.BahceAdapter
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -49,6 +50,10 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val helper = DatabaseHelper(requireContext())
+        //Bu iki satır kod sayesinde bottomSheet içerisindeki recyclerviewler kaydırılabiliyor.
+        //Bu satırlar olmadan önce sadece bir tanesi kaydırılabiliyordu
+        binding.BahceSecimRecyclerView.isNestedScrollingEnabled = false
+        binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
 
         val TarihDataSet = DatabaseOperations().readYear(helper)
         TarihDataSet.add("123")
@@ -60,6 +65,14 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         TarihDataSet.add("123")
         TarihDataSet.add("123")
         TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("123")
+        TarihDataSet.add("444")
         val TarihAdapter = TarihAdapter(TarihDataSet, this)
         binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.TarihSecimRecyclerView.adapter = TarihAdapter
@@ -80,7 +93,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         BahceDataSet.add("asdasd")
 
 
-        val BahceAdapter = TarihAdapter(BahceDataSet, this)
+        val BahceAdapter = BahceAdapter(BahceDataSet)
         binding.BahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.BahceSecimRecyclerView.adapter = BahceAdapter
 
@@ -136,9 +149,10 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         super.onStart()
         dialog?.let {
             val bottomSheet = dialog?.findViewById<View>(R.id.list)
-            bottomSheet?.layoutParams?.height = 1200  // İstediğin yükseklik (px cinsinden)
+            bottomSheet?.layoutParams?.height = 800  // İstediğin yükseklik (px cinsinden)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

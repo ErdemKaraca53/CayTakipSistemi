@@ -6,10 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
-import com.erdem.designexample.adapter.TarihAdapter.RecyclerViewEvent
 
-class BahceAdapter(private val dataSet: ArrayList<String>,
-                   private val listener: RecyclerViewEvent) : RecyclerView.Adapter<BahceAdapter.ViewHolder>() {
+class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -20,7 +18,7 @@ class BahceAdapter(private val dataSet: ArrayList<String>,
 
         init {
             // Define click listener for the ViewHolder's View
-            textView = view.findViewById(R.id.textView)
+            textView = view.findViewById(R.id.recyclerViewTextView)
             view.setOnClickListener(this)
         }
 
@@ -28,7 +26,7 @@ class BahceAdapter(private val dataSet: ArrayList<String>,
             val position = bindingAdapterPosition
 
             if(position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(dataSet[position])
+                //listener.onItemClick(dataSet[position])
             }
 
         }
