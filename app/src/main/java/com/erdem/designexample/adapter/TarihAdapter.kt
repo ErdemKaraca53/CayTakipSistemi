@@ -1,13 +1,16 @@
 package com.erdem.designexample.adapter
 
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
+import kotlin.coroutines.coroutineContext
 
 class TarihAdapter(val dataSet: ArrayList<String>,
                     private val listener: RecyclerViewEvent) : RecyclerView.Adapter<TarihAdapter.ViewHolder>() {
@@ -16,9 +19,11 @@ class TarihAdapter(val dataSet: ArrayList<String>,
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val textView: TextView
+        val imageView : ImageView
 
         init {
             textView = view.findViewById(R.id.recyclerViewTextView)
+            imageView = view.findViewById(R.id.recyclerViewImageView)
             view.setOnClickListener(this)
         }
 
@@ -45,9 +50,11 @@ class TarihAdapter(val dataSet: ArrayList<String>,
         // Seçili elemanı kontrol edip arka plan rengini değiştir
         if (position == lastSelectPosition) {
             viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
+            viewHolder.imageView.setImageDrawable(ContextCompat.getDrawable(viewHolder.imageView.context, R.drawable.baseline_check_24))
             Log.e("bilgi", "Yeni seçim değişildi")
         } else {
             viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
+            viewHolder.imageView.setImageDrawable(null)
             Log.e("bilgi", "Eski seçim değişildi")
         }
 
