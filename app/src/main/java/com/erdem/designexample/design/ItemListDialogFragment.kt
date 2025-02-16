@@ -70,35 +70,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         helper.close()
     }
 
-    private inner class ViewHolder internal constructor(binding: FragmentItemListDialogListDialogItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        val text: TextView = binding.recyclerViewTextView
-    }
-
-    private inner class ItemAdapter(private val mItemCount: Int) :
-        RecyclerView.Adapter<ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-            return ViewHolder(
-                FragmentItemListDialogListDialogItemBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            )
-
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.text.text = position.toString()
-        }
-
-        override fun getItemCount(): Int {
-            return mItemCount
-        }
-    }
 
     companion object {
 
