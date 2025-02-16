@@ -9,29 +9,74 @@
     android:orientation="horizontal"
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
-    tools:context=".design.ItemListDialogFragment">
+    tools:context=".design.ItemListDialogFragment"
+    android:backgroundTint="@color/white">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/BahceSecimRecyclerView"
+        android:id="@+id/TarihSecimRecyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:scrollbars="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/TarihSecimRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/BahceSecimRecyclerView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/TarihSecimRecyclerView"
+        android:id="@+id/BahceSecimRecyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/BahceSecimRecyclerView"
-        app:layout_constraintTop_toTopOf="@+id/BahceSecimRecyclerView"
+        app:layout_constraintStart_toEndOf="@+id/TarihSecimRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/TarihSecimRecyclerView"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
+        android:id="@+id/BottomSheetTarihTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:padding="11dp"
+        android:text="Tarih Seçiniz"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/BahceSecimRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/BottomSheetTarihTextView" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/BottomSheetBahceTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:padding="11dp"
+        android:text="Bahçe Seçiniz"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/BahceSecimRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
 
