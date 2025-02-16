@@ -15,6 +15,7 @@ import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogBinding
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogItemBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 // TODO: Customize parameter argument names
@@ -44,7 +45,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         val result = Bundle()
         result.putString("tarih", data)
         parentFragmentManager.setFragmentResult("requestKey", result)
-
         this.dismiss() //BottomSheetFragmentı kapatacak.
     }
 
@@ -74,6 +74,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     companion object {
 
         // TODO: Customize parameters
+        const val TAG = "ModalBottomSheet"
         fun newInstance(itemCount: Int): ItemListDialogFragment =
             ItemListDialogFragment().apply {
                 arguments = Bundle().apply {
@@ -85,12 +86,14 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
 
     override fun onStart() {
         super.onStart()
+
         dialog?.let {
             val bottomSheet = dialog?.findViewById<View>(R.id.list)
-            bottomSheet?.layoutParams?.height = 800  // İstediğin yükseklik (px cinsinden)
+            bottomSheet?.layoutParams?.height = getWindowHeight()
         }
     }
 
+    private fun getWindowHeight() = resources.displayMetrics.heightPixels
 
     override fun onDestroyView() {
         super.onDestroyView()

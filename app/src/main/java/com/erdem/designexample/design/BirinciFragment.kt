@@ -21,7 +21,7 @@ class birinciFragment : Fragment() {
         val view = binding.root
 
         binding.YilBottomSheetButon.setOnClickListener {
-            ItemListDialogFragment.newInstance(30).show(parentFragmentManager, "dialog")
+            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
         }
 
 
