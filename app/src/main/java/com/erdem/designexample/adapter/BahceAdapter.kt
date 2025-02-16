@@ -3,22 +3,25 @@ package com.erdem.designexample.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 
 class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
+
+    private var lastSelection: Int = -1
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),  View.OnClickListener {
         val textView: TextView
+        val imageView: ImageView
 
         init {
             // Define click listener for the ViewHolder's View
             textView = view.findViewById(R.id.recyclerViewTextView)
+            imageView = view.findViewById(R.id.recyclerViewImageView)
             view.setOnClickListener(this)
         }
 
@@ -45,10 +48,24 @@ class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapte
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.textView.text = dataSet[position]
+
+        if(position == lastSelection) {
+            viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.textView.context,R.color.spinnerColor))
+            viewHolder.imageView.setImageDrawable(ContextCompat.getDrawable(viewHolder.imageView.context, R.drawable.baseline_check_24))
+        } else {
+            viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.textView.context,R.color.white))
+            viewHolder.imageView.setImageDrawable(null)
+        }
+
+        viewHolder.textView.setOnClickListener {
+            val previousSelection = lastSelection
+            lastSelection = viewHolder.bindingAdapterPosition
+            notifyItemChanged(previousSelection)
+            notifyItemChanged(lastSelection)
+        }
+
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -59,3 +76,5 @@ class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapte
     }
 
 }
+
+
