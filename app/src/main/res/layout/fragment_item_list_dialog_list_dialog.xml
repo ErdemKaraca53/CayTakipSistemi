@@ -9,8 +9,7 @@
     android:orientation="horizontal"
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
-    tools:context=".design.ItemListDialogFragment"
-    android:backgroundTint="@color/white">
+    tools:context=".design.ItemListDialogFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TarihSecimRecyclerView"
@@ -60,6 +59,7 @@
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

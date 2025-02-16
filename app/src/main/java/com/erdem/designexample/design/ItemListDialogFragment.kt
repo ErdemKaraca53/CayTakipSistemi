@@ -110,6 +110,8 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
     override fun onStart() {
         super.onStart()
 
+
+        //!! burada dialog nedir tam öğren !!
         dialog?.let {
             val bottomSheet = dialog?.findViewById<View>(R.id.list)
             bottomSheet?.layoutParams?.height = getWindowHeight()
