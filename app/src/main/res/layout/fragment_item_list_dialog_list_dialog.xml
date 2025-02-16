@@ -9,7 +9,8 @@
     android:orientation="horizontal"
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
-    tools:context=".design.ItemListDialogFragment">
+    tools:context=".design.ItemListDialogFragment"
+    android:background="@drawable/bottomsheet_shape">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/TarihSecimRecyclerView"
@@ -21,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.5"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/BahceSecimRecyclerView"

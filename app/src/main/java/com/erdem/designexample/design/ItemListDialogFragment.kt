@@ -1,5 +1,6 @@
 package com.erdem.designexample.design
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -109,7 +110,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
 
     override fun onStart() {
         super.onStart()
-
 
         //!! burada dialog nedir tam öğren !!
         dialog?.let {

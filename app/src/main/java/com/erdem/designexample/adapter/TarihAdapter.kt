@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 
@@ -43,22 +44,22 @@ class TarihAdapter(val dataSet: ArrayList<String>,
         viewHolder.textView.text = dataSet[position]
         // Seçili elemanı kontrol edip arka plan rengini değiştir
         if (position == lastSelectPosition) {
-            //viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
+            viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
             Log.e("bilgi", "Yeni seçim değişildi")
         } else {
-            //viewHolder.card.setCardBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
+            viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
             Log.e("bilgi", "Eski seçim değişildi")
         }
 
-        /*viewHolder.card.setOnClickListener {
+        viewHolder.textView.setOnClickListener {
             val previousPosition = lastSelectPosition
-            lastSelectPosition = viewHolder.adapterPosition
+            lastSelectPosition = viewHolder.bindingAdapterPosition
             Log.e("bilgi", dataSet[position])
             // Önceki seçili elemanı güncelle
             notifyItemChanged(previousPosition)
             // Yeni seçili elemanı güncelle
             notifyItemChanged(lastSelectPosition)
-        }*/
+        }
     }
 
 
