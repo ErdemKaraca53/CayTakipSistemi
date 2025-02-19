@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.erdem.designexample.R
+import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentBirinciBinding
@@ -32,10 +33,6 @@ class birinciFragment : Fragment() {
     ): View {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
-
-        binding.YilBottomSheetButon.setOnClickListener {
-            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
-        }
 
         // Veri tabanından verileri al
         /*val helper = DatabaseHelper(requireContext())
@@ -101,24 +98,24 @@ class birinciFragment : Fragment() {
 
 
     // Seçilen Kategoriye Göre Pasta Grafiğini Güncelleyen Fonksiyon
-    private fun loadPieChartData(type: String) {
+    private fun loadPieChartData(type: String, pieData: ArrayList<PieChartData>) {
         val entries = ArrayList<PieEntry>()
 
         when (type) {
             "Devlet" -> {
-                entries.add(PieEntry(500f, "1. Sürgün"))
-                entries.add(PieEntry(400f, "2. Sürgün"))
-                entries.add(PieEntry(300f, "3. Sürgün"))
+                entries.add(PieEntry(pieData.get(0).ToplamKg, "1. Sürgün"))
+                entries.add(PieEntry(pieData.get(1).ToplamKg, "2. Sürgün"))
+                entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
             }
             "Özel" -> {
-                entries.add(PieEntry(300f, "1. Sürgün"))
-                entries.add(PieEntry(500f, "2. Sürgün"))
-                entries.add(PieEntry(700f, "3. Sürgün"))
+                entries.add(PieEntry(pieData.get(0).ToplamKg, "1. Sürgün"))
+                entries.add(PieEntry(pieData.get(1).ToplamKg, "2. Sürgün"))
+                entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
             }
             "Tümü" -> {
-                entries.add(PieEntry(856f, "1. Sürgün"))
-                entries.add(PieEntry(739f, "2. Sürgün"))
-                entries.add(PieEntry(793f, "3. Sürgün"))
+                entries.add(PieEntry(pieData.get(0).ToplamKg, "1. Sürgün"))
+                entries.add(PieEntry(pieData.get(1).ToplamKg, "2. Sürgün"))
+                entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
             }
         }
 
@@ -159,8 +156,18 @@ class birinciFragment : Fragment() {
             val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!)
 
             Log.e("pieChart", pieChartData.toString())
-
         }
+
+        binding.YilBottomSheetButon.setOnClickListener {
+            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
+            // Pasta Grafiği Ayarları
+            setupPieChart()
+
+            // Varsayılan grafik verisini yükle
+            //loadPieChartData("Tümü", pieChartData)
+        }
+
+
 
 
 
