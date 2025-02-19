@@ -162,7 +162,6 @@ class birinciFragment : Fragment() {
             ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
             // Pasta Grafiği Ayarları
             setupPieChart()
-
             // Varsayılan grafik verisini yükle
             //loadPieChartData("Tümü", pieChartData)
         }
