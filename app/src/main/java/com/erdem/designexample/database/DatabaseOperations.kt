@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import com.erdem.designexample.dataClass.BahceRapor
+import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.dataClass.SurumRapor
 import com.erdem.designexample.dataClass.YılRapor
 
@@ -175,6 +176,30 @@ class DatabaseOperations {
         return BahceRaporList
     }
 
+    fun getPieChartData(databaseHelper: DatabaseHelper, year: Int, gardenName: String) : ArrayList<PieChartData>{
+
+        val db = databaseHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
+                "WHERE year = ? AND gardenName = ? GROUP BY season ", arrayOf(year.toString(), gardenName)
+        )
+
+        val PieChartDataList = ArrayList<PieChartData>()
+
+        while (cursor.moveToNext()) {
+
+            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
+            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
+            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
+
+            val PieChartData = PieChartData(season, total_weight, total_revenue)
+
+            PieChartDataList.add(PieChartData)
+        }
+
+        cursor.close()
+        return PieChartDataList
+    }
 
     //Eğer girilen bahçe ismi daha önce kullanılmış ise id değeri döner
     //Eğer bahçe ismi daha önce kullanılmamış ise -1 değerini döner

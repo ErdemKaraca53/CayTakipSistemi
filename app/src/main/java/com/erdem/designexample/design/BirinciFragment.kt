@@ -1,12 +1,24 @@
 package com.erdem.designexample.design
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.erdem.designexample.R
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentBirinciBinding
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 
 class birinciFragment : Fragment() {
 
@@ -56,7 +68,7 @@ class birinciFragment : Fragment() {
         return view
     }
 
-/*
+
     // Pasta Grafiği Temel Ayarlarını Yapan Fonksiyon
     private fun setupPieChart() {
         binding.pieChart.apply {
@@ -134,19 +146,23 @@ class birinciFragment : Fragment() {
         binding.pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
 
- */
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _ , bundle ->
             val tarih = bundle.getString("tarih")
             val bahce = bundle.getString("bahce")
 
-            Log.d("MyFragment", "Seçilen Tarih: $tarih")
-            Log.d("MyFragment", "Seçilen Bahçe: $bahce")
-            
+            val helper = DatabaseHelper(requireContext())
+            val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!)
+
+            Log.e("pieChart", pieChartData.toString())
+
         }
+
+
 
 
     }
