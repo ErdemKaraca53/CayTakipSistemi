@@ -3,7 +3,6 @@ package com.erdem.designexample.database
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.erdem.designexample.dataClass.BahceRapor
 import com.erdem.designexample.dataClass.SurumRapor
 import com.erdem.designexample.dataClass.YılRapor
