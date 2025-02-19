@@ -34,6 +34,15 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.YilBottomSheetButon.setOnClickListener {
+            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
+            // Pasta Grafiği Ayarları
+            setupPieChart()
+            // Varsayılan grafik verisini yükle
+            //loadPieChartData("Tümü", pieChartData)
+        }
+
+
         // Veri tabanından verileri al
         /*val helper = DatabaseHelper(requireContext())
         val bahceDataSet = DatabaseOperations().readGardenName(helper)
@@ -157,19 +166,6 @@ class birinciFragment : Fragment() {
 
             Log.e("pieChart", pieChartData.toString())
         }
-
-        binding.YilBottomSheetButon.setOnClickListener {
-            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
-            // Pasta Grafiği Ayarları
-            setupPieChart()
-            // Varsayılan grafik verisini yükle
-            //loadPieChartData("Tümü", pieChartData)
-        }
-
-
-
-
-
 
     }
 
