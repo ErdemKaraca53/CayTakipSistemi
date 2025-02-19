@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
-import com.erdem.designexample.adapter.BahceAdapter.RecyclerViewEvent
 import com.erdem.designexample.design.ItemType
 
 

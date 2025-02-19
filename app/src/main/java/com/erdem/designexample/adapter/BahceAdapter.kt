@@ -62,11 +62,6 @@ class BahceAdapter(private val dataSet: ArrayList<String>,
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    interface RecyclerViewEvent {
-        fun onItemClick(data: String, type: ItemType)
-    }
-
 }
 
 

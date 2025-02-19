@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.R
 import com.erdem.designexample.adapter.BahceAdapter
-import com.erdem.designexample.adapter.BahceAdapter.RecyclerViewEvent
+import com.erdem.designexample.adapter.RecyclerViewEvent
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -24,7 +24,7 @@ enum class ItemType {
 }
 
 
-class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent {
+class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
 
     private var _binding: FragmentItemListDialogListDialogBinding? = null
 
