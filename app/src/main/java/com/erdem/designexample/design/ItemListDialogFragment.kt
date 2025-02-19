@@ -42,23 +42,21 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
 
     override fun onItemClick(data: String, type: ItemType) {
         when (type) {
-            ItemType.TARIH -> {
-                tarih = data
-                if(!bahce.isEmpty()) {
-                    Toast.makeText(requireContext(), "$tarih ve $bahce", Toast.LENGTH_SHORT).show()
-                    this.dismiss()
-                }
+            ItemType.TARIH -> tarih = data
+            ItemType.BAHCE -> bahce = data
+        }
 
+        // Her iki değişken de doluysa işlemi yap
+        if (tarih.isNotEmpty() && bahce.isNotEmpty()) {
+            val result = Bundle().apply {
+                putString("tarih", tarih)
+                putString("bahce", bahce)
             }
-            ItemType.BAHCE -> {
-                bahce = data
-                if(!tarih.isEmpty()) {
-                    Toast.makeText(requireContext(), "$tarih ve  $bahce", Toast.LENGTH_SHORT).show()
-                    this.dismiss()
-                }
-            }
+            parentFragmentManager.setFragmentResult("requestKey", result)
+            this.dismiss()
         }
     }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,6 +1,7 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,6 @@ class birinciFragment : Fragment() {
         binding.YilBottomSheetButon.setOnClickListener {
             ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
         }
-
 
         // Veri tabanından verileri al
         /*val helper = DatabaseHelper(requireContext())
@@ -139,9 +139,13 @@ class birinciFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) { _, bundle ->
+        parentFragmentManager.setFragmentResultListener("requestKey", this) { _ , bundle ->
             val tarih = bundle.getString("tarih")
-            binding.YilBottomSheetButon.text = tarih ?: "Varsayılan Değer"
+            val bahce = bundle.getString("bahce")
+
+            Log.d("MyFragment", "Seçilen Tarih: $tarih")
+            Log.d("MyFragment", "Seçilen Bahçe: $bahce")
+            
         }
 
 
