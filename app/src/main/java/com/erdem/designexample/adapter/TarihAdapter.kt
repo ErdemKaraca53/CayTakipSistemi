@@ -1,7 +1,5 @@
 package com.erdem.designexample.adapter
 
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,32 +8,23 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
-import kotlin.coroutines.coroutineContext
+import com.erdem.designexample.adapter.BahceAdapter.RecyclerViewEvent
+import com.erdem.designexample.design.ItemType
+
 
 class TarihAdapter(val dataSet: ArrayList<String>,
                     private val listener: RecyclerViewEvent) : RecyclerView.Adapter<TarihAdapter.ViewHolder>() {
 
     private var lastSelectPosition: Int = -1
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
         val imageView : ImageView
 
         init {
             textView = view.findViewById(R.id.recyclerViewTextView)
             imageView = view.findViewById(R.id.recyclerViewImageView)
-            view.setOnClickListener(this)
         }
-
-        override fun onClick(v: View?) {
-            val position = bindingAdapterPosition
-
-            if(position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(dataSet[position])
-            }
-
-        }
-
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int, ): ViewHolder {
@@ -51,30 +40,24 @@ class TarihAdapter(val dataSet: ArrayList<String>,
         if (position == lastSelectPosition) {
             viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.spinnerColor))
             viewHolder.imageView.setImageDrawable(ContextCompat.getDrawable(viewHolder.imageView.context, R.drawable.baseline_check_24))
-            Log.e("bilgi", "Yeni seçim değişildi")
         } else {
             viewHolder.textView.setBackgroundColor(ContextCompat.getColor(viewHolder.itemView.context, R.color.white))
             viewHolder.imageView.setImageDrawable(null)
-            Log.e("bilgi", "Eski seçim değişildi")
         }
 
         viewHolder.textView.setOnClickListener {
             val previousPosition = lastSelectPosition
             lastSelectPosition = viewHolder.bindingAdapterPosition
-            Log.e("bilgi", dataSet[position])
             // Önceki seçili elemanı güncelle
             notifyItemChanged(previousPosition)
             // Yeni seçili elemanı güncelle
             notifyItemChanged(lastSelectPosition)
+            listener.onItemClick(dataSet[position], ItemType.TARIH)
         }
     }
 
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    interface RecyclerViewEvent {
-        fun onItemClick(data: String)
-    }
 
 }

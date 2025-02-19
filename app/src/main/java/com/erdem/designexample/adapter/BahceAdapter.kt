@@ -8,13 +8,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
+import com.erdem.designexample.design.ItemType
 
-class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapter<BahceAdapter.ViewHolder>() {
+class BahceAdapter(private val dataSet: ArrayList<String>,
+                   private val listener: RecyclerViewEvent) : RecyclerView.Adapter<BahceAdapter.ViewHolder>() {
 
 
     private var lastSelection: Int = -1
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),  View.OnClickListener {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val textView: TextView
         val imageView: ImageView
 
@@ -22,19 +24,8 @@ class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapte
             // Define click listener for the ViewHolder's View
             textView = view.findViewById(R.id.recyclerViewTextView)
             imageView = view.findViewById(R.id.recyclerViewImageView)
-            view.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = bindingAdapterPosition
-
-            if(position != RecyclerView.NO_POSITION) {
-                //listener.onItemClick(dataSet[position])
-            }
 
         }
-
-
     }
 
     // Create new views (invoked by the layout manager)
@@ -63,6 +54,7 @@ class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapte
             lastSelection = viewHolder.bindingAdapterPosition
             notifyItemChanged(previousSelection)
             notifyItemChanged(lastSelection)
+            listener.onItemClick(dataSet[position], ItemType.BAHCE)
         }
 
 
@@ -72,7 +64,7 @@ class BahceAdapter(private val dataSet: ArrayList<String>) : RecyclerView.Adapte
     override fun getItemCount() = dataSet.size
 
     interface RecyclerViewEvent {
-        fun onItemClick(data: String)
+        fun onItemClick(data: String, type: ItemType)
     }
 
 }

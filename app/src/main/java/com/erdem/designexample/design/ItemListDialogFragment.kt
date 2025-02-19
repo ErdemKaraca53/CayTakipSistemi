@@ -2,15 +2,18 @@ package com.erdem.designexample.design
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.adapter.BahceAdapter
+import com.erdem.designexample.adapter.BahceAdapter.RecyclerViewEvent
 import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -23,31 +26,47 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 //Fragment'ı başlatırken kaç adet öğe gösterileceği newInstance(itemCount: Int) metodu ile belirlenir.
 const val ARG_ITEM_COUNT = "item_count"
 
-class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.RecyclerViewEvent {
+enum class ItemType {
+    BAHCE, TARIH
+}
+
+
+class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent {
 
     private var _binding: FragmentItemListDialogListDialogBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
+    var tarih : String = ""
+    var bahce : String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentItemListDialogListDialogBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
-    override fun onItemClick(data: String) {
-        val result = Bundle()
-        result.putString("tarih", data)
-        parentFragmentManager.setFragmentResult("requestKey", result)
-        this.dismiss() //BottomSheetFragmentı kapatacak.
+    override fun onItemClick(data: String, type: ItemType) {
+        when (type) {
+            ItemType.TARIH -> {
+                tarih = data
+                if(!bahce.isEmpty()) {
+                    Toast.makeText(requireContext(), "$tarih ve $bahce", Toast.LENGTH_SHORT).show()
+                    this.dismiss()
+                }
+
+            }
+            ItemType.BAHCE -> {
+                bahce = data
+                if(!tarih.isEmpty()) {
+                    Toast.makeText(requireContext(), "$tarih ve  $bahce", Toast.LENGTH_SHORT).show()
+                    this.dismiss()
+                }
+            }
+        }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -76,7 +95,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         BahceDataSet.add("asdasd")
         BahceDataSet.add("asdasd")
         BahceDataSet.add("asdasd")
-        val BahceAdapter = BahceAdapter(BahceDataSet)
+        val BahceAdapter = BahceAdapter(BahceDataSet, this)
         binding.BahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.BahceSecimRecyclerView.adapter = BahceAdapter
 
@@ -113,6 +132,5 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), TarihAdapter.Recycle
         super.onDestroyView()
         _binding = null
     }
-
 
 }
