@@ -36,56 +36,53 @@
         app:rippleColor="#E9FFBF"
         app:strokeColor="#B3D9FF" />
 
-    <Button
-        android:id="@+id/DevletFiltreButton"
-        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-        app:layout_constraintWidth_percent="0.3"
-        android:layout_width="0dp"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/buttonGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="Devlet"
-        app:icon="@drawable/baseline_check_24"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintEnd_toStartOf="@+id/TumuFiltreButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/OzelFiltreButton"
-        app:rippleColor="#E9FFBF"
-        app:strokeColor="#B3D9FF"
-        app:iconTint="@color/black"
-        android:textColor="@color/black"/>
-
-    <Button
-        android:id="@+id/OzelFiltreButton"
-        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-        android:layout_width="0dp"
-        app:layout_constraintWidth_percent="0.3"
-        android:layout_height="wrap_content"
-        android:text="Özel"
-        app:layout_constraintBottom_toBottomOf="@+id/DevletFiltreButton"
-        app:layout_constraintEnd_toStartOf="@+id/DevletFiltreButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/DevletFiltreButton"
-        app:rippleColor="#E9FFBF"
-        app:strokeColor="#B3D9FF"
-        app:iconTint="@color/black"
-        android:textColor="@color/black"/>
-
-    <Button
-        android:id="@+id/TumuFiltreButton"
-        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-        android:layout_width="0dp"
-        app:layout_constraintWidth_percent="0.3"
-        android:layout_height="wrap_content"
-        android:text="Tümü"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/DevletFiltreButton"
-        app:layout_constraintTop_toTopOf="@+id/DevletFiltreButton"
-        app:rippleColor="#E9FFBF"
-        app:strokeColor="#B3D9FF"
-        app:iconTint="@color/black"
-        android:textColor="@color/black"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/DevletFiltreButton"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Devlet"
+            android:textColor="@color/black"
+            app:icon="@drawable/baseline_check_24"
+            app:iconTint="@color/black"
+            app:rippleColor="#E9FFBF"
+            app:strokeColor="#B3D9FF" />
+
+        <Button
+            android:id="@+id/OzelFiltreButton"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Özel"
+            android:textColor="@color/black"
+            app:iconTint="@color/black"
+
+            app:layout_constraintWidth_percent="0.3"
+            app:rippleColor="#E9FFBF"
+            app:strokeColor="#B3D9FF" />
+
+        <Button
+            android:id="@+id/TumuFiltreButton"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tümü"
+            android:textColor="@color/black"
+            app:iconTint="@color/black"
+            app:rippleColor="#E9FFBF"
+            app:strokeColor="#B3D9FF" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
