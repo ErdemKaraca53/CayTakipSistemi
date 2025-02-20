@@ -16,8 +16,6 @@
     <color name="spinnerColor">#E1FFBB</color>
     <color name="radio_gruop">#E1FFBB</color>
     <color name="radio_gruop_stroke">#009990</color>
-
-
     <color name="circular_green">#0F9D58</color>
     <color name="purple_500">#0F9D58</color>
     <color name="purple_700">#0F9D58</color>
@@ -27,9 +25,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#aaa</color>
     <color name="button_color">#1E573B</color>
-
     <color name="yellow">#FFEB3B</color>
     <color name="red">#F44336</color>
-
+    <color name="toggleButton">#E9FFBF</color>
 
 </resources>
