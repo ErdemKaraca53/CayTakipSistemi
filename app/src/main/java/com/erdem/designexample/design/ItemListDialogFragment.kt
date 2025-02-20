@@ -67,25 +67,12 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
         binding.BahceSecimRecyclerView.isNestedScrollingEnabled = false
         binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
         val TarihDataSet = DatabaseOperations().readYear(helper)
-        TarihDataSet.add("222")
-        TarihDataSet.add("222")
 
         val TarihAdapter = TarihAdapter(TarihDataSet, this)
         binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.TarihSecimRecyclerView.adapter = TarihAdapter
         val BahceDataSet = DatabaseOperations().readGardenName(helper)
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
-        BahceDataSet.add("asdasd")
+        
         val BahceAdapter = BahceAdapter(BahceDataSet, this)
         binding.BahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.BahceSecimRecyclerView.adapter = BahceAdapter

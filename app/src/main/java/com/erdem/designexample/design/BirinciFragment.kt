@@ -34,15 +34,6 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.YilBottomSheetButon.setOnClickListener {
-            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
-            // Pasta Grafiği Ayarları
-            setupPieChart()
-            // Varsayılan grafik verisini yükle
-            //loadPieChartData("Tümü", pieChartData)
-        }
-
-
         // Veri tabanından verileri al
         /*val helper = DatabaseHelper(requireContext())
         val bahceDataSet = DatabaseOperations().readGardenName(helper)
@@ -122,9 +113,10 @@ class birinciFragment : Fragment() {
                 entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
             }
             "Tümü" -> {
-                entries.add(PieEntry(pieData.get(0).ToplamKg, "1. Sürgün"))
-                entries.add(PieEntry(pieData.get(1).ToplamKg, "2. Sürgün"))
-                entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
+
+                for (data in pieData) {
+                    entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
+                }
             }
         }
 
@@ -135,7 +127,8 @@ class birinciFragment : Fragment() {
             colors = arrayListOf(
                 ContextCompat.getColor(requireContext(), R.color.circular_green),
                 ContextCompat.getColor(requireContext(), R.color.yellow),
-                ContextCompat.getColor(requireContext(), R.color.red)
+                ContextCompat.getColor(requireContext(), R.color.red),
+                ContextCompat.getColor(requireContext(), R.color.radio_gruop)
             )
         }
 
@@ -156,6 +149,13 @@ class birinciFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.YilBottomSheetButon.setOnClickListener {
+            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
+            // Pasta Grafiği Ayarları
+
+            // Varsayılan grafik verisini yükle
+            //loadPieChartData("Tümü", pieChartData)
+        }
 
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _ , bundle ->
             val tarih = bundle.getString("tarih")
@@ -163,7 +163,8 @@ class birinciFragment : Fragment() {
 
             val helper = DatabaseHelper(requireContext())
             val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!)
-
+            setupPieChart()
+            loadPieChartData("Tümü", pieChartData)
             Log.e("pieChart", pieChartData.toString())
         }
 

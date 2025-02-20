@@ -10,8 +10,8 @@
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="364dp"
+        android:layout_height="309dp"
         android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toTopOf="@+id/YilBottomSheetButon"
         app:layout_constraintEnd_toEndOf="parent"
