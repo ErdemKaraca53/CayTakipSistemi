@@ -42,40 +42,7 @@ class SatisYeriFiltreleme : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.findViewById<RecyclerView>(R.id.List)?.layoutManager =
-            LinearLayoutManager(context)
-        activity?.findViewById<RecyclerView>(R.id.TarihBahceList)?.adapter =
-            arguments?.getInt(ARG_ITEM_COUNT2)?.let { ItemAdapter(it) }
-    }
 
-    private inner class ViewHolder internal constructor(binding: FragmentSatisYeriFiltrelemeListDialogItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        internal val text: TextView = binding.text
-    }
-
-    private inner class ItemAdapter internal constructor(private val mItemCount: Int) :
-        RecyclerView.Adapter<ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-            return ViewHolder(
-                FragmentSatisYeriFiltrelemeListDialogItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.text.text = position.toString()
-        }
-
-        override fun getItemCount(): Int {
-            return mItemCount
-        }
     }
 
     companion object {
