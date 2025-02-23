@@ -177,9 +177,10 @@ class DatabaseOperations {
         return BahceRaporList
     }
 
-    fun getPieChartDataAll(databaseHelper: DatabaseHelper, year: Int, gardenName: String) : ArrayList<PieChartData>{
+    fun getPieChartDataAllWithGardenName(databaseHelper: DatabaseHelper, year: Int, gardenName: String) : ArrayList<PieChartData>{
 
         val db = databaseHelper.readableDatabase
+
         val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
                 " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
                 "WHERE year = ? AND gardenName = ? GROUP BY season ", arrayOf(year.toString(), gardenName)

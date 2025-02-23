@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import java.util.Calendar
 
 class birinciFragment : Fragment() {
 
@@ -34,33 +35,22 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Veri tabanından verileri al
-        /*val helper = DatabaseHelper(requireContext())
-        val bahceDataSet = DatabaseOperations().readGardenName(helper)
+        //!!!!
+        //İLGİLİ VERİ TABANI KODU YAZILDIKTAN SONRA DÜZENLENECEK
+        binding.RaporEkranTextView.text = "RAPOR EKRANI"
+        //!!!!
 
-        bahceDataSet.add(0, "TÜMÜ")
-        val customAdapter = BahceAdapter(bahceDataSet)
-
-
-        binding.bahceSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.bahceSecimRecyclerView.adapter = customAdapter
-
-        helper.close()
-
-        // Pasta Grafiği Ayarları
+        /*val year = Calendar.getInstance().get(Calendar.YEAR)
+        val textString = "$year Yılı Genel Rapor"
+        binding.RaporEkranTextView.text = textString
         setupPieChart()
 
-        // Varsayılan grafik verisini yükle
-        loadPieChartData("Tümü")
+        val helper = DatabaseHelper(requireContext())
 
-        // RadioButton Seçimine Göre Grafik Verisini Güncelle
-        binding.radioGroup2.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.DevletRadio -> loadPieChartData("Devlet")
-                R.id.ÖzelRadio -> loadPieChartData("Özel")
-                R.id.ToplamRadio -> loadPieChartData("Tümü")
-            }
-        }*/
+        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(helper, year.toInt(), bahce!!)
+        setupPieChart()
+        loadPieChartData("Tümü", pieChartData)
+        Log.e("pieChart", pieChartData.toString())*/
 
         return view
     }
@@ -162,6 +152,7 @@ class birinciFragment : Fragment() {
             val bahce = bundle.getString("bahce")
 
             val helper = DatabaseHelper(requireContext())
+            var textViewString: String
 
             parentFragmentManager.setFragmentResultListener("Satis", this) { _, bundle ->
 
@@ -170,22 +161,28 @@ class birinciFragment : Fragment() {
 
                 when (satisYeri) {
                     "Tümü" -> {
-                        val pieChartData = DatabaseOperations().getPieChartDataAll(helper, tarih!!.toInt(), bahce!!)
+                        textViewString = "$tarih yılına ait genel satış raporu"
+                        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(helper, tarih!!.toInt(), bahce!!)
                         setupPieChart()
                         loadPieChartData(satisYeri, pieChartData)
                         Log.e("pieChart", pieChartData.toString())
+                        binding.RaporEkranTextView.text = textViewString
                     }
                     "Özel" -> {
+                        textViewString = "$tarih yılına ait özel firmalar satış raporu"
                         val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!, satisYeri)
                         setupPieChart()
                         loadPieChartData(satisYeri, pieChartData)
                         Log.e("pieChart", pieChartData.toString())
+                        binding.RaporEkranTextView.text = textViewString
                     }
                     "Devlet" -> {
+                        textViewString = "$tarih yılına ait DEVLET satış raporu"
                         val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!, "DEVLET")
                         setupPieChart()
                         loadPieChartData(satisYeri, pieChartData)
                         Log.e("pieChart", pieChartData.toString())
+                        binding.RaporEkranTextView.text = textViewString
                     }
                 }
 
