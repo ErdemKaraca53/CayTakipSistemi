@@ -43,6 +43,14 @@ class SatisYeriFiltreleme : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        val bundle = Bundle()
+        bundle.putString("SatisYeri", "Tümü")
+        parentFragmentManager.setFragmentResult("Satis", bundle)
+
+        binding.SatisYeriGroup.setOnCheckedChangeListener { group, checkedId ->
+
+        }
+
     }
 
     companion object {

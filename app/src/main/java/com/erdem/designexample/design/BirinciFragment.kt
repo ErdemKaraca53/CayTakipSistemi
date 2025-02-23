@@ -164,9 +164,16 @@ class birinciFragment : Fragment() {
 
             val helper = DatabaseHelper(requireContext())
             val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!)
-            setupPieChart()
-            loadPieChartData("Tümü", pieChartData)
-            Log.e("pieChart", pieChartData.toString())
+
+            parentFragmentManager.setFragmentResultListener("Satis", this) { _, bundle ->
+
+                val x = bundle.getString("SatisYeri")
+                Log.e("pieChart", "Veri geldi $x")
+                setupPieChart()
+                loadPieChartData(x!!, pieChartData)
+                Log.e("pieChart", pieChartData.toString())
+
+            }
         }
 
         var sonSecim = 0
