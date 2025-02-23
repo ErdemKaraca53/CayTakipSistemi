@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.erdem.designexample.R
@@ -163,14 +162,14 @@ class birinciFragment : Fragment() {
             val bahce = bundle.getString("bahce")
 
             val helper = DatabaseHelper(requireContext())
-            val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!)
+            val pieChartData = DatabaseOperations().getPieChartDataAll(helper, tarih!!.toInt(), bahce!!)
 
             parentFragmentManager.setFragmentResultListener("Satis", this) { _, bundle ->
 
-                val x = bundle.getString("SatisYeri")
-                Log.e("pieChart", "Veri geldi $x")
+                val satisYeri = bundle.getString("SatisYeri")
+                Log.e("pieChart", "Veri geldi $satisYeri")
                 setupPieChart()
-                loadPieChartData(x!!, pieChartData)
+                loadPieChartData(satisYeri!!, pieChartData)
                 Log.e("pieChart", pieChartData.toString())
 
             }

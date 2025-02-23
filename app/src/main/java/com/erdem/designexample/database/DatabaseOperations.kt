@@ -176,12 +176,37 @@ class DatabaseOperations {
         return BahceRaporList
     }
 
-    fun getPieChartData(databaseHelper: DatabaseHelper, year: Int, gardenName: String) : ArrayList<PieChartData>{
+    fun getPieChartDataAll(databaseHelper: DatabaseHelper, year: Int, gardenName: String) : ArrayList<PieChartData>{
 
         val db = databaseHelper.readableDatabase
         val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
                 " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
                 "WHERE year = ? AND gardenName = ? GROUP BY season ", arrayOf(year.toString(), gardenName)
+        )
+
+        val PieChartDataList = ArrayList<PieChartData>()
+
+        while (cursor.moveToNext()) {
+
+            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
+            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
+            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
+
+            val PieChartData = PieChartData(season, total_weight, total_revenue)
+
+            PieChartDataList.add(PieChartData)
+        }
+
+        cursor.close()
+        return PieChartDataList
+    }
+
+    fun getPieChartData(databaseHelper: DatabaseHelper, year: Int, gardenName: String, satisYeri: String) : ArrayList<PieChartData>{
+
+        val db = databaseHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
+                "WHERE year = ? AND gardenName = ? AND company = ? GROUP BY season ", arrayOf(year.toString(), gardenName, satisYeri)
         )
 
         val PieChartDataList = ArrayList<PieChartData>()

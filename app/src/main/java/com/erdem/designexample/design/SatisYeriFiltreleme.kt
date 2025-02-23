@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.erdem.designexample.R
-import com.erdem.designexample.databinding.FragmentSatisYeriFiltrelemeListDialogItemBinding
 import com.erdem.designexample.databinding.FragmentSatisYeriFiltrelemeListDialogBinding
 
 const val ARG_ITEM_COUNT2 = "item_count"
@@ -44,13 +43,29 @@ class SatisYeriFiltreleme : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val bundle = Bundle()
-        bundle.putString("SatisYeri", "Tümü")
-        parentFragmentManager.setFragmentResult("Satis", bundle)
+
 
         binding.SatisYeriGroup.setOnCheckedChangeListener { group, checkedId ->
 
-        }
+            when(checkedId) {
+                binding.DevletRadio.id -> {
+                    bundle.putString("SatisYeri", "Devlet")
+                    parentFragmentManager.setFragmentResult("Satis", bundle)
+                    this.dismiss()
+                }
+                binding.OzelRadio.id -> {
+                    bundle.putString("SatisYeri", "Özel")
+                    parentFragmentManager.setFragmentResult("Satis", bundle)
+                    this.dismiss()
+                }
+                binding.TumuRadio.id -> {
+                    bundle.putString("SatisYeri", "Tümü")
+                    parentFragmentManager.setFragmentResult("Satis", bundle)
+                    this.dismiss()
+                }
+            }
 
+        }
     }
 
     companion object {
