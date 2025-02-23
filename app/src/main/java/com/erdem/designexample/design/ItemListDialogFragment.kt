@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.R
 import com.erdem.designexample.adapter.BahceAdapter
@@ -54,6 +53,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
             }
             parentFragmentManager.setFragmentResult("requestKey", result)
             this.dismiss()
+            SatisYeriFiltreleme.newInstance(getWindowHeight()).show(parentFragmentManager, "dialog")
         }
     }
 
@@ -88,7 +88,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
         fun newInstance(itemCount: Int): ItemListDialogFragment =
             ItemListDialogFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_ITEM_COUNT, itemCount)
+                    putInt(ARG_ITEM_COUNT2, itemCount)
                 }
             }
 
@@ -99,7 +99,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
 
         //!! burada dialog nedir tam öğren !!
         dialog?.let {
-            val bottomSheet = dialog?.findViewById<View>(R.id.list)
+            val bottomSheet = dialog?.findViewById<View>(R.id.TarihBahceList)
             bottomSheet?.layoutParams?.height = getWindowHeight()
         }
     }

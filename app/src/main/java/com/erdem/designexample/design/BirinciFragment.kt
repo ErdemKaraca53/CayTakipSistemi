@@ -171,7 +171,7 @@ class birinciFragment : Fragment() {
 
         var sonSecim = 0
 
-        binding.buttonGroup.addOnButtonCheckedListener { buttonGroup, checkedId, isChecked ->
+        /*binding.buttonGroup.addOnButtonCheckedListener { buttonGroup, checkedId, isChecked ->
 
             if (isChecked) {
                 when (checkedId) {
@@ -195,7 +195,7 @@ class birinciFragment : Fragment() {
                 }
             }
 
-        }
+        }*/
 
     }
 
@@ -203,14 +203,14 @@ class birinciFragment : Fragment() {
         val selectedColor = ContextCompat.getColor(requireContext(), R.color.toggleButton)
         val defaultColor = ContextCompat.getColor(requireContext(), R.color.white)
         val icon = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_check_24)
-        listOf(
+        /*listOf(
             binding.OzelFiltreButton to R.id.OzelFiltreButton,
             binding.DevletFiltreButton to R.id.DevletFiltreButton,
             binding.TumuFiltreButton to R.id.TumuFiltreButton
         ).forEach { (button, id) ->
             button.setBackgroundColor(if (id == selectedId) selectedColor else defaultColor)
             button.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null)
-        }
+        }*/
     }
 
     override fun onDestroyView() {
