@@ -151,7 +151,7 @@ class OzelFragment : Fragment() {
                 binding.TarlaEditText,
                 binding.KgEditText,
                 binding.SurumEditText,
-                binding.SatisYeriEditText,
+                binding.OzelSatisYeriEditText,
                 binding.FiyatEdit,
                 binding.VadeTarihiEdit
             )
@@ -172,7 +172,7 @@ class OzelFragment : Fragment() {
                 if (editText.text.toString().trim().isEmpty()) {
                     // Eğer alan boşsa, text rengini kırmızı yap ve allFieldsFilled'ı false olarak ayarla
                     editText.setHintTextColor(Color.RED)
-                    if(editText.id != binding.SatisYeriEditText.id) {
+                    if(editText.id != binding.OzelSatisYeriEditText.id) {
                         allFieldsFilled = false
                     }
 
@@ -193,6 +193,7 @@ class OzelFragment : Fragment() {
 
             hasat.VadeTarihi = binding.VadeTarihiEdit.text.toString()
             hasat.SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
+            hasat.SatisYeri = binding.OzelSatisYeriEditText.text.toString().toString()
 
             Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()
             DatabaseOperations().add(dbHelper,tarla,hasat,requireContext())

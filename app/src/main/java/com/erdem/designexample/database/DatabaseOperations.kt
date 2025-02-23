@@ -2,6 +2,7 @@ package com.erdem.designexample.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.util.Log
 import com.erdem.designexample.dataClass.BahceRapor
 import com.erdem.designexample.dataClass.PieChartData
@@ -204,10 +205,22 @@ class DatabaseOperations {
     fun getPieChartData(databaseHelper: DatabaseHelper, year: Int, gardenName: String, satisYeri: String) : ArrayList<PieChartData>{
 
         val db = databaseHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                "WHERE year = ? AND gardenName = ? AND company = ? GROUP BY season ", arrayOf(year.toString(), gardenName, satisYeri)
-        )
+
+        val cursor: Cursor
+        Log.e("pieChart", satisYeri)
+        if (satisYeri == "DEVLET") {
+            cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                    " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
+                    "WHERE year = ? AND gardenName = ? AND company = ? GROUP BY season ", arrayOf(year.toString(), gardenName, satisYeri)
+            )
+        } else {
+            cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                    " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
+                    "WHERE year = ? AND gardenName = ? AND company != ? GROUP BY season ", arrayOf(year.toString(), gardenName, "DEVLET")
+            )
+
+        }
+
 
         val PieChartDataList = ArrayList<PieChartData>()
 

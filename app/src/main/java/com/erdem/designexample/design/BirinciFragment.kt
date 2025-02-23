@@ -103,14 +103,14 @@ class birinciFragment : Fragment() {
 
         when (type) {
             "Devlet" -> {
-                entries.add(PieEntry(pieData.get(0).ToplamKg, "1. Sürgün"))
-                entries.add(PieEntry(pieData.get(1).ToplamKg, "2. Sürgün"))
-                entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
+                for (data in pieData) {
+                    entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
+                }
             }
             "Özel" -> {
-                entries.add(PieEntry(pieData.get(0).ToplamKg, "1. Sürgün"))
-                entries.add(PieEntry(pieData.get(1).ToplamKg, "2. Sürgün"))
-                entries.add(PieEntry(pieData.get(2).ToplamKg, "3. Sürgün"))
+                for (data in pieData) {
+                    entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
+                }
             }
             "Tümü" -> {
 
@@ -162,15 +162,34 @@ class birinciFragment : Fragment() {
             val bahce = bundle.getString("bahce")
 
             val helper = DatabaseHelper(requireContext())
-            val pieChartData = DatabaseOperations().getPieChartDataAll(helper, tarih!!.toInt(), bahce!!)
 
             parentFragmentManager.setFragmentResultListener("Satis", this) { _, bundle ->
 
                 val satisYeri = bundle.getString("SatisYeri")
                 Log.e("pieChart", "Veri geldi $satisYeri")
-                setupPieChart()
-                loadPieChartData(satisYeri!!, pieChartData)
-                Log.e("pieChart", pieChartData.toString())
+
+                when (satisYeri) {
+                    "Tümü" -> {
+                        val pieChartData = DatabaseOperations().getPieChartDataAll(helper, tarih!!.toInt(), bahce!!)
+                        setupPieChart()
+                        loadPieChartData(satisYeri, pieChartData)
+                        Log.e("pieChart", pieChartData.toString())
+                    }
+                    "Özel" -> {
+                        val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!, satisYeri)
+                        setupPieChart()
+                        loadPieChartData(satisYeri, pieChartData)
+                        Log.e("pieChart", pieChartData.toString())
+                    }
+                    "Devlet" -> {
+                        val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!, "DEVLET")
+                        setupPieChart()
+                        loadPieChartData(satisYeri, pieChartData)
+                        Log.e("pieChart", pieChartData.toString())
+                    }
+                }
+
+
 
             }
         }
