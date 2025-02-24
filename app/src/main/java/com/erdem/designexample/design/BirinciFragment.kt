@@ -37,7 +37,6 @@ class birinciFragment : Fragment() {
 
         //!!!!
         //İLGİLİ VERİ TABANI KODU YAZILDIKTAN SONRA DÜZENLENECEK
-        binding.RaporEkranTextView.text = "RAPOR EKRANI"
         //!!!!
 
         /*val year = Calendar.getInstance().get(Calendar.YEAR)
@@ -166,7 +165,6 @@ class birinciFragment : Fragment() {
                         setupPieChart()
                         loadPieChartData(satisYeri, pieChartData)
                         Log.e("pieChart", pieChartData.toString())
-                        binding.RaporEkranTextView.text = textViewString
                     }
                     "Özel" -> {
                         textViewString = "$tarih yılına ait özel firmalar satış raporu"
@@ -174,7 +172,6 @@ class birinciFragment : Fragment() {
                         setupPieChart()
                         loadPieChartData(satisYeri, pieChartData)
                         Log.e("pieChart", pieChartData.toString())
-                        binding.RaporEkranTextView.text = textViewString
                     }
                     "Devlet" -> {
                         textViewString = "$tarih yılına ait DEVLET satış raporu"
@@ -182,7 +179,6 @@ class birinciFragment : Fragment() {
                         setupPieChart()
                         loadPieChartData(satisYeri, pieChartData)
                         Log.e("pieChart", pieChartData.toString())
-                        binding.RaporEkranTextView.text = textViewString
                     }
                 }
 
