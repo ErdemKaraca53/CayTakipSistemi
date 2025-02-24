@@ -8,12 +8,13 @@
     android:layout_margin="10dp"
     android:elevation="6dp"
     app:cardCornerRadius="5dp"
-    app:strokeColor="#6E3FF3">
+    app:strokeColor="#A5D6A7">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/BahceConstraitLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/RaporRecyclerViewTextView"

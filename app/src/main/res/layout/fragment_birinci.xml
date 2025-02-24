@@ -16,6 +16,7 @@
         android:background="@drawable/card_view_gradient"
         android:backgroundTint="@color/white"
         app:cardElevation="5dp"
+        app:strokeColor="#A5D6A7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.45"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.7"
         app:rippleColor="#E9FFBF"
-        app:strokeColor="#B3D9FF" />
+        app:strokeColor="#A5D6A7" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RaporRecyclerView"
