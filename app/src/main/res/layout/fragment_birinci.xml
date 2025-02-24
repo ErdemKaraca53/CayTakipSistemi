@@ -72,5 +72,4 @@
         app:layout_constraintWidth_percent="0.7"
         app:rippleColor="#E9FFBF"
         app:strokeColor="#B3D9FF" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
