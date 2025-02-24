@@ -165,8 +165,7 @@ class birinciFragment : Fragment() {
             setupPieChart()
             loadPieChartData("Tümü", pieChartData)
 
-            val dataset = DatabaseOperations().readGardenName(helper)
-            val customAdapter = RaporCardAdapter(dataset)
+            val customAdapter = RaporCardAdapter(pieChartData)
 
             binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.RaporRecyclerView.adapter = customAdapter

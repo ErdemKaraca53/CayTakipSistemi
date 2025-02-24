@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import androidx.core.view.isGone
+import com.erdem.designexample.dataClass.PieChartData
 
-class RaporCardAdapter (private val dataSet: ArrayList<String>) :
+class RaporCardAdapter (private val dataSet: ArrayList<PieChartData>) :
     RecyclerView.Adapter<RaporCardAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,7 +30,13 @@ class RaporCardAdapter (private val dataSet: ArrayList<String>) :
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.textView.text = dataSet[position]
+
+        val season = dataSet[position].season
+        val toplamKg = dataSet[position].ToplamKg.toInt()
+        val toplamGelir = dataSet[position].ToplamGelir.toInt()
+
+        val textViewString = "$season. sürgün sonucu: $toplamKg kg | $toplamGelir TL"
+        viewHolder.textView.text = textViewString
         viewHolder.textView.setOnClickListener {
         }
     }
