@@ -154,38 +154,14 @@ class birinciFragment : Fragment() {
             val helper = DatabaseHelper(requireContext())
             var textViewString: String
 
-            parentFragmentManager.setFragmentResultListener("Satis", this) { _, bundle ->
-
-                val satisYeri = bundle.getString("SatisYeri")
-                Log.e("pieChart", "Veri geldi $satisYeri")
-
-                when (satisYeri) {
-                    "Tümü" -> {
-                        textViewString = "$tarih yılına ait genel satış raporu"
-                        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(helper, tarih!!.toInt(), bahce!!)
-                        setupPieChart()
-                        loadPieChartData(satisYeri, pieChartData)
-                        Log.e("pieChart", pieChartData.toString())
-                    }
-                    "Özel" -> {
-                        textViewString = "$tarih yılına ait özel firmalar satış raporu"
-                        val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!, satisYeri)
-                        setupPieChart()
-                        loadPieChartData(satisYeri, pieChartData)
-                        Log.e("pieChart", pieChartData.toString())
-                    }
-                    "Devlet" -> {
-                        textViewString = "$tarih yılına ait DEVLET satış raporu"
-                        val pieChartData = DatabaseOperations().getPieChartData(helper, tarih!!.toInt(), bahce!!, "DEVLET")
-                        setupPieChart()
-                        loadPieChartData(satisYeri, pieChartData)
-                        Log.e("pieChart", pieChartData.toString())
-                    }
-                }
-
-
-
-            }
+            textViewString = "$tarih yılına ait genel satış raporu"
+            val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(
+                helper,
+                tarih!!.toInt(),
+                bahce!!
+            )
+            setupPieChart()
+            loadPieChartData("Tümü", pieChartData)
         }
 
         var sonSecim = 0

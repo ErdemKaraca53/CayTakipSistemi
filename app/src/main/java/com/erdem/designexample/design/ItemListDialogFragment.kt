@@ -53,7 +53,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
             }
             parentFragmentManager.setFragmentResult("requestKey", result)
             this.dismiss()
-            SatisYeriFiltreleme.newInstance(30).show(parentFragmentManager, "dialog")
         }
     }
 
