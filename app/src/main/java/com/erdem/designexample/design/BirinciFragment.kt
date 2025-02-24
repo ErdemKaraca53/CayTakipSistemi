@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.R
+import com.erdem.designexample.adapter.RaporCardAdapter
 import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -162,6 +164,13 @@ class birinciFragment : Fragment() {
             )
             setupPieChart()
             loadPieChartData("Tümü", pieChartData)
+
+            val dataset = DatabaseOperations().readGardenName(helper)
+            val customAdapter = RaporCardAdapter(dataset)
+
+            binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.RaporRecyclerView.adapter = customAdapter
+
         }
 
         var sonSecim = 0
