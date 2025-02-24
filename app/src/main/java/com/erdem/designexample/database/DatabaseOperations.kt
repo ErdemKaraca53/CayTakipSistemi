@@ -203,6 +203,32 @@ class DatabaseOperations {
         return PieChartDataList
     }
 
+    fun getPieChartDataAll(databaseHelper: DatabaseHelper, year: Int) : ArrayList<PieChartData>{
+
+        val db = databaseHelper.readableDatabase
+
+        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
+                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
+                "WHERE year = ? GROUP BY season ", arrayOf(year.toString())
+        )
+
+        val PieChartDataList = ArrayList<PieChartData>()
+
+        while (cursor.moveToNext()) {
+
+            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
+            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
+            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
+
+            val PieChartData = PieChartData(season, total_weight, total_revenue)
+
+            PieChartDataList.add(PieChartData)
+        }
+
+        cursor.close()
+        return PieChartDataList
+    }
+
     fun getPieChartData(databaseHelper: DatabaseHelper, year: Int, gardenName: String, satisYeri: String) : ArrayList<PieChartData>{
 
         val db = databaseHelper.readableDatabase

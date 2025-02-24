@@ -37,6 +37,24 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        val tarih = Calendar.getInstance().get(Calendar.YEAR)
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val pieChartData = DatabaseOperations().getPieChartDataAll(
+            helper,
+            tarih.toInt()
+        )
+        setupPieChart()
+        loadPieChartData("Tümü", pieChartData)
+
+        val customAdapter = RaporCardAdapter(pieChartData)
+
+        binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.RaporRecyclerView.adapter = customAdapter
+
         //!!!!
         //İLGİLİ VERİ TABANI KODU YAZILDIKTAN SONRA DÜZENLENECEK
         //!!!!
