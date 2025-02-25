@@ -52,8 +52,8 @@ class birinciFragment : Fragment() {
 
         val customAdapter = RaporCardAdapter(pieChartData)
 
-        binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.RaporRecyclerView.adapter = customAdapter
+        //binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        //binding.RaporRecyclerView.adapter = customAdapter
 
         //!!!!
         //İLGİLİ VERİ TABANI KODU YAZILDIKTAN SONRA DÜZENLENECEK
@@ -81,13 +81,13 @@ class birinciFragment : Fragment() {
             setUsePercentValues(false)  // Yüzde olarak gösterme
             description.isEnabled = false
 
-            setExtraOffsets(0f, 0f, 0f, 0f)
+            setExtraOffsets(40f, 20f, 40f, 20f)
             setDragDecelerationFrictionCoef(0.95f)
             isDrawHoleEnabled = true
             setHoleColor(Color.WHITE)
             setTransparentCircleColor(Color.WHITE)
             setTransparentCircleAlpha(110)
-            holeRadius = 10f
+            holeRadius = 20f
             transparentCircleRadius = 10f
             setDrawCenterText(true)
             setRotationAngle(0f)
@@ -124,6 +124,13 @@ class birinciFragment : Fragment() {
             }
             "Tümü" -> {
 
+                listOf(binding.Surgun1Rapor,
+                    binding.Surgun2Rapor,
+                    binding.Surgun3Rapor,
+                    binding.Surgun4Rapor).forEach {
+
+                }
+
                 for (data in pieData) {
                     entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
                 }
@@ -135,11 +142,23 @@ class birinciFragment : Fragment() {
             sliceSpace = 5f
             selectionShift = 2f
             colors = arrayListOf(
-                ContextCompat.getColor(requireContext(), R.color.circular_green),
-                ContextCompat.getColor(requireContext(), R.color.yellow),
-                ContextCompat.getColor(requireContext(), R.color.red),
-                ContextCompat.getColor(requireContext(), R.color.radio_gruop)
+                ContextCompat.getColor(requireContext(), R.color.pieChart),
+                ContextCompat.getColor(requireContext(), R.color.pieChart2),
+                ContextCompat.getColor(requireContext(), R.color.pieChart3),
+                ContextCompat.getColor(requireContext(), R.color.pieChart4)
             )
+            valueTextSize = 12f
+            valueTextColor = Color.BLACK
+            // **Çizgili Etiketler İçin Ayarlar**
+            setDrawValues(true) // Değerleri göster
+            xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE // Değerleri dışarı taşı
+            yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE // Değerleri dışarı taşı
+
+            // Çizgilerin uzunluğu ve görünümü
+            valueLinePart1OffsetPercentage = 80f // Çizgi uzunluğu
+            valueLinePart1Length = 0.7f // Çizgi ilk parça uzunluğu
+            valueLinePart2Length = 0.7f // Çizgi ikinci parça uzunluğu
+            valueLineColor = Color.BLACK // Çizgi rengi
         }
 
         val data = PieData(dataSet).apply {
@@ -185,8 +204,8 @@ class birinciFragment : Fragment() {
 
             val customAdapter = RaporCardAdapter(pieChartData)
 
-            binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.RaporRecyclerView.adapter = customAdapter
+            //binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            //binding.RaporRecyclerView.adapter = customAdapter
 
         }
 

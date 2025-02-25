@@ -35,7 +35,7 @@ class RaporCardAdapter (private val dataSet: ArrayList<PieChartData>) :
         val toplamKg = dataSet[position].ToplamKg.toInt()
         val toplamGelir = dataSet[position].ToplamGelir.toInt()
 
-        val textViewString = "$season. sürgün sonucu: $toplamKg kg | $toplamGelir TL"
+        val textViewString = "$toplamKg kg | $toplamGelir TL"
         viewHolder.textView.text = textViewString
         viewHolder.textView.setOnClickListener {
         }

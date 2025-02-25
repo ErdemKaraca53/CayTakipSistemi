@@ -3,31 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/BahceRecyclerViewCardView"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:elevation="6dp"
-    app:cardCornerRadius="5dp"
-    app:strokeColor="#A5D6A7">
+    app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/BahceConstraitLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#30437A">
+
+        <TextView
+            android:id="@+id/asdasdasd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="1. Sürgün"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/RaporRecyclerViewTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:layout_marginStart="16dp"
-            android:padding="6dp"
-            android:text="TextView"
-            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="1234 KG / 9999 TL"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/asdasdasd"
+            app:layout_constraintTop_toBottomOf="@+id/asdasdasd" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

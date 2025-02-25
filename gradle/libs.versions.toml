@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.0-rc01"
+anychartAndroid = "0.0.3"
 constraintlayoutVersion = "2.2.0"
 googleMaterial = "1.10.0"
 kotlin = "1.9.0"
@@ -22,6 +23,7 @@ androidx-constraintlayout-v220 = { module = "androidx.constraintlayout:constrain
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
+anychart-android = { module = "com.github.AnyChart:AnyChart-Android", version.ref = "anychartAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
