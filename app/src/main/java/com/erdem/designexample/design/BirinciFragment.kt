@@ -52,8 +52,9 @@ class birinciFragment : Fragment() {
 
         val customAdapter = RaporCardAdapter(pieChartData)
 
-        //binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        //binding.RaporRecyclerView.adapter = customAdapter
+        binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext(),
+            LinearLayoutManager.HORIZONTAL,false)
+        binding.RaporRecyclerView.adapter = customAdapter
 
         //!!!!
         //İLGİLİ VERİ TABANI KODU YAZILDIKTAN SONRA DÜZENLENECEK
@@ -122,14 +123,6 @@ class birinciFragment : Fragment() {
                 }
             }
             "Tümü" -> {
-
-                listOf(binding.Surgun1Rapor,
-                    binding.Surgun2Rapor,
-                    binding.Surgun3Rapor,
-                    binding.Surgun4Rapor).forEach {
-
-                }
-
                 for (data in pieData) {
                     entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
                 }

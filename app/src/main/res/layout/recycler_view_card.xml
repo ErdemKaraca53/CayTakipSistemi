@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/BahceRecyclerViewCardView"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:elevation="6dp"
@@ -11,35 +11,93 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/BahceConstraitLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#30437A">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E8F5E9">
 
         <TextView
-            android:id="@+id/asdasdasd"
+            android:id="@+id/RecyclerViewBaslik"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="1. Sürgün"
-            android:textColor="@color/white"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:text=" 2025 / Merze"
+            android:textColor="@color/black"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/RaporRecyclerViewTextView"
+            android:id="@+id/Surgun1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="14sp"
+            android:text="1. Sürgün"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/Surgun1Rapor"
+            app:layout_constraintTop_toBottomOf="@+id/RecyclerViewBaslik" />
+
+        <TextView
+            android:id="@+id/Surgun1Rapor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9999 KG | 99"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Surgun1" />
+
+        <TextView
+            android:id="@+id/Surgun2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:textSize="14sp"
+            android:text="2. Sürgün"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/Surgun2Rapor"
+            app:layout_constraintTop_toBottomOf="@+id/Surgun1Rapor" />
+
+        <TextView
+            android:id="@+id/Surgun2Rapor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9999 KG | 99"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Surgun2" />
+
+        <TextView
+            android:id="@+id/Surgun3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
+            android:text="3. Sürgün"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/Surgun3Rapor"
+            app:layout_constraintTop_toBottomOf="@+id/Surgun2Rapor" />
+
+        <TextView
+            android:id="@+id/Surgun3Rapor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="1234 KG / 9999 TL"
-            android:textColor="@color/white"
+            android:text="9999 KG | 99"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/asdasdasd"
-            app:layout_constraintTop_toBottomOf="@+id/asdasdasd" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Surgun3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
