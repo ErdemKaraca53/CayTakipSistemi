@@ -80,7 +80,6 @@ class birinciFragment : Fragment() {
         binding.pieChart.apply {
             setUsePercentValues(false)  // Yüzde olarak gösterme
             description.isEnabled = false
-
             setExtraOffsets(40f, 20f, 40f, 20f)
             setDragDecelerationFrictionCoef(0.95f)
             isDrawHoleEnabled = true
