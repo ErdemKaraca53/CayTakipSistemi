@@ -201,7 +201,7 @@ class birinciFragment : Fragment() {
 
         }
 
-        binding.ileriButton.setOnClickListener {
+        binding.ileriButon.setOnClickListener {
             val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             binding.RaporRecyclerView.smoothScrollToPosition(currentPosition + 1)
         }

@@ -41,37 +41,46 @@
         app:rippleColor="#E9FFBF"
         app:strokeColor="#A5D6A7" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ileriButton"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/baseline_arrow_forward_24"
-        android:text="@null"
-        app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintEnd_toEndOf="@+id/pieChart"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/geriButon"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/baseline_arrow_back_24"
-        android:text="@null"
-        app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintStart_toStartOf="@+id/pieChart"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RaporRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintEnd_toStartOf="@+id/ileriButton"
+        app:layout_constraintEnd_toStartOf="@+id/ileriButon"
         app:layout_constraintStart_toEndOf="@+id/geriButon"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/geriButon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="2025"
+        android:clickable="true"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/plus_jakarta_sans"
+        app:layout_constraintBottom_toTopOf="@+id/pieChart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ileriButon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="2026"
+        android:textColor="@color/black"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/geriButon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
