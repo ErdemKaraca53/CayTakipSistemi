@@ -41,7 +41,7 @@
         app:rippleColor="#E9FFBF"
         app:strokeColor="#A5D6A7" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ileriButton"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
@@ -51,8 +51,8 @@
         app:layout_constraintEnd_toEndOf="@+id/pieChart"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button2"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/geriButon"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:background="@drawable/baseline_arrow_back_24"
@@ -71,7 +71,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/pieChart"
         app:layout_constraintEnd_toStartOf="@+id/ileriButton"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/geriButon"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

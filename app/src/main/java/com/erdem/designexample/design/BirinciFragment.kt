@@ -201,6 +201,19 @@ class birinciFragment : Fragment() {
 
         }
 
+        binding.ileriButton.setOnClickListener {
+            val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            binding.RaporRecyclerView.smoothScrollToPosition(currentPosition + 1)
+        }
+
+        binding.geriButon.setOnClickListener {
+            val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            if(currentPosition != 0) {
+                binding.RaporRecyclerView.smoothScrollToPosition(currentPosition -1)
+            }
+
+        }
+
         var sonSecim = 0
 
         /*binding.buttonGroup.addOnButtonCheckedListener { buttonGroup, checkedId, isChecked ->
