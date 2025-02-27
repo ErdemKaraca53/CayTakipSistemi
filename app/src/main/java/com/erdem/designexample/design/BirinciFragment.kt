@@ -3,13 +3,12 @@ package com.erdem.designexample.design
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.R
 import com.erdem.designexample.adapter.RaporCardAdapter
 import com.erdem.designexample.dataClass.PieChartData
@@ -34,7 +33,6 @@ class birinciFragment : Fragment() {
 
     private var _binding: FragmentBirinciBinding? = null
     private val binding get() = _binding!!
-    private lateinit var dataSet: ArrayList<PieChartData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,18 +41,36 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val helper = DatabaseHelper(requireContext())
-        var textViewString: String
+        val pieChartDataSet = getPieChartFirstData()
 
-        val tarih = Calendar.getInstance().get(Calendar.YEAR)
-
-        textViewString = "$tarih yılına ait genel satış raporu"
-        dataSet = DatabaseOperations().getPieChartDataAllWithYear(
-            helper,
-            tarih.toInt()
-        )
         setupPieChart()
-        loadPieChartData("Tümü", dataSet)
+        loadPieChartData("Tümü", pieChartDataSet)
+
+        val barChartDataSet = getBarChartFirstData()
+        var years = ArrayList<String>()
+        val sezon1 = ArrayList<Float>()
+        val sezon2 = ArrayList<Float>()
+        val sezon3 = ArrayList<Float>()
+        val sezon4 = ArrayList<Float>()
+
+        /**map olduğu için for döngüsü ile erişiyoruz. **/
+        Log.e("pieChart", barChartDataSet.toString())
+        for ((year, seasonList) in barChartDataSet) {
+            Log.e("pieChart","Yıl: $year")
+            years.add("$year")
+            for (seasonData in seasonList) {
+                when(seasonData.season) {
+                    1-> sezon1.add(seasonData.ToplamKg)
+                    2-> sezon2.add(seasonData.ToplamKg)
+                    3-> sezon3.add(seasonData.ToplamKg)
+                    4-> sezon4.add(seasonData.ToplamKg)
+                }
+
+            }
+        }
+
+
+        setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
 
         return view
     }
@@ -185,47 +201,61 @@ class birinciFragment : Fragment() {
             //binding.RaporRecyclerView.adapter = customAdapter
 
         }
-        setupGroupedBarChart(binding.barChart)
+
+
 
     }
 
 
-    private fun setupGroupedBarChart(barChart: BarChart) {
-        val years = listOf("1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "")
+    private fun setupGroupedBarChart(
+        barChart: BarChart,
+        years: List<String>,
+        sezon1: List<Float>,
+        sezon2: List<Float>,
+        sezon3: List<Float>,
+        sezon4: List<Float>
+    ) {
+        val entriesSezon1 = createEntries(sezon1, 0f)    // İlk çubuk
+        val entriesSezon2 = createEntries(sezon2, 0.2f)  // Hafif sağa kaydır
+        val entriesSezon3 = createEntries(sezon3, 0.4f)  // Daha sağa kaydır
+        val entriesSezon4 = createEntries(sezon4, 0.6f)  // En sağa kaydır
 
-        val companyA = listOf(30f, 40f, 80f, 20f, 45f, 10f, 15f, 30f, 10f, 5f, 0f)
-        val companyB = listOf(40f, 5f, 55f, 80f, 70f, 50f, 60f, 45f, 5f, 40f, 0f)
-        val companyC = listOf(5f, 55f, 30f, 100f, 85f, 60f, 35f, 40f, 55f, 10f, 0f)
+        val dataSetA = createBarDataSet(entriesSezon1, "Sezon 1", Color.rgb(104, 241, 175))
+        val dataSetB = createBarDataSet(entriesSezon2, "Sezon 2", Color.rgb(164, 228, 251))
+        val dataSetC = createBarDataSet(entriesSezon3, "Sezon 3", Color.rgb(255, 210, 140))
+        val dataSetD = createBarDataSet(entriesSezon4, "Sezon 4", Color.rgb(100, 0, 140))
 
-        val entriesCompanyA = ArrayList<BarEntry>()
-        val entriesCompanyB = ArrayList<BarEntry>()
-        val entriesCompanyC = ArrayList<BarEntry>()
-        for (i in years.indices) {
-            entriesCompanyA.add(BarEntry(i.toFloat(), companyA[i]))
-            entriesCompanyB.add(BarEntry(i.toFloat() + 0.33f, companyB[i]))
-            entriesCompanyC.add(BarEntry(i.toFloat() + 0.66f, companyC[i]))
-        }
+        val barData = BarData(dataSetA, dataSetB, dataSetC, dataSetD)
 
-        val dataSetA = BarDataSet(entriesCompanyA, "Company A").apply {
-            color = Color.rgb(104, 241, 175) // Yeşil
-        }
-
-        val dataSetB = BarDataSet(entriesCompanyB, "Company B").apply {
-            color = Color.rgb(164, 228, 251) // Mavi
-        }
-
-        val dataSetC = BarDataSet(entriesCompanyC, "Company C").apply {
-            color = Color.rgb(255, 210, 140) // Sarı
-        }
-
-        val barData = BarData(dataSetA, dataSetB, dataSetC)
-
-        // **Daha iyi grup ayrımı için boşluklar güncellendi**
-        val groupSpace = 0.4f
-        val barSpace = 0.02f
-        val barWidth = 0.2f
+        // **Grup Çubukları için Boşluk Ayarları**
+        val groupSpace = 0.3f   // Gruplar arası boşluk
+        val barSpace = 0.05f    // Çubuklar arası boşluk
+        val barWidth = 0.15f    // Çubuk genişliği (daha iyi hizalama için küçültüldü)
         barData.barWidth = barWidth
 
+        configureBarChart(barChart, barData, years, groupSpace, barSpace)
+    }
+
+    /** Çubuk verilerini oluşturur **/
+    private fun createEntries(data: List<Float>, offset: Float): ArrayList<BarEntry> {
+        return ArrayList<BarEntry>().apply {
+            for (i in data.indices) {
+                add(BarEntry(i.toFloat() + offset, data[i])) // Çubukları kaydır
+            }
+        }
+    }
+
+    /** BarDataSet oluşturur **/
+    private fun createBarDataSet(entries: List<BarEntry>, label: String, color: Int): BarDataSet {
+        return BarDataSet(entries, label).apply {
+            this.color = color
+            valueTextSize = 12f
+            valueTextColor = Color.BLACK
+        }
+    }
+
+    /** BarChart konfigürasyonu **/
+    private fun configureBarChart(barChart: BarChart, barData: BarData, years: List<String>, groupSpace: Float, barSpace: Float) {
         barChart.apply {
             data = barData
             description.isEnabled = false
@@ -241,30 +271,59 @@ class birinciFragment : Fragment() {
                 }
                 position = XAxis.XAxisPosition.BOTTOM
                 granularity = 1f
-                setCenterAxisLabels(true)
+                setCenterAxisLabels(true) // X ekseni için daha iyi hizalama
             }
 
-            axisLeft.apply {
-                axisMinimum = 0f
-            }
-
+            axisLeft.axisMinimum = 0f
             axisRight.isEnabled = false
 
             // **X Ekseni Ayarları**
             xAxis.axisMinimum = 0f
-            xAxis.axisMaximum = years.size.toFloat()
+            xAxis.axisMaximum = years.size.toFloat() + groupSpace // X eksenini genişlet
 
-            // **Grup Çubuklarını Yerleştir**
+            // **Grupları Düzenli Bir Şekilde Yerleştir**
             groupBars(0f, groupSpace, barSpace)
 
             // **Kaydırma Özelliği Aktif Edildi**
             setVisibleXRangeMaximum(5f)  // Aynı anda en fazla 5 yıl gözüksün
-            moveViewToX(3f)  // Başlangıçta en sola hizalanmış başlasın
+            moveViewToX(0f) // Başlangıçta en soldan başlamasını sağla
 
             invalidate()
         }
     }
 
+
+
+
+    fun getPieChartFirstData() :  ArrayList<PieChartData>{
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        val tarih = Calendar.getInstance().get(Calendar.YEAR)
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val dataSet = DatabaseOperations().getPieChartDataAllWithYear(
+            helper,
+            tarih.toInt()
+        )
+        helper.close()
+        return dataSet
+    }
+
+    fun getBarChartFirstData(): Map<Int, List<PieChartData>> {
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        val tarih = Calendar.getInstance().get(Calendar.YEAR)
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val dataSet = DatabaseOperations().getPieChartDataAll(
+            helper,
+        )
+
+        helper.close()
+        return dataSet.groupBy { it.year }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
