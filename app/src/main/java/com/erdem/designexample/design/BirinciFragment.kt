@@ -17,11 +17,17 @@ import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentBirinciBinding
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.Calendar
 
 class birinciFragment : Fragment() {
@@ -179,38 +185,85 @@ class birinciFragment : Fragment() {
             //binding.RaporRecyclerView.adapter = customAdapter
 
         }
+        setupGroupedBarChart(binding.barChart)
 
     }
 
-    var sonSecim = 0
 
-    /*binding.buttonGroup.addOnButtonCheckedListener { buttonGroup, checkedId, isChecked ->
+    private fun setupGroupedBarChart(barChart: BarChart) {
+        val years = listOf("1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "")
 
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.OzelFiltreButton -> {
-                        sonSecim = checkedId
-                        updateButtonColorsAndIcon(checkedId)
-                        Toast.makeText(requireContext(), "özel", Toast.LENGTH_SHORT).show()
-                    }
-                    R.id.DevletFiltreButton -> {
-                        sonSecim = checkedId
-                        updateButtonColorsAndIcon(checkedId)
-                    }
-                    R.id.TumuFiltreButton -> {
-                        sonSecim = checkedId
-                        updateButtonColorsAndIcon(checkedId)
+        val companyA = listOf(30f, 40f, 80f, 20f, 45f, 10f, 15f, 30f, 10f, 5f, 0f)
+        val companyB = listOf(40f, 5f, 55f, 80f, 70f, 50f, 60f, 45f, 5f, 40f, 0f)
+        val companyC = listOf(5f, 55f, 30f, 100f, 85f, 60f, 35f, 40f, 55f, 10f, 0f)
+
+        val entriesCompanyA = ArrayList<BarEntry>()
+        val entriesCompanyB = ArrayList<BarEntry>()
+        val entriesCompanyC = ArrayList<BarEntry>()
+        for (i in years.indices) {
+            entriesCompanyA.add(BarEntry(i.toFloat(), companyA[i]))
+            entriesCompanyB.add(BarEntry(i.toFloat() + 0.33f, companyB[i]))
+            entriesCompanyC.add(BarEntry(i.toFloat() + 0.66f, companyC[i]))
+        }
+
+        val dataSetA = BarDataSet(entriesCompanyA, "Company A").apply {
+            color = Color.rgb(104, 241, 175) // Yeşil
+        }
+
+        val dataSetB = BarDataSet(entriesCompanyB, "Company B").apply {
+            color = Color.rgb(164, 228, 251) // Mavi
+        }
+
+        val dataSetC = BarDataSet(entriesCompanyC, "Company C").apply {
+            color = Color.rgb(255, 210, 140) // Sarı
+        }
+
+        val barData = BarData(dataSetA, dataSetB, dataSetC)
+
+        // **Daha iyi grup ayrımı için boşluklar güncellendi**
+        val groupSpace = 0.4f
+        val barSpace = 0.02f
+        val barWidth = 0.2f
+        barData.barWidth = barWidth
+
+        barChart.apply {
+            data = barData
+            description.isEnabled = false
+            setFitBars(true)
+            legend.isEnabled = true
+
+            xAxis.apply {
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        val index = value.toInt()
+                        return if (index in years.indices) years[index] else ""
                     }
                 }
-            } else {
-                if (buttonGroup.checkedButtonId == View.NO_ID) {
-                    buttonGroup.check(sonSecim)
-                }
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = 1f
+                setCenterAxisLabels(true)
             }
 
-        }*/
+            axisLeft.apply {
+                axisMinimum = 0f
+            }
 
+            axisRight.isEnabled = false
 
+            // **X Ekseni Ayarları**
+            xAxis.axisMinimum = 0f
+            xAxis.axisMaximum = years.size.toFloat()
+
+            // **Grup Çubuklarını Yerleştir**
+            groupBars(0f, groupSpace, barSpace)
+
+            // **Kaydırma Özelliği Aktif Edildi**
+            setVisibleXRangeMaximum(5f)  // Aynı anda en fazla 5 yıl gözüksün
+            moveViewToX(3f)  // Başlangıçta en sola hizalanmış başlasın
+
+            invalidate()
+        }
+    }
 
 
     override fun onDestroyView() {
