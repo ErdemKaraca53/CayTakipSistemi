@@ -17,15 +17,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.4"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RaporRecyclerView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/YilBottomSheetButon"
         style="@style/Widget.Material3.Button.OutlinedButton.Icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="100dp"
         android:text="Filtrele"
         android:textColor="@color/black"
@@ -36,50 +34,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pieChart"
         app:layout_constraintWidth_percent="0.7"
         app:rippleColor="#E9FFBF"
         app:strokeColor="#A5D6A7" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RaporRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintEnd_toStartOf="@+id/ileriButon"
-        app:layout_constraintStart_toEndOf="@+id/geriButon"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/geriButon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="2222"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:fontFamily="@font/plus_jakarta_sans"
-        app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/ileriButon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="2028"
-        android:textColor="@color/black"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/geriButon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

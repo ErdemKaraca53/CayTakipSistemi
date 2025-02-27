@@ -50,14 +50,6 @@ class birinciFragment : Fragment() {
         setupPieChart()
         loadPieChartData("Tümü", dataSet)
 
-        val customAdapter = RaporCardAdapter(dataSet)
-
-        binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext(),
-            LinearLayoutManager.HORIZONTAL,false)
-        binding.RaporRecyclerView.adapter = customAdapter
-        dataSet = DatabaseOperations().getPieChartDataAll(helper)
-        binding.geriButon.text = dataSet.firstOrNull()?.year.toString()
-        binding.ileriButon.text = dataSet.lastOrNull()?.year.toString()
         return view
     }
 
@@ -187,18 +179,6 @@ class birinciFragment : Fragment() {
 
         }
 
-        binding.ileriButon.setOnClickListener {
-            val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-            binding.RaporRecyclerView.smoothScrollToPosition(currentPosition + 1)
-            binding.ileriButon.text = dataSet.lastOrNull()?.year.toString()
-        }
-
-        binding.geriButon.setOnClickListener {
-            val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-            if(currentPosition != 0) {
-                binding.RaporRecyclerView.smoothScrollToPosition(currentPosition -1)
-                //binding.geriButon.text = dataSet.get(currentPosition).year.toString()
-            }
 
         }
 
