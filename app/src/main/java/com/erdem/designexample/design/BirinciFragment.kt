@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.erdem.designexample.R
-import com.erdem.designexample.adapter.RaporCardAdapter
 import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -74,6 +73,114 @@ class birinciFragment : Fragment() {
 
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.YilBottomSheetButon.setOnClickListener {
+            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
+            // Pasta Grafiği Ayarları
+
+            // Varsayılan grafik verisini yükle
+            //loadPieChartData("Tümü", pieChartData)
+        }
+
+        parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
+            val tarih = bundle.getString("tarih")
+            val bahce = bundle.getString("bahce")
+
+            setUpPieChartDataWithYearAndGardenName(tarih, bahce)
+            setUpBarChartDataWithYearAndGardenName(tarih, bahce)
+        }
+
+
+
+    }
+
+    fun setUpPieChartDataWithYearAndGardenName(tarih: String?, bahce: String?){
+
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenNameAndYear(
+            helper,
+            tarih!!.toInt(),
+            bahce!!
+        )
+        helper.close()
+        setupPieChart()
+        loadPieChartData("Tümü", pieChartData)
+    }
+
+    fun setUpBarChartDataWithYearAndGardenName(tarih: String?, bahce: String?){
+
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val barChartData = DatabaseOperations().getPieChartDataAllWithGardenNameAndYear(
+            helper,
+            tarih!!.toInt(),
+            bahce!!
+        )
+        helper.close()
+        val barChartDataSet = barChartData.groupBy { it.year }
+        var years = ArrayList<String>()
+        val sezon1 = ArrayList<Float>()
+        val sezon2 = ArrayList<Float>()
+        val sezon3 = ArrayList<Float>()
+        val sezon4 = ArrayList<Float>()
+
+        /**map olduğu için for döngüsü ile erişiyoruz. **/
+        Log.e("pieChart", barChartDataSet.toString())
+        for ((year, seasonList) in barChartDataSet) {
+            Log.e("pieChart","Yıl: $year")
+            years.add("$year")
+            for (seasonData in seasonList) {
+                when(seasonData.season) {
+                    1-> sezon1.add(seasonData.ToplamKg)
+                    2-> sezon2.add(seasonData.ToplamKg)
+                    3-> sezon3.add(seasonData.ToplamKg)
+                    4-> sezon4.add(seasonData.ToplamKg)
+                }
+
+            }
+        }
+
+        setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
+    }
+
+
+    fun getPieChartFirstData() :  ArrayList<PieChartData>{
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        val tarih = Calendar.getInstance().get(Calendar.YEAR)
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val dataSet = DatabaseOperations().getPieChartDataAllWithYear(
+            helper,
+            tarih.toInt()
+        )
+        helper.close()
+        return dataSet
+    }
+
+    fun getBarChartFirstData(): Map<Int, List<PieChartData>> {
+        val helper = DatabaseHelper(requireContext())
+        var textViewString: String
+
+        val tarih = Calendar.getInstance().get(Calendar.YEAR)
+
+        textViewString = "$tarih yılına ait genel satış raporu"
+        val dataSet = DatabaseOperations().getPieChartDataAll(
+            helper,
+        )
+
+        helper.close()
+        return dataSet.groupBy { it.year }
+    }
+
 
 
     // Pasta Grafiği Temel Ayarlarını Yapan Fonksiyon
@@ -167,46 +274,6 @@ class birinciFragment : Fragment() {
         binding.pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.YilBottomSheetButon.setOnClickListener {
-            ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
-            // Pasta Grafiği Ayarları
-
-            // Varsayılan grafik verisini yükle
-            //loadPieChartData("Tümü", pieChartData)
-        }
-        var recyclerViewData = ArrayList<PieChartData>()
-        parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
-            val tarih = bundle.getString("tarih")
-            val bahce = bundle.getString("bahce")
-
-            val helper = DatabaseHelper(requireContext())
-            var textViewString: String
-
-            textViewString = "$tarih yılına ait genel satış raporu"
-            val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenNameAndYear(
-                helper,
-                tarih!!.toInt(),
-                bahce!!
-            )
-            recyclerViewData = pieChartData
-            setupPieChart()
-            loadPieChartData("Tümü", pieChartData)
-
-            val customAdapter = RaporCardAdapter(pieChartData)
-
-            //binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            //binding.RaporRecyclerView.adapter = customAdapter
-
-        }
-
-
-
-    }
-
-
     private fun setupGroupedBarChart(
         barChart: BarChart,
         years: List<String>,
@@ -290,39 +357,6 @@ class birinciFragment : Fragment() {
 
             invalidate()
         }
-    }
-
-
-
-
-    fun getPieChartFirstData() :  ArrayList<PieChartData>{
-        val helper = DatabaseHelper(requireContext())
-        var textViewString: String
-
-        val tarih = Calendar.getInstance().get(Calendar.YEAR)
-
-        textViewString = "$tarih yılına ait genel satış raporu"
-        val dataSet = DatabaseOperations().getPieChartDataAllWithYear(
-            helper,
-            tarih.toInt()
-        )
-        helper.close()
-        return dataSet
-    }
-
-    fun getBarChartFirstData(): Map<Int, List<PieChartData>> {
-        val helper = DatabaseHelper(requireContext())
-        var textViewString: String
-
-        val tarih = Calendar.getInstance().get(Calendar.YEAR)
-
-        textViewString = "$tarih yılına ait genel satış raporu"
-        val dataSet = DatabaseOperations().getPieChartDataAll(
-            helper,
-        )
-
-        helper.close()
-        return dataSet.groupBy { it.year }
     }
 
     override fun onDestroyView() {
