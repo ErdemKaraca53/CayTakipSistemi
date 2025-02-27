@@ -3,10 +3,10 @@ package com.erdem.designexample.design
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +28,7 @@ class birinciFragment : Fragment() {
 
     private var _binding: FragmentBirinciBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var dataSet: ArrayList<PieChartData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,35 +43,21 @@ class birinciFragment : Fragment() {
         val tarih = Calendar.getInstance().get(Calendar.YEAR)
 
         textViewString = "$tarih yılına ait genel satış raporu"
-        val pieChartData = DatabaseOperations().getPieChartDataAll(
+        dataSet = DatabaseOperations().getPieChartDataAllWithYear(
             helper,
             tarih.toInt()
         )
         setupPieChart()
-        loadPieChartData("Tümü", pieChartData)
+        loadPieChartData("Tümü", dataSet)
 
-        val customAdapter = RaporCardAdapter(pieChartData)
+        val customAdapter = RaporCardAdapter(dataSet)
 
         binding.RaporRecyclerView.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.HORIZONTAL,false)
         binding.RaporRecyclerView.adapter = customAdapter
-
-        //!!!!
-        //İLGİLİ VERİ TABANI KODU YAZILDIKTAN SONRA DÜZENLENECEK
-        //!!!!
-
-        /*val year = Calendar.getInstance().get(Calendar.YEAR)
-        val textString = "$year Yılı Genel Rapor"
-        binding.RaporEkranTextView.text = textString
-        setupPieChart()
-
-        val helper = DatabaseHelper(requireContext())
-
-        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(helper, year.toInt(), bahce!!)
-        setupPieChart()
-        loadPieChartData("Tümü", pieChartData)
-        Log.e("pieChart", pieChartData.toString())*/
-
+        dataSet = DatabaseOperations().getPieChartDataAll(helper)
+        binding.geriButon.text = dataSet.firstOrNull()?.year.toString()
+        binding.ileriButon.text = dataSet.lastOrNull()?.year.toString()
         return view
     }
 
@@ -169,7 +155,6 @@ class birinciFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.YilBottomSheetButon.setOnClickListener {
             ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
             // Pasta Grafiği Ayarları
@@ -177,7 +162,7 @@ class birinciFragment : Fragment() {
             // Varsayılan grafik verisini yükle
             //loadPieChartData("Tümü", pieChartData)
         }
-
+        var recyclerViewData = ArrayList<PieChartData>()
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _ , bundle ->
             val tarih = bundle.getString("tarih")
             val bahce = bundle.getString("bahce")
@@ -186,11 +171,12 @@ class birinciFragment : Fragment() {
             var textViewString: String
 
             textViewString = "$tarih yılına ait genel satış raporu"
-            val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(
+            val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenNameAndYear(
                 helper,
                 tarih!!.toInt(),
                 bahce!!
             )
+            recyclerViewData = pieChartData
             setupPieChart()
             loadPieChartData("Tümü", pieChartData)
 
@@ -204,12 +190,14 @@ class birinciFragment : Fragment() {
         binding.ileriButon.setOnClickListener {
             val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             binding.RaporRecyclerView.smoothScrollToPosition(currentPosition + 1)
+            binding.ileriButon.text = dataSet.lastOrNull()?.year.toString()
         }
 
         binding.geriButon.setOnClickListener {
             val currentPosition = (binding.RaporRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             if(currentPosition != 0) {
                 binding.RaporRecyclerView.smoothScrollToPosition(currentPosition -1)
+                //binding.geriButon.text = dataSet.get(currentPosition).year.toString()
             }
 
         }
