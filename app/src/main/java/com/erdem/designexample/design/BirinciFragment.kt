@@ -84,7 +84,6 @@ class birinciFragment : Fragment() {
     }
 
 
-
     // Seçilen Kategoriye Göre Pasta Grafiğini Güncelleyen Fonksiyon
     private fun loadPieChartData(type: String, pieData: ArrayList<PieChartData>) {
         val entries = ArrayList<PieEntry>()
@@ -95,11 +94,13 @@ class birinciFragment : Fragment() {
                     entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
                 }
             }
+
             "Özel" -> {
                 for (data in pieData) {
                     entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
                 }
             }
+
             "Tümü" -> {
                 for (data in pieData) {
                     entries.add(PieEntry(data.ToplamKg, "${data.season}. Sürgün"))
@@ -155,7 +156,7 @@ class birinciFragment : Fragment() {
             //loadPieChartData("Tümü", pieChartData)
         }
         var recyclerViewData = ArrayList<PieChartData>()
-        parentFragmentManager.setFragmentResultListener("requestKey", this) { _ , bundle ->
+        parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
             val tarih = bundle.getString("tarih")
             val bahce = bundle.getString("bahce")
 
@@ -179,12 +180,11 @@ class birinciFragment : Fragment() {
 
         }
 
+    }
 
-        }
+    var sonSecim = 0
 
-        var sonSecim = 0
-
-        /*binding.buttonGroup.addOnButtonCheckedListener { buttonGroup, checkedId, isChecked ->
+    /*binding.buttonGroup.addOnButtonCheckedListener { buttonGroup, checkedId, isChecked ->
 
             if (isChecked) {
                 when (checkedId) {
@@ -210,21 +210,8 @@ class birinciFragment : Fragment() {
 
         }*/
 
-    }
 
-    private fun updateButtonColorsAndIcon(selectedId: Int) {
-        val selectedColor = ContextCompat.getColor(requireContext(), R.color.toggleButton)
-        val defaultColor = ContextCompat.getColor(requireContext(), R.color.white)
-        val icon = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_check_24)
-        /*listOf(
-            binding.OzelFiltreButton to R.id.OzelFiltreButton,
-            binding.DevletFiltreButton to R.id.DevletFiltreButton,
-            binding.TumuFiltreButton to R.id.TumuFiltreButton
-        ).forEach { (button, id) ->
-            button.setBackgroundColor(if (id == selectedId) selectedColor else defaultColor)
-            button.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null)
-        }*/
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
