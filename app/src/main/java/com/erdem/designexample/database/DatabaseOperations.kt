@@ -210,7 +210,7 @@ class DatabaseOperations {
 
         val cursor = db.rawQuery("SELECT year, season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
                 " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                "AND gardenName = ? GROUP BY season, year", arrayOf(gardenName)
+                "AND gardenName = ? GROUP BY year, season", arrayOf(gardenName)
         )
 
         val PieChartDataList = ArrayList<PieChartData>()

@@ -46,26 +46,36 @@ class birinciFragment : Fragment() {
         loadPieChartData("Tümü", pieChartDataSet)
 
         val barChartDataSet = getBarChartFirstData()
+
         var years = ArrayList<String>()
         val sezon1 = ArrayList<Float>()
         val sezon2 = ArrayList<Float>()
         val sezon3 = ArrayList<Float>()
         val sezon4 = ArrayList<Float>()
 
+        for (i in 0..3) {
+            sezon1.add(0f)
+            sezon2.add(0f)
+            sezon3.add(0f)
+            sezon4.add(0f)
+        }
+
+        var sayac = 0
         /**map olduğu için for döngüsü ile erişiyoruz. **/
-        Log.e("pieChart", barChartDataSet.toString())
+        Log.e("pieChart", "BarChart: $barChartDataSet")
         for ((year, seasonList) in barChartDataSet) {
             Log.e("pieChart","Yıl: $year")
             years.add("$year")
             for (seasonData in seasonList) {
+                Log.e("pieChart","Yıl: ${seasonData.season}")
                 when(seasonData.season) {
-                    1-> sezon1.add(seasonData.ToplamKg)
-                    2-> sezon2.add(seasonData.ToplamKg)
-                    3-> sezon3.add(seasonData.ToplamKg)
-                    4-> sezon4.add(seasonData.ToplamKg)
+                    1-> sezon1.add(sayac,seasonData.ToplamKg)
+                    2-> sezon2.add(sayac,seasonData.ToplamKg)
+                    3-> sezon3.add(sayac,seasonData.ToplamKg)
+                    4-> sezon4.add(sayac,seasonData.ToplamKg)
                 }
-
             }
+            sayac++
         }
 
 
@@ -89,7 +99,7 @@ class birinciFragment : Fragment() {
             val bahce = bundle.getString("bahce")
 
             setUpPieChartDataWithYearAndGardenName(tarih, bahce)
-            setUpBarChartDataWithYearAndGardenName(tarih, bahce)
+            setUpBarChartDataWitGardenName(tarih, bahce)
         }
 
 
@@ -112,15 +122,14 @@ class birinciFragment : Fragment() {
         loadPieChartData("Tümü", pieChartData)
     }
 
-    fun setUpBarChartDataWithYearAndGardenName(tarih: String?, bahce: String?){
+    fun setUpBarChartDataWitGardenName(tarih: String?, bahce: String?){
 
         val helper = DatabaseHelper(requireContext())
         var textViewString: String
 
         textViewString = "$tarih yılına ait genel satış raporu"
-        val barChartData = DatabaseOperations().getPieChartDataAllWithGardenNameAndYear(
+        val barChartData = DatabaseOperations().getPieChartDataAllWithGardenName(
             helper,
-            tarih!!.toInt(),
             bahce!!
         )
         helper.close()
@@ -132,9 +141,7 @@ class birinciFragment : Fragment() {
         val sezon4 = ArrayList<Float>()
 
         /**map olduğu için for döngüsü ile erişiyoruz. **/
-        Log.e("pieChart", barChartDataSet.toString())
         for ((year, seasonList) in barChartDataSet) {
-            Log.e("pieChart","Yıl: $year")
             years.add("$year")
             for (seasonData in seasonList) {
                 when(seasonData.season) {
@@ -143,7 +150,6 @@ class birinciFragment : Fragment() {
                     3-> sezon3.add(seasonData.ToplamKg)
                     4-> sezon4.add(seasonData.ToplamKg)
                 }
-
             }
         }
 
@@ -307,7 +313,9 @@ class birinciFragment : Fragment() {
     private fun createEntries(data: List<Float>, offset: Float): ArrayList<BarEntry> {
         return ArrayList<BarEntry>().apply {
             for (i in data.indices) {
-                add(BarEntry(i.toFloat() + offset, data[i])) // Çubukları kaydır
+                if(data[i] != 0f) {
+                    add(BarEntry(i.toFloat() + offset, data[i])) // Çubukları kaydır
+                }
             }
         }
     }
@@ -352,7 +360,7 @@ class birinciFragment : Fragment() {
             groupBars(0f, groupSpace, barSpace)
 
             // **Kaydırma Özelliği Aktif Edildi**
-            setVisibleXRangeMaximum(5f)  // Aynı anda en fazla 5 yıl gözüksün
+            setVisibleXRangeMaximum(2f)  // Aynı anda en fazla 5 yıl gözüksün
             moveViewToX(0f) // Başlangıçta en soldan başlamasını sağla
 
             invalidate()
