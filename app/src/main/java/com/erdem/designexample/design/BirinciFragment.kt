@@ -27,6 +27,11 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.Calendar
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.data.Entry
+import android.widget.Toast
+
 
 class birinciFragment : Fragment() {
 
@@ -53,7 +58,7 @@ class birinciFragment : Fragment() {
         val sezon3 = ArrayList<Float>()
         val sezon4 = ArrayList<Float>()
 
-        for (i in 0..3) {
+        for (i in 0..4) {
             sezon1.add(0f)
             sezon2.add(0f)
             sezon3.add(0f)
@@ -140,17 +145,29 @@ class birinciFragment : Fragment() {
         val sezon3 = ArrayList<Float>()
         val sezon4 = ArrayList<Float>()
 
+        for (i in 0..3) {
+            sezon1.add(0f)
+            sezon2.add(0f)
+            sezon3.add(0f)
+            sezon4.add(0f)
+        }
+
+        var sayac = 0
         /**map olduğu için for döngüsü ile erişiyoruz. **/
+        Log.e("pieChart", "BarChart1: $barChartDataSet")
         for ((year, seasonList) in barChartDataSet) {
+            Log.e("pieChart","Yıl: $year")
             years.add("$year")
             for (seasonData in seasonList) {
+                Log.e("pieChart","Yıl: ${seasonData.season}")
                 when(seasonData.season) {
-                    1-> sezon1.add(seasonData.ToplamKg)
-                    2-> sezon2.add(seasonData.ToplamKg)
-                    3-> sezon3.add(seasonData.ToplamKg)
-                    4-> sezon4.add(seasonData.ToplamKg)
+                    1-> sezon1.add(sayac,seasonData.ToplamKg)
+                    2-> sezon2.add(sayac,seasonData.ToplamKg)
+                    3-> sezon3.add(sayac,seasonData.ToplamKg)
+                    4-> sezon4.add(sayac,seasonData.ToplamKg)
                 }
             }
+            sayac++
         }
 
         setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
@@ -300,22 +317,31 @@ class birinciFragment : Fragment() {
 
         val barData = BarData(dataSetA, dataSetB, dataSetC, dataSetD)
 
+        // **0 olan değerlere yazı yazılmasını engelleme**
+        barData.setValueFormatter(object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return if (value == 0f) "0" else value.toString() // 0 olanları boş göster
+            }
+        })
+
         // **Grup Çubukları için Boşluk Ayarları**
-        val groupSpace = 0.3f   // Gruplar arası boşluk
-        val barSpace = 0.05f    // Çubuklar arası boşluk
-        val barWidth = 0.15f    // Çubuk genişliği (daha iyi hizalama için küçültüldü)
+        val groupSpace = 0.04f   // Gruplar arası boşluk
+        val barSpace = 0.03f    // Çubuklar arası boşluk
+        val barWidth = 0.21f    // Çubuk genişliği (daha iyi hizalama için küçültüldü)
         barData.barWidth = barWidth
 
         configureBarChart(barChart, barData, years, groupSpace, barSpace)
     }
 
+
+
     /** Çubuk verilerini oluşturur **/
     private fun createEntries(data: List<Float>, offset: Float): ArrayList<BarEntry> {
         return ArrayList<BarEntry>().apply {
             for (i in data.indices) {
-                if(data[i] != 0f) {
+                //if(data[i] != 0f) {
                     add(BarEntry(i.toFloat() + offset, data[i])) // Çubukları kaydır
-                }
+                //}
             }
         }
     }
@@ -344,7 +370,7 @@ class birinciFragment : Fragment() {
                         return if (index in years.indices) years[index] else ""
                     }
                 }
-                position = XAxis.XAxisPosition.BOTTOM
+                position = XAxis.XAxisPosition.TOP
                 granularity = 1f
                 setCenterAxisLabels(true) // X ekseni için daha iyi hizalama
             }
