@@ -25,8 +25,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <!-- Boşlukla ayırmak isterseniz layout_weight kullanabilirsiniz. -->
             <TextView
-                android:id="@+id/tvMonth"
+                android:id="@+id/CompanyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,7 +36,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- Boşlukla ayırmak isterseniz layout_weight kullanabilirsiniz. -->
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -72,7 +72,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvStatus"
+                android:id="@+id/OdemeDurumu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -96,7 +96,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvAmount"
+                android:id="@+id/OdemeMiktari"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -125,7 +125,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvCompany"
+                android:id="@+id/KalanGunSayisi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"

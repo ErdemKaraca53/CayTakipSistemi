@@ -12,16 +12,16 @@ class RaporCardAdapter (private val dataSet: ArrayList<PieChartData>) :
     RecyclerView.Adapter<RaporCardAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val Title: TextView
-        val rapor1: TextView
-        val rapor2: TextView
-        val rapor3: TextView
+        val CompanyName: TextView
+        val OdemeDurumu: TextView
+        val OdemeMiktari: TextView
+        val KalanGunSayisi: TextView
         init {
             // Define click listener for the ViewHolder's View
-            Title = view.findViewById(R.id.RecyclerViewBaslik)
-            rapor1 = view.findViewById(R.id.Surgun1Rapor)
-            rapor2 = view.findViewById(R.id.Surgun2Rapor)
-            rapor3 = view.findViewById(R.id.Surgun3Rapor)
+            CompanyName = view.findViewById(R.id.CompanyName)
+            OdemeDurumu = view.findViewById(R.id.OdemeDurumu)
+            OdemeMiktari = view.findViewById(R.id.OdemeMiktari)
+            KalanGunSayisi = view.findViewById(R.id.KalanGunSayisi)
         }
     }
 
@@ -35,15 +35,8 @@ class RaporCardAdapter (private val dataSet: ArrayList<PieChartData>) :
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        val season = dataSet[position].season
-        val toplamKg = dataSet[position].ToplamKg.toInt()
-        val toplamGelir = dataSet[position].ToplamGelir.toInt()
 
-        val textViewString = "$toplamKg KG | $toplamGelir TL"
-        viewHolder.rapor1.text = textViewString
-        viewHolder.rapor2.text = textViewString
-        viewHolder.rapor3.text = textViewString
     }
 
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = 5
 }
