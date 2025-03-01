@@ -16,11 +16,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
+import com.erdem.designexample.R
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentDevletBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class DevletFragment : Fragment() {
@@ -37,17 +39,20 @@ class DevletFragment : Fragment() {
         _binding = FragmentDevletBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
 
         val calendar = Calendar.getInstance()
+        val gun = calendar.get(Calendar.DAY_OF_MONTH)
         val yil = calendar.get(Calendar.YEAR)
         val ay = calendar.get(Calendar.MONTH)
 
-        val tarih = "31/${(ay+2) % 12}/$yil"
+        val tarla = TeaGardens("")
+        val hasat = TeaHarverst(yil,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
 
-        binding.VadeTarihiEdit.text = "$tarih"
+        var tarih = "$gun/${(ay+1) % 12}/$yil"
+        binding.TarihEditText.text = tarih
+        var VadeTarih = "31/${(ay+2) % 12}/$yil"
+        binding.VadeTarihiEdit.text = VadeTarih
 
         binding.TarlaEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -111,7 +116,9 @@ class DevletFragment : Fragment() {
                 hasat.day = dayOfMonth
                 hasat.month = month+1
                 hasat.year = year
-
+                    var VadeTarih = "31/${(month+2) % 12}/$yil"
+                    Log.e("Tarih1", VadeTarih)
+                    binding.VadeTarihiEdit.text = VadeTarih
                 //Toast.makeText(context, binding.textView6.text, Toast.LENGTH_SHORT).show()
 
             },yil, ay, gun)
@@ -170,13 +177,34 @@ class DevletFragment : Fragment() {
             hasat.season = binding.SurumEditText.text.toString().toInt()
             hasat.weight_kg = binding.KgEditText.text.toString().toFloat()
 
-            hasat.VadeTarihi = binding.VadeTarihiTextView.text.toString()
+            hasat.VadeTarihi = binding.VadeTarihiEdit.text.toString()
             hasat.SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
 
-            Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()
-            DatabaseOperations().add(dbHelper,tarla,hasat,requireContext())
-            clearTextFields(view)
-            binding.SurumEditText.text = ""
+            var text = "Yıl: ${hasat.year}\n" +
+                    "Bahçe: ${tarla.gardenName}\n" +
+                    "Sürüm: ${hasat.season}\n" +
+                    "Kg: ${hasat.weight_kg.toInt()}\n" +
+                    "Satış Yeri: ${hasat.SatisYeri}\n" +
+                    "Satış Fiyatı: ${hasat.SatisFiyati}\n" +
+                    "Vade Tarihi: ${hasat.VadeTarihi}"
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Son kayıt kontrolü")
+                .setMessage(text)
+                .setNegativeButton("Reddet") { dialog, which ->
+                    // Respond to negative button press
+                    Toast.makeText(requireContext(), "Reddedildi", Toast.LENGTH_SHORT).show()
+                }
+                .setPositiveButton("Kabul et") { dialog, which ->
+                    // Respond to positive button press
+
+
+                    Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()
+                    DatabaseOperations().add(dbHelper,tarla,hasat,requireContext())
+                    clearTextFields(view)
+                    binding.SurumEditText.text = ""
+                    Toast.makeText(requireContext(), "Kabul edildi", Toast.LENGTH_SHORT).show()
+                }
+                .show()
 
         }
 
