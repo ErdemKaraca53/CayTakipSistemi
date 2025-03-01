@@ -43,10 +43,47 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="124dp"
+        app:layout_constraintBottom_toTopOf="@+id/YilRaporTextView"
+        app:layout_constraintTop_toBottomOf="@+id/GenelRaporBilgiTextView"
         tools:layout_editor_absoluteX="10dp" />
 
+    <TextView
+        android:id="@+id/GenelRaporBilgiTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:text="RAPOR"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/barChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/YilRaporTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="RAPOR"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/pieChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/AraCizgi"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/YilRaporTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barChart" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,11 +27,6 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.Calendar
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.data.Entry
-import android.widget.Toast
-
 
 class birinciFragment : Fragment() {
 
@@ -82,8 +77,11 @@ class birinciFragment : Fragment() {
             }
             sayac++
         }
-
-
+        val tarih = Calendar.getInstance().get(Calendar.YEAR)
+        val GenelRaporText = "Tüm yıllar / Tüm bahçeler"
+        val YilRaporText = "$tarih / Tüm bahçeler"
+        binding.GenelRaporBilgiTextView.text = GenelRaporText
+        binding.YilRaporTextView.text = YilRaporText
         setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
 
         return view
@@ -103,6 +101,10 @@ class birinciFragment : Fragment() {
             val tarih = bundle.getString("tarih")
             val bahce = bundle.getString("bahce")
 
+            val RaporText = "Tüm yıllar / $bahce"
+            val YilRaporText = "$tarih / $bahce"
+            binding.GenelRaporBilgiTextView.text = RaporText
+            binding.YilRaporTextView.text = YilRaporText
             setUpPieChartDataWithYearAndGardenName(tarih, bahce)
             setUpBarChartDataWitGardenName(tarih, bahce)
         }
