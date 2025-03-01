@@ -1,105 +1,139 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- card_item.xml -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/BahceRecyclerViewCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:elevation="6dp"
-    app:strokeColor="@color/pieChart3"
-    app:cardCornerRadius="5dp">
+    android:layout_margin="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    app:cardStrokeWidth="2dp"
+    app:cardStrokeColor="@android:color/holo_blue_dark">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/BahceConstraitLayout"
+    <!-- İç düzeni oluşturmak için bir dikey LinearLayout -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E8F5E9">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/RecyclerViewBaslik"
-            android:layout_width="wrap_content"
+        <!-- 1. Satır: Ay (October) solda, Tarih (30/10/2019) sağda -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text=" 2025 / Merze"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/Surgun1"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/Surgun1"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Firma ismi"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Boşlukla ayırmak isterseniz layout_weight kullanabilirsiniz. -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30/10/2019"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- İki satır arasında boşluk -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <!-- 2. Satır: Status - Unsuccessfully, Amount - $50 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textSize="14sp"
-            android:text="1. Sürgün"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/Surgun1Rapor"
-            app:layout_constraintTop_toBottomOf="@+id/RecyclerViewBaslik" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/Surgun1Rapor"
-            android:layout_width="wrap_content"
+            <!-- Sol tarafta Status -->
+            <TextView
+                android:id="@+id/tvStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Satış Bilgisi"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Unsuccessfully"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp" />
+
+            <!-- Ortada boşluk, Amount sağa yaslansın diye -->
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- Sağ tarafta Amount -->
+            <TextView
+                android:id="@+id/tvAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mİktar"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="65000 TL"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- İki satır arasında boşluk -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <!-- 3. Satır: Company - Capi Telecom -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="9999 KG | 99"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Surgun1" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/Surgun2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="14sp"
-            android:text="2. Sürgün"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/Surgun2Rapor"
-            app:layout_constraintTop_toBottomOf="@+id/Surgun1Rapor" />
+            <TextView
+                android:id="@+id/tvCompanyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ödemeye Kalan Gün"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/Surgun2Rapor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9999 KG | 99"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Surgun2" />
+            <TextView
+                android:id="@+id/tvCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Capi Telecom"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/Surgun3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="14sp"
-            android:text="3. Sürgün"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/Surgun3Rapor"
-            app:layout_constraintTop_toBottomOf="@+id/Surgun2Rapor" />
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/Surgun3Rapor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="9999 KG | 99"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Surgun3" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>
