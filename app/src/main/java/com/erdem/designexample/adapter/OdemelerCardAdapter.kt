@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.PieChartData
 
-class RaporCardAdapter (private val dataSet: ArrayList<PieChartData>) :
-    RecyclerView.Adapter<RaporCardAdapter.ViewHolder>() {
+class OdemelerCardAdapter (private val dataSet: ArrayList<PieChartData>) :
+    RecyclerView.Adapter<OdemelerCardAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val CompanyName: TextView
