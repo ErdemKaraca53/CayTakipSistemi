@@ -8,9 +8,7 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    app:cardPreventCornerOverlap="true"
-    app:cardStrokeWidth="2dp"
-    app:cardStrokeColor="@android:color/holo_blue_dark">
+    app:cardPreventCornerOverlap="true">
 
     <!-- İç düzeni oluşturmak için bir dikey LinearLayout -->
     <LinearLayout

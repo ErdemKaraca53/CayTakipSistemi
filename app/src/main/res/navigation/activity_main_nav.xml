@@ -28,4 +28,9 @@
         android:name="com.erdem.designexample.design.birinciFragment"
         android:label="fragment_birinci"
         tools:layout="@layout/fragment_birinci" />
+    <fragment
+        android:id="@+id/odemeSayfasiFragment"
+        android:name="com.erdem.designexample.design.OdemeSayfasiFragment"
+        android:label="fragment_odeme_sayfasi"
+        tools:layout="@layout/fragment_odeme_sayfasi" />
 </navigation>

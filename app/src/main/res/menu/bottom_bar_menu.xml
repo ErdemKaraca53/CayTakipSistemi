@@ -15,4 +15,8 @@
         android:enabled="true"
         android:icon="@drawable/vector"
         android:title="@string/bottom_bar_1" />
+    <item
+        android:id="@+id/odemeSayfasiFragment"
+        android:icon="@drawable/money_icon"
+        android:title="Ödemeler" />
 </menu>
