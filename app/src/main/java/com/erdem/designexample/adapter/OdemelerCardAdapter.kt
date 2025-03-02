@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.PieChartData
 
-class OdemelerCardAdapter (private val dataSet: ArrayList<PieChartData>) :
+class OdemelerCardAdapter () :
     RecyclerView.Adapter<OdemelerCardAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

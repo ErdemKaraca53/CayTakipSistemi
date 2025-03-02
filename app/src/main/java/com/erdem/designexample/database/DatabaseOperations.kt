@@ -437,7 +437,20 @@ class DatabaseOperations {
         return gardens
     }
 
+    fun getPaymentData(helper: DatabaseHelper) {
 
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, company " +
+                "FROM TeaHarverst GROUP BY paymentDate", null)
+
+        while (cursor.moveToNext()) {
+            val paymentDate = cursor.getString(cursor.getColumnIndexOrThrow("paymentDate"))
+            val money = cursor.getFloat(cursor.getColumnIndexOrThrow("totalPayment"))
+            val company = cursor.getString(cursor.getColumnIndexOrThrow("company"))
+            Log.e("payment", "$paymentDate -- $money -- $company")
+        }
+        cursor.close()
+    }
 
 
 
