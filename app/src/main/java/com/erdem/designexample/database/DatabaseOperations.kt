@@ -8,6 +8,7 @@ import com.erdem.designexample.dataClass.BahceRapor
 import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.dataClass.SurumRapor
 import com.erdem.designexample.dataClass.YılRapor
+import com.erdem.designexample.dataClass.paymentData
 
 class DatabaseOperations {
 
@@ -437,19 +438,26 @@ class DatabaseOperations {
         return gardens
     }
 
-    fun getPaymentData(helper: DatabaseHelper) {
+    fun getPaymentData(helper: DatabaseHelper) : ArrayList<paymentData> {
 
         val db = helper.readableDatabase
         val cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, company " +
                 "FROM TeaHarverst GROUP BY paymentDate", null)
 
+        val paymenDataSet = ArrayList<paymentData>()
+
         while (cursor.moveToNext()) {
+
             val paymentDate = cursor.getString(cursor.getColumnIndexOrThrow("paymentDate"))
             val money = cursor.getFloat(cursor.getColumnIndexOrThrow("totalPayment"))
             val company = cursor.getString(cursor.getColumnIndexOrThrow("company"))
+
+            val tmp = paymentData(paymentDate, money, company)
+            paymenDataSet.add(tmp)
             Log.e("payment", "$paymentDate -- $money -- $company")
         }
         cursor.close()
+        return paymenDataSet
     }
 
 

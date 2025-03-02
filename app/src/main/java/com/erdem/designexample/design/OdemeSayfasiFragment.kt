@@ -28,14 +28,17 @@ class OdemeSayfasiFragment : Fragment() {
         val view = binding.root
 
         val helper = DatabaseHelper(requireContext())
-        DatabaseOperations().getPaymentData(helper)
+        val dataSet = DatabaseOperations().getPaymentData(helper)
 
-        val customAdapter = OdemelerCardAdapter()
+        //sortedBy methodu List olarak return ediyor listeyi. Bu yüzden Arrayliste çevirdim
+        val sortedDataSet = ArrayList(dataSet.sortedBy { it.paymentDate })
+
+        val customAdapter = OdemelerCardAdapter(sortedDataSet)
 
         binding.OdemeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.OdemeRecyclerView.adapter = customAdapter
 
-
+        helper.close()
         return view
     }
 

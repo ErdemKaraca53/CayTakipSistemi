@@ -43,8 +43,8 @@
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="30/10/2019"
-                android:textColor="@android:color/darker_gray"
+                android:text="5 Gün kaldı"
+                android:textColor="@android:color/holo_red_dark"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -118,12 +118,12 @@
                 android:id="@+id/tvCompanyLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ödemeye Kalan Gün"
+                android:text="Ödeme Tarihi"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/KalanGunSayisi"
+                android:id="@+id/OdemeTarihi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
