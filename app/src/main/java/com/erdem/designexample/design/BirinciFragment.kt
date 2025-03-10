@@ -89,7 +89,7 @@ class birinciFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.YilBottomSheetButon.setOnClickListener {
+        binding.FiltreleBottomSheetButon.setOnClickListener {
             ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
             // Pasta Grafiği Ayarları
 
