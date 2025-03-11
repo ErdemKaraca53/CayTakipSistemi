@@ -28,9 +28,9 @@
     <color name="yellow">#FFEB3B</color>
     <color name="red">#F44336</color>
     <color name="toggleButton">#E9FFBF</color>
-    <color name="pieChart">#A3D900</color>
-    <color name="pieChart2">#FBC02D</color>
-    <color name="pieChart3">#029BE5</color>
-    <color name="pieChart4">#673AB7</color>
+    <color name="pieChart">#205781</color>
+    <color name="pieChart2">#4F959D </color>
+    <color name="pieChart3">#98D2C0</color>
+    <color name="pieChart4">#F6F8D5</color>
 
 </resources>
