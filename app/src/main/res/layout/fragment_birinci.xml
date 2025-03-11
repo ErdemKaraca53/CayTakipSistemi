@@ -26,73 +26,15 @@
         app:rippleColor="#E9FFBF"
         app:strokeColor="#A5D6A7" />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/GrafikRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.35"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="124dp"
-        app:layout_constraintBottom_toTopOf="@+id/YilRaporTextView"
-        app:layout_constraintTop_toBottomOf="@+id/GenelRaporBilgiTextView"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <TextView
-        android:id="@+id/GenelRaporBilgiTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="9dp"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:text="RAPOR"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/barChart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FiltreleBottomSheetButon" />
-
-    <TextView
-        android:id="@+id/YilRaporTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:text="RAPOR"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/pieChart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/AraCizgi2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="8dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/YilRaporTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barChart" />
-
-    <View
-        android:id="@+id/AraCizgi"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="8dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/GenelRaporBilgiTextView"
-        app:layout_constraintTop_toBottomOf="@+id/FiltreleBottomSheetButon"
-        tools:layout_editor_absoluteX="8dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

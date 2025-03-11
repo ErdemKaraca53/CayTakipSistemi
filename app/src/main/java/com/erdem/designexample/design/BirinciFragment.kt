@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.R
+import com.erdem.designexample.adapter.GrafikAdapter
 import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
@@ -80,12 +82,36 @@ class birinciFragment : Fragment() {
         val tarih = Calendar.getInstance().get(Calendar.YEAR)
         val GenelRaporText = "Tüm yıllar / Tüm bahçeler"
         val YilRaporText = "$tarih / Tüm bahçeler"
-        binding.GenelRaporBilgiTextView.text = GenelRaporText
-        binding.YilRaporTextView.text = YilRaporText
-        setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
+        //binding.GenelRaporBilgiTextView.text = GenelRaporText
+        //binding.YilRaporTextView.text = YilRaporText
+        //setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
+
+        val pieChartDataSet1 = getDummyPieChartData()
+
+        binding.GrafikRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.GrafikRecyclerView.adapter = GrafikAdapter(pieChartDataSet1)
+
 
         return view
     }
+
+    fun getDummyPieChartData(): List<List<PieChartData>> {
+        val dummyDataList = mutableListOf<List<PieChartData>>()
+
+        for (year in 2020..2024) {  // 5 farklı yıl için veri oluştur
+            val pieData = listOf(
+                PieChartData(year = year, season = 1, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat()),
+                PieChartData(year = year, season = 2, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat()),
+                PieChartData(year = year, season = 3, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat()),
+                PieChartData(year = year, season = 4, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat())
+            )
+            dummyDataList.add(pieData)
+        }
+
+        return dummyDataList
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,8 +129,8 @@ class birinciFragment : Fragment() {
 
             val RaporText = "Tüm yıllar / $bahce"
             val YilRaporText = "$tarih / $bahce"
-            binding.GenelRaporBilgiTextView.text = RaporText
-            binding.YilRaporTextView.text = YilRaporText
+            //binding.GenelRaporBilgiTextView.text = RaporText
+            //binding.YilRaporTextView.text = YilRaporText
             setUpPieChartDataWithYearAndGardenName(tarih, bahce)
             setUpBarChartDataWitGardenName(tarih, bahce)
         }
@@ -172,7 +198,7 @@ class birinciFragment : Fragment() {
             sayac++
         }
 
-        setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
+        //setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
     }
 
 
@@ -210,7 +236,7 @@ class birinciFragment : Fragment() {
 
     // Pasta Grafiği Temel Ayarlarını Yapan Fonksiyon
     private fun setupPieChart() {
-        binding.pieChart.apply {
+        /*binding.pieChart.apply {
             setUsePercentValues(false)  // Yüzde olarak gösterme
             description.isEnabled = false
             setExtraOffsets(40f, 20f, 40f, 20f)
@@ -234,7 +260,7 @@ class birinciFragment : Fragment() {
             }
             setEntryLabelColor(Color.BLACK)
             setEntryLabelTextSize(12f)
-        }
+        }*/
     }
 
 
@@ -293,10 +319,10 @@ class birinciFragment : Fragment() {
             setValueTextColor(Color.BLACK)
         }
 
-        binding.pieChart.data = data
+        /*binding.pieChart.data = data
         binding.pieChart.highlightValues(null)  // Önceki seçimleri temizle
         binding.pieChart.invalidate()  // Grafiği yeniden çiz
-        binding.pieChart.animateY(1400, Easing.EaseInOutQuad)
+        binding.pieChart.animateY(1400, Easing.EaseInOutQuad)*/
     }
 
     private fun setupGroupedBarChart(
