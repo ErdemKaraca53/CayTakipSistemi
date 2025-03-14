@@ -2,15 +2,10 @@ package com.erdem.designexample.database
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.util.Log
-import com.erdem.designexample.dataClass.BahceRapor
 import com.erdem.designexample.dataClass.PieChartData
-import com.erdem.designexample.dataClass.SurumRapor
-import com.erdem.designexample.dataClass.YılRapor
 import com.erdem.designexample.dataClass.paymentData
 import java.util.Calendar
-import java.util.Date
 
 class DatabaseOperations {
 
@@ -218,13 +213,14 @@ class DatabaseOperations {
             val company = cursor.getString(cursor.getColumnIndexOrThrow("company"))
 
             val day = "${paymentDate[0]}${paymentDate[1]}"
-            val month ="${paymentDate[3]}"
-            val year = "${paymentDate.get(5)}${paymentDate[6]}${paymentDate[7]}${paymentDate[8]}"
+            val month ="${paymentDate[4]}"
+            val year = "${paymentDate.get(6)}${paymentDate[7]}${paymentDate[8]}${paymentDate[9]}"
 
-            val calendar = Calendar.getInstance()
-            //calendar.set(year.toInt(), month.toInt(), day.toInt())
-            Log.e("paymentDate", paymentDate)
-            val tmp = paymentData(paymentDate, money, company)
+            val date = Calendar.getInstance()
+            Log.e("paymentDate", "$day/$month/$year")
+            date.set(year.toInt(), month.toInt(), day.toInt())
+
+            val tmp = paymentData(date, money, company)
             paymenDataSet.add(tmp)
         }
         cursor.close()

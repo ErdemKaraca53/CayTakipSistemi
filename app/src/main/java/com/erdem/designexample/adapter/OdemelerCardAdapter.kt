@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.paymentData
+import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
     RecyclerView.Adapter<OdemelerCardAdapter.ViewHolder>() {
@@ -16,12 +18,14 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         val OdemeDurumu: TextView
         val OdemeMiktari: TextView
         val OdemeTarihi: TextView
+        val KalanTarih: TextView
         init {
             // Define click listener for the ViewHolder's View
             CompanyName = view.findViewById(R.id.CompanyName)
             OdemeDurumu = view.findViewById(R.id.OdemeDurumu)
             OdemeMiktari = view.findViewById(R.id.OdemeMiktari)
             OdemeTarihi = view.findViewById(R.id.OdemeTarihi)
+            KalanTarih = view.findViewById(R.id.kalanTarih)
         }
     }
 
@@ -37,7 +41,24 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
 
         viewHolder.OdemeMiktari.text = dataSet[position].money.toString()
         viewHolder.CompanyName.text = dataSet[position].company
-        viewHolder.OdemeTarihi.text = dataSet[position].paymentDate
+
+        val today = Calendar.getInstance()
+
+        val tmp = dataSet[position].paymentDate
+
+        val kalanSure = tmp.timeInMillis - today.timeInMillis
+        val kalanGun = TimeUnit.MILLISECONDS.toDays(kalanSure)
+
+        val time = "${tmp.get(Calendar.DAY_OF_MONTH)}/0${tmp.get(Calendar.MONTH)}/${tmp.get(Calendar.YEAR)}"
+        viewHolder.OdemeTarihi.text = time
+
+        if(kalanGun > 0) {
+            viewHolder.KalanTarih.text = "$kalanGun gün kaldı."
+        } else {
+            viewHolder.KalanTarih.text = ""
+        }
+
+
 
     }
 

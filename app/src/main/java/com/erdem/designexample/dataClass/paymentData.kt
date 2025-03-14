@@ -1,3 +1,5 @@
 package com.erdem.designexample.dataClass
 
-data class paymentData(val paymentDate: String, val money: Float, val company: String)
+import java.util.Calendar
+
+data class paymentData(val paymentDate: Calendar, val money: Float, val company: String)

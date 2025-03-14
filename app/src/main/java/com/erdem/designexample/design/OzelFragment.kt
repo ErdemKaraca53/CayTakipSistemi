@@ -129,8 +129,6 @@ class OzelFragment : Fragment() {
                     hasat.month = month+1
                     hasat.year = year
 
-                    //Toast.makeText(context, binding.textView6.text, Toast.LENGTH_SHORT).show()
-
                 },yil, ay, gun)
 
             datePickerDialog.setTitle("Tarih seçiniz")
