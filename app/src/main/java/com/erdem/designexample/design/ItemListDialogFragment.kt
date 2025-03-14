@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.R
 import com.erdem.designexample.adapter.BahceAdapter
 import com.erdem.designexample.adapter.RecyclerViewEvent
-import com.erdem.designexample.adapter.TarihAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentItemListDialogListDialogBinding
@@ -19,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 const val ARG_ITEM_COUNT = "item_count"
 
 enum class ItemType {
-    BAHCE, TARIH
+    BAHCE
 }
 
 
@@ -41,7 +40,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
 
     override fun onItemClick(data: String, type: ItemType) {
         when (type) {
-            ItemType.TARIH -> tarih = data
             ItemType.BAHCE -> bahce = data
         }
 
@@ -63,12 +61,6 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
         //Bu iki satır kod sayesinde bottomSheet içerisindeki recyclerviewler kaydırılabiliyor.
         //Bu satırlar olmadan önce sadece bir tanesi kaydırılabiliyordu
         binding.BahceSecimRecyclerView.isNestedScrollingEnabled = false
-        //binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
-        val TarihDataSet = DatabaseOperations().readYear(helper)
-
-        val TarihAdapter = TarihAdapter(TarihDataSet, this)
-        //binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        //binding.TarihSecimRecyclerView.adapter = TarihAdapter
         val BahceDataSet = DatabaseOperations().readGardenName(helper)
         
         val BahceAdapter = BahceAdapter(BahceDataSet, this)
