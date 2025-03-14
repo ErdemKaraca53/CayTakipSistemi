@@ -44,7 +44,7 @@ class PieChartManager(private val context: Context, private val pieChart: PieCha
         }
     }
 
-    fun loadPieChartData(type: String, pieData: ArrayList<PieChartData>) {
+    fun loadPieChartData(pieData: ArrayList<PieChartData>) {
         val entries = ArrayList<PieEntry>()
 
         for (data in pieData) {

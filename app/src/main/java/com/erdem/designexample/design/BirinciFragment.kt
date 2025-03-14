@@ -16,9 +16,7 @@ import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentBirinciBinding
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -29,6 +27,9 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.Calendar
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.iterator
 
 class birinciFragment : Fragment() {
 
@@ -42,10 +43,10 @@ class birinciFragment : Fragment() {
         _binding = FragmentBirinciBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val pieChartDataSet = getPieChartFirstData()
+        //val pieChartDataSet = getPieChartFirstData()
 
-        setupPieChart()
-        loadPieChartData("Tümü", pieChartDataSet)
+        //setupPieChart()
+        //loadPieChartData("Tümü", pieChartDataSet)
 
         val barChartDataSet = getBarChartFirstData()
 
@@ -79,42 +80,93 @@ class birinciFragment : Fragment() {
             }
             sayac++
         }
-        val tarih = Calendar.getInstance().get(Calendar.YEAR)
-        val GenelRaporText = "Tüm yıllar / Tüm bahçeler"
-        val YilRaporText = "$tarih / Tüm bahçeler"
-        //binding.GenelRaporBilgiTextView.text = GenelRaporText
-        //binding.YilRaporTextView.text = YilRaporText
-        //setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
 
-        val pieChartDataSet1 = getDummyPieChartData()
+        val pieChartDataSet1 = getPieChartDataFirst()
 
         binding.GrafikRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.GrafikRecyclerView.adapter = GrafikAdapter(pieChartDataSet1)
+        binding.GrafikRecyclerView.adapter = GrafikAdapter(pieChartDataSet1, "Tüm Bahçeler")
 
 
         return view
     }
 
-    fun getDummyPieChartData(): List<List<PieChartData>> {
-        val dummyDataList = mutableListOf<List<PieChartData>>()
+    fun getPieChartDataFirst() :List<List<PieChartData>> {
 
-        for (year in 2020..2024) {  // 5 farklı yıl için veri oluştur
-            val pieData = listOf(
-                PieChartData(year = year, season = 1, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat()),
-                PieChartData(year = year, season = 2, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat()),
-                PieChartData(year = year, season = 3, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat()),
-                PieChartData(year = year, season = 4, ToplamKg = (10..100).random().toFloat(), ToplamGelir = (500..5000).random().toFloat())
-            )
+        val helper = DatabaseHelper(requireContext())
+        var years = ArrayList<String>()
+        val pieChartData = DatabaseOperations().getPieChartDataAll(helper).groupBy { it.year }
+        val dummyDataList = mutableListOf<List<PieChartData>>()
+        /**map olduğu için for döngüsü ile erişiyoruz. **/
+        Log.e("pieChart", "BarChart: $pieChartData")
+        for ((year, seasonList) in pieChartData) {
+            Log.e("pieChart","Yıl: $year")
+            years.add("$year")
+            val pieData = ArrayList<PieChartData>()
+            for (seasonData in seasonList) {
+                Log.e("pieChart","Yıl: ${seasonData.season}")
+                when(seasonData.season) {
+                    1->{
+                        pieData.add(PieChartData(year = year, season = 1, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                    2->{
+                        pieData.add(PieChartData(year = year, season = 2, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                    3->{
+                        pieData.add(PieChartData(year = year, season = 3, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                    4->{
+                        pieData.add(PieChartData(year = year, season = 4, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                }
+            }
             dummyDataList.add(pieData)
         }
 
+        helper.close()
         return dummyDataList
     }
 
+    fun getPieChartDataWithGardenName(gardenName: String) :List<List<PieChartData>> {
 
+        val helper = DatabaseHelper(requireContext())
+
+        var years = ArrayList<String>()
+        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenName(helper, gardenName).groupBy { it.year }
+        val dummyDataList = mutableListOf<List<PieChartData>>()
+        /**map olduğu için for döngüsü ile erişiyoruz. **/
+        Log.e("pieChart", "BarChart: $pieChartData")
+        for ((year, seasonList) in pieChartData) {
+            Log.e("pieChart","Yıl: $year")
+            years.add("$year")
+            val pieData = ArrayList<PieChartData>()
+            for (seasonData in seasonList) {
+                Log.e("pieChart","Yıl: ${seasonData.season}")
+                when(seasonData.season) {
+                    1->{
+                        pieData.add(PieChartData(year = year, season = 1, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                    2->{
+                        pieData.add(PieChartData(year = year, season = 2, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                    3->{
+                        pieData.add(PieChartData(year = year, season = 3, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                    4->{
+                        pieData.add(PieChartData(year = year, season = 4, seasonData.ToplamKg, seasonData.ToplamGelir))
+                    }
+                }
+            }
+            dummyDataList.add(pieData)
+        }
+
+        helper.close()
+        return dummyDataList
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         binding.FiltreleBottomSheetButon.setOnClickListener {
             ItemListDialogFragment.newInstance(300).show(parentFragmentManager, "dialog")
             // Pasta Grafiği Ayarları
@@ -129,13 +181,13 @@ class birinciFragment : Fragment() {
 
             val RaporText = "Tüm yıllar / $bahce"
             val YilRaporText = "$tarih / $bahce"
-            //binding.GenelRaporBilgiTextView.text = RaporText
-            //binding.YilRaporTextView.text = YilRaporText
+            val pieChartDataSet1 = getPieChartDataWithGardenName(bahce!!)
+
+            binding.GrafikRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.GrafikRecyclerView.adapter = GrafikAdapter(pieChartDataSet1, bahce)
             setUpPieChartDataWithYearAndGardenName(tarih, bahce)
             setUpBarChartDataWitGardenName(tarih, bahce)
         }
-
-
 
     }
 
@@ -197,25 +249,10 @@ class birinciFragment : Fragment() {
             }
             sayac++
         }
-
+        helper.close()
         //setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
     }
 
-
-    fun getPieChartFirstData() :  ArrayList<PieChartData>{
-        val helper = DatabaseHelper(requireContext())
-        var textViewString: String
-
-        val tarih = Calendar.getInstance().get(Calendar.YEAR)
-
-        textViewString = "$tarih yılına ait genel satış raporu"
-        val dataSet = DatabaseOperations().getPieChartDataAllWithYear(
-            helper,
-            tarih.toInt()
-        )
-        helper.close()
-        return dataSet
-    }
 
     fun getBarChartFirstData(): Map<Int, List<PieChartData>> {
         val helper = DatabaseHelper(requireContext())
