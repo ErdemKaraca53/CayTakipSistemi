@@ -21,6 +21,7 @@ import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentOzelBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class OzelFragment : Fragment() {
@@ -88,7 +89,7 @@ class OzelFragment : Fragment() {
             }, 100) // 100ms gecikme ile klavyenin kapanması için zaman tanıyoruz
         }
 
-        binding.VadeTarihiEdit.setOnClickListener {
+        binding.VadeTarihiEditOzel.setOnClickListener {
             val calendar = Calendar.getInstance()
             val yil = calendar.get(Calendar.YEAR)
             val ay = calendar.get(Calendar.MONTH)
@@ -98,11 +99,7 @@ class OzelFragment : Fragment() {
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
                     val tarih = "$dayOfMonth/0${month+1}/$year"
-                    binding.VadeTarihiEdit.text = tarih
-
-                    hasat.day = dayOfMonth
-                    hasat.month = month+1
-                    hasat.year = year
+                    binding.VadeTarihiEditOzel.text = tarih
 
                     //Toast.makeText(context, binding.textView6.text, Toast.LENGTH_SHORT).show()
 
@@ -113,7 +110,7 @@ class OzelFragment : Fragment() {
             datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "İPTAL", datePickerDialog)
 
             datePickerDialog.show()
-            binding.VadeTarihiEdit.setTextColor(Color.BLACK)
+            binding.VadeTarihiEditOzel.setTextColor(Color.BLACK)
         }
 
         binding.TarihEditText.setOnClickListener {
@@ -128,7 +125,6 @@ class OzelFragment : Fragment() {
 
                     val tarih = "$dayOfMonth/0${month+1}/$year"
                     binding.TarihEditText.text = tarih
-
                     hasat.day = dayOfMonth
                     hasat.month = month+1
                     hasat.year = year
@@ -153,7 +149,7 @@ class OzelFragment : Fragment() {
                 binding.SurumEditText,
                 binding.OzelSatisYeriEditText,
                 binding.FiyatEdit,
-                binding.VadeTarihiEdit
+                binding.VadeTarihiEditOzel
             )
             var allFieldsFilled = true
 
@@ -161,10 +157,10 @@ class OzelFragment : Fragment() {
                 allFieldsFilled = false
                 binding.TarihEditText.setTextColor(Color.RED)
             }
-            Log.e("tarih", binding.VadeTarihiEdit.text.toString().trim())
-            if(binding.VadeTarihiEdit.text.toString().trim() == "Tarih seçiniz") {
+            Log.e("tarih", binding.VadeTarihiEditOzel.text.toString().trim())
+            if(binding.VadeTarihiEditOzel.text.toString().trim() == "Tarih seçiniz") {
                 allFieldsFilled = false
-                binding.VadeTarihiEdit.setTextColor(Color.RED)
+                binding.VadeTarihiEditOzel.setTextColor(Color.RED)
             }
 
 
@@ -191,15 +187,28 @@ class OzelFragment : Fragment() {
             hasat.season = binding.SurumEditText.text.toString().toInt()
             hasat.weight_kg = binding.KgEditText.text.toString().toFloat()
 
-            hasat.VadeTarihi = binding.VadeTarihiEdit.text.toString()
+            hasat.VadeTarihi = binding.VadeTarihiEditOzel.text.toString()
             hasat.SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
             hasat.SatisYeri = binding.OzelSatisYeriEditText.text.toString().toString()
 
-            Toast.makeText(context, "Kaydedildi", Toast.LENGTH_SHORT).show()
-            DatabaseOperations().add(dbHelper,tarla,hasat,requireContext())
-            clearTextFields(view)
-            binding.SurumEditText.text = ""
-
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Son kayıt kontrolü")
+                .setMessage(
+                    "Yıl: ${hasat.year}\nBahçe: ${tarla.gardenName}\n" +
+                            "Sürüm: ${hasat.season}\nKg: ${hasat.weight_kg}\n" +
+                            "Satış Fiyatı: ${hasat.SatisFiyati}\nVade Tarihi: ${hasat.VadeTarihi}\n" +
+                            "Satış Yeri: ${hasat.SatisYeri}"
+                )
+                .setNegativeButton("Reddet") { _, _ ->
+                    Toast.makeText(requireContext(), "Reddedildi", Toast.LENGTH_SHORT).show()
+                }
+                .setPositiveButton("Kabul et") { _, _ ->
+                    DatabaseOperations().add(dbHelper, tarla, hasat, requireContext())
+                    clearTextFields(view)
+                    binding.SurumEditText.text = ""
+                    Toast.makeText(requireContext(), "Kaydedildi", Toast.LENGTH_SHORT).show()
+                }
+                .show()
         }
 
 
