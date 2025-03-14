@@ -7,7 +7,7 @@
     <color name="editTextGray">#F0F5FA</color>
     <color name="editTextColor">#6B6E82</color>
     <color name="textViewColor">#32343E</color>
-    <color name="selected_tab_color">#EFF0F6</color>
+    <color name="selected_tab_color">#E9FFBF</color>
     <color name="default_tab_color">#FFFFFF</color> <!-- Transparan -->
     <color name="recyclerViewGray">#979797</color>
     <color name="recyclerViewBlue">#3629B7</color>
