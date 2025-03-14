@@ -41,8 +41,8 @@ class DevletFragment : Fragment() {
 
         val hasat = TeaHarverst(yil, 0, 0, 0, "", 0.0f, "DEVLET", 0.0f, "")
 
-        binding.TarihEditText.text = "$gun/${(ay + 1) % 12}/$yil"
-        binding.VadeTarihiEdit.text = "31/${(ay + 2) % 12}/$yil"
+        binding.TarihEditText.text = "$gun/0${(ay + 1) % 12}/$yil"
+        binding.VadeTarihiEdit.text = "31/0${(ay + 2) % 12}/$yil"
 
         binding.TarlaEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -64,8 +64,8 @@ class DevletFragment : Fragment() {
 
         binding.TarihEditText.setOnClickListener {
             DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
-                binding.TarihEditText.text = "$dayOfMonth/${month + 1}/$year"
-                binding.VadeTarihiEdit.text = "31/${(month + 2) % 12}/$year"
+                binding.TarihEditText.text = "$dayOfMonth/0${month + 1}/$year"
+                binding.VadeTarihiEdit.text = "31/0${(month + 2) % 12}/$year"
                 hasat.apply {
                     this.year = year
                     this.month = month + 1

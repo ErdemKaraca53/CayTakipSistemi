@@ -9,6 +9,8 @@ import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.dataClass.SurumRapor
 import com.erdem.designexample.dataClass.YılRapor
 import com.erdem.designexample.dataClass.paymentData
+import java.util.Calendar
+import java.util.Date
 
 class DatabaseOperations {
 
@@ -215,9 +217,15 @@ class DatabaseOperations {
             val money = cursor.getFloat(cursor.getColumnIndexOrThrow("totalPayment"))
             val company = cursor.getString(cursor.getColumnIndexOrThrow("company"))
 
+            val day = "${paymentDate[0]}${paymentDate[1]}"
+            val month ="${paymentDate[3]}"
+            val year = "${paymentDate.get(5)}${paymentDate[6]}${paymentDate[7]}${paymentDate[8]}"
+
+            val calendar = Calendar.getInstance()
+            //calendar.set(year.toInt(), month.toInt(), day.toInt())
+            Log.e("paymentDate", paymentDate)
             val tmp = paymentData(paymentDate, money, company)
             paymenDataSet.add(tmp)
-            Log.e("payment", "$paymentDate -- $money -- $company")
         }
         cursor.close()
         return paymenDataSet

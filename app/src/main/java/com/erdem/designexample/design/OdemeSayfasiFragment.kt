@@ -46,7 +46,7 @@ class OdemeSayfasiFragment : Fragment() {
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = format.parse(dateString)!!
 
-        //Log.e("payment", date.getDay().toString())
+        Log.e("payment", date.getDay().toString())
 
         helper.close()
         return view
