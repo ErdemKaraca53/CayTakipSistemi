@@ -69,140 +69,6 @@ class DatabaseOperations {
         //db.close()
     }
 
-    fun readData(helper: DatabaseHelper, year: Int, season: Int) : ArrayList<TeaHarverst> {
-
-        val db = helper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id " +
-                                    "WHERE year = ? AND season =?",
-            arrayOf(year.toString(), season.toString())
-        )
-
-        val harverst = ArrayList<TeaHarverst>()
-
-        while(cursor.moveToNext()) {
-
-            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
-            val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
-            val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
-            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
-            val gardenName = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
-            val weight_kg = cursor.getFloat(cursor.getColumnIndexOrThrow("weight_kg"))
-
-            /*
-                SATIŞ YERİ, SATIŞ FİYAT - VADE TARİHİ DEAFULT DEĞERLER KOYULDU ŞİMDİLİK.
-                DÜZELTİLECEK !!!!!!!!!!!!!!
-             */
-            val tmp = TeaHarverst(year,month,day,season,gardenName, weight_kg, "",0.0f,"null")
-            harverst.add(tmp)
-
-        }
-        cursor.close()
-        return harverst
-    }
-
-    fun GetInfoYear(databaseHelper: DatabaseHelper) : ArrayList<YılRapor>{
-
-        val db = databaseHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT year, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                                        " FROM TeaHarverst GROUP BY year", null)
-
-        val yılRaporList = ArrayList<YılRapor>()
-
-        while (cursor.moveToNext()) {
-
-            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
-            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
-            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
-
-            val YılRapor = YılRapor(year, total_weight, total_revenue)
-
-            yılRaporList.add(YılRapor)
-        }
-        cursor.close()
-        return yılRaporList
-    }
-
-    fun GetInfoSeason(databaseHelper: DatabaseHelper, year: Int) : ArrayList<SurumRapor>{
-
-        val db = databaseHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                " FROM TeaHarverst WHERE year = ? GROUP BY season", arrayOf(year.toString())
-        )
-
-        val SurumRaporList = ArrayList<SurumRapor>()
-
-        while (cursor.moveToNext()) {
-
-            val surum = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
-            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
-            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
-
-            val SurumRapor = SurumRapor(surum, total_weight, total_revenue, year)
-
-            SurumRaporList.add(SurumRapor)
-        }
-        //Recyclerview son elemanı bottom app bar ile çakışıyordu.
-        //Bunu engellemek için fazladan bir elaman koyuldu listeye.
-        //Recyclerview içerisinde son eleman pasif hale getiriliyor. bu sayede çakışma olmuyor görüntüler arasında
-        val tmp = SurumRapor(0,0.0f,0.0f,0)
-        SurumRaporList.add(tmp)
-
-        cursor.close()
-        return SurumRaporList
-    }
-
-    fun GetInfoGarden(databaseHelper: DatabaseHelper, year: Int, season: Int) : ArrayList<BahceRapor>{
-
-        val db = databaseHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT gardenName, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                "WHERE year = ? AND season = ? GROUP BY gardenName", arrayOf(year.toString(), season.toString())
-        )
-
-        val BahceRaporList = ArrayList<BahceRapor>()
-
-        while (cursor.moveToNext()) {
-
-            val bahce = cursor.getString(cursor.getColumnIndexOrThrow("gardenName"))
-            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
-            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
-
-            val BahceRapor = BahceRapor(bahce, total_weight, total_revenue)
-
-            BahceRaporList.add(BahceRapor)
-        }
-
-        val tmp = BahceRapor("",0.0f, 0.0f)
-        BahceRaporList.add(tmp)
-        cursor.close()
-        return BahceRaporList
-    }
-
-    fun getPieChartDataAllWithGardenNameAndYear(databaseHelper: DatabaseHelper, year: Int, gardenName: String) : ArrayList<PieChartData>{
-
-        val db = databaseHelper.readableDatabase
-
-        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                "WHERE year = ? AND gardenName = ? GROUP BY season ", arrayOf(year.toString(), gardenName)
-        )
-
-        val PieChartDataList = ArrayList<PieChartData>()
-
-        while (cursor.moveToNext()) {
-
-            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
-            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
-            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
-
-            val PieChartData = PieChartData(year,season, total_weight, total_revenue)
-
-            PieChartDataList.add(PieChartData)
-        }
-
-        cursor.close()
-        return PieChartDataList
-    }
 
     //Bunu düzenle
     fun getPieChartDataAllWithGardenName(databaseHelper: DatabaseHelper,gardenName: String) : ArrayList<PieChartData>{
@@ -223,32 +89,6 @@ class DatabaseOperations {
             val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
 
             val PieChartData = PieChartData(year, season, total_weight, total_revenue)
-
-            PieChartDataList.add(PieChartData)
-        }
-
-        cursor.close()
-        return PieChartDataList
-    }
-
-    fun getPieChartDataAllWithYear(databaseHelper: DatabaseHelper, year: Int) : ArrayList<PieChartData>{
-
-        val db = databaseHelper.readableDatabase
-
-        val cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                "WHERE year = ? GROUP BY season ", arrayOf(year.toString())
-        )
-
-        val PieChartDataList = ArrayList<PieChartData>()
-
-        while (cursor.moveToNext()) {
-
-            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
-            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
-            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
-            //Yıl bilgisine göre filtreleme yapıldığı içi
-            val PieChartData = PieChartData(year,season, total_weight, total_revenue)
 
             PieChartDataList.add(PieChartData)
         }
@@ -284,42 +124,6 @@ class DatabaseOperations {
         return PieChartDataList
     }
 
-    fun getPieChartData(databaseHelper: DatabaseHelper, year: Int, gardenName: String, satisYeri: String) : ArrayList<PieChartData>{
-
-        val db = databaseHelper.readableDatabase
-
-        val cursor: Cursor
-        Log.e("pieChart", satisYeri)
-        if (satisYeri == "DEVLET") {
-            cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                    " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                    "WHERE year = ? AND gardenName = ? AND company = ? GROUP BY season ", arrayOf(year.toString(), gardenName, satisYeri)
-            )
-        } else {
-            cursor = db.rawQuery("SELECT season, sum(weight_kg) as total_weight, sum(weight_kg * price) as total_revenue" +
-                    " FROM TeaHarverst JOIN TeaGardens ON TeaHarverst.garden_id = TeaGardens.id  " +
-                    "WHERE year = ? AND gardenName = ? AND company != ? GROUP BY season ", arrayOf(year.toString(), gardenName, "DEVLET")
-            )
-
-        }
-
-
-        val PieChartDataList = ArrayList<PieChartData>()
-
-        while (cursor.moveToNext()) {
-
-            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
-            val total_weight = cursor.getFloat(cursor.getColumnIndexOrThrow("total_weight"))
-            val total_revenue = cursor.getFloat(cursor.getColumnIndexOrThrow("total_revenue"))
-
-            val PieChartData = PieChartData(year,season, total_weight, total_revenue)
-
-            PieChartDataList.add(PieChartData)
-        }
-
-        cursor.close()
-        return PieChartDataList
-    }
 
     //Eğer girilen bahçe ismi daha önce kullanılmış ise id değeri döner
     //Eğer bahçe ismi daha önce kullanılmamış ise -1 değerini döner
@@ -362,47 +166,6 @@ class DatabaseOperations {
 
     }
 
-    fun deleteData(helper: DatabaseHelper, gardenName:String) {
-
-        val db = helper.writableDatabase
-        db.delete("TeaGardens", "gardenName=?", arrayOf(gardenName))
-    }
-
-    fun readYear(helper: DatabaseHelper) : ArrayList<String> {
-        val db = helper.readableDatabase
-        val cursor = db.rawQuery("SELECT year FROM TeaHarverst ",null)
-
-        val years = ArrayList<String>()
-
-        while (cursor.moveToNext()) {
-            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("year"))
-
-            if(!years.contains(tmp)) {
-                years.add(tmp)
-            }
-        }
-
-        cursor.close()
-        return years
-    }
-
-    fun readSeason(helper: DatabaseHelper, year: Int) : ArrayList<String> {
-        val db = helper.readableDatabase
-        val cursor = db.rawQuery("SELECT season FROM TeaHarverst WHERE year = ?", arrayOf(year.toString()))
-
-        val seasons = ArrayList<String>()
-
-        while (cursor.moveToNext()) {
-            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("season"))
-
-            if(!seasons.contains(tmp)) {
-                seasons.add(tmp)
-            }
-        }
-
-        cursor.close()
-        return seasons
-    }
 
     fun readGardens(helper: DatabaseHelper, string: String) :ArrayList<String> {
 
@@ -459,19 +222,6 @@ class DatabaseOperations {
         cursor.close()
         return paymenDataSet
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
