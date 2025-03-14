@@ -46,9 +46,8 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
         }
 
         // Her iki değişken de doluysa işlemi yap
-        if (tarih.isNotEmpty() && bahce.isNotEmpty()) {
+        if (bahce.isNotEmpty()) {
             val result = Bundle().apply {
-                putString("tarih", tarih)
                 putString("bahce", bahce)
             }
             parentFragmentManager.setFragmentResult("requestKey", result)
@@ -64,12 +63,12 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
         //Bu iki satır kod sayesinde bottomSheet içerisindeki recyclerviewler kaydırılabiliyor.
         //Bu satırlar olmadan önce sadece bir tanesi kaydırılabiliyordu
         binding.BahceSecimRecyclerView.isNestedScrollingEnabled = false
-        binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
+        //binding.TarihSecimRecyclerView.isNestedScrollingEnabled = false
         val TarihDataSet = DatabaseOperations().readYear(helper)
 
         val TarihAdapter = TarihAdapter(TarihDataSet, this)
-        binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.TarihSecimRecyclerView.adapter = TarihAdapter
+        //binding.TarihSecimRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        //binding.TarihSecimRecyclerView.adapter = TarihAdapter
         val BahceDataSet = DatabaseOperations().readGardenName(helper)
         
         val BahceAdapter = BahceAdapter(BahceDataSet, this)

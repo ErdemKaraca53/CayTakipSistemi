@@ -176,81 +176,13 @@ class birinciFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener("requestKey", this) { _, bundle ->
-            val tarih = bundle.getString("tarih")
             val bahce = bundle.getString("bahce")
-
-            val RaporText = "Tüm yıllar / $bahce"
-            val YilRaporText = "$tarih / $bahce"
             val pieChartDataSet1 = getPieChartDataWithGardenName(bahce!!)
 
             binding.GrafikRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.GrafikRecyclerView.adapter = GrafikAdapter(pieChartDataSet1, bahce)
-            setUpPieChartDataWithYearAndGardenName(tarih, bahce)
-            setUpBarChartDataWitGardenName(tarih, bahce)
         }
 
-    }
-
-    fun setUpPieChartDataWithYearAndGardenName(tarih: String?, bahce: String?){
-
-        val helper = DatabaseHelper(requireContext())
-        var textViewString: String
-
-        textViewString = "$tarih yılına ait genel satış raporu"
-        val pieChartData = DatabaseOperations().getPieChartDataAllWithGardenNameAndYear(
-            helper,
-            tarih!!.toInt(),
-            bahce!!
-        )
-        helper.close()
-        setupPieChart()
-        loadPieChartData("Tümü", pieChartData)
-    }
-
-    fun setUpBarChartDataWitGardenName(tarih: String?, bahce: String?){
-
-        val helper = DatabaseHelper(requireContext())
-        var textViewString: String
-
-        textViewString = "$tarih yılına ait genel satış raporu"
-        val barChartData = DatabaseOperations().getPieChartDataAllWithGardenName(
-            helper,
-            bahce!!
-        )
-        helper.close()
-        val barChartDataSet = barChartData.groupBy { it.year }
-        var years = ArrayList<String>()
-        val sezon1 = ArrayList<Float>()
-        val sezon2 = ArrayList<Float>()
-        val sezon3 = ArrayList<Float>()
-        val sezon4 = ArrayList<Float>()
-
-        for (i in 0..3) {
-            sezon1.add(0f)
-            sezon2.add(0f)
-            sezon3.add(0f)
-            sezon4.add(0f)
-        }
-
-        var sayac = 0
-        /**map olduğu için for döngüsü ile erişiyoruz. **/
-        Log.e("pieChart", "BarChart1: $barChartDataSet")
-        for ((year, seasonList) in barChartDataSet) {
-            Log.e("pieChart","Yıl: $year")
-            years.add("$year")
-            for (seasonData in seasonList) {
-                Log.e("pieChart","Yıl: ${seasonData.season}")
-                when(seasonData.season) {
-                    1-> sezon1.add(sayac,seasonData.ToplamKg)
-                    2-> sezon2.add(sayac,seasonData.ToplamKg)
-                    3-> sezon3.add(sayac,seasonData.ToplamKg)
-                    4-> sezon4.add(sayac,seasonData.ToplamKg)
-                }
-            }
-            sayac++
-        }
-        helper.close()
-        //setupGroupedBarChart(binding.barChart, years, sezon1, sezon2, sezon3, sezon4)
     }
 
 

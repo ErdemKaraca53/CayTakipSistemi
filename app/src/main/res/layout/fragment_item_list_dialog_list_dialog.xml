@@ -13,70 +13,35 @@
     android:background="@drawable/bottomsheet_shape">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/TarihSecimRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/BahceSecimRecyclerView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5"/>
-
-    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/BahceSecimRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/TarihSecimRecyclerView"
-        app:layout_constraintTop_toTopOf="@+id/TarihSecimRecyclerView"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <TextView
-        android:id="@+id/BottomSheetTarihTextView"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:padding="11dp"
-        android:text="Tarih"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/BahceSecimRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#6E3FF3"
-        app:layout_constraintBottom_toBottomOf="@+id/BottomSheetTarihTextView" />
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#6E3FF3"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/BottomSheetBahceTextView"
+        app:layout_constraintWidth_percent="1" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#6E3FF3"
+        app:layout_constraintTop_toBottomOf="@+id/BottomSheetBahceTextView" />
 
     <TextView
         android:id="@+id/BottomSheetBahceTextView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/plus_jakarta_sans"
         android:padding="11dp"
         android:text="Bahçe"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/BahceSecimRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
