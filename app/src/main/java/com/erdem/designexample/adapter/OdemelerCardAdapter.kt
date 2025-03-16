@@ -24,6 +24,8 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         val OdemeMiktari: TextView
         val OdemeTarihi: TextView
         val KalanTarih: TextView
+        val Kg: TextView
+        val Fiyat: TextView
         init {
             // Define click listener for the ViewHolder's View
             CompanyName = view.findViewById(R.id.CompanyName)
@@ -31,6 +33,8 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
             OdemeMiktari = view.findViewById(R.id.OdemeMiktari)
             OdemeTarihi = view.findViewById(R.id.OdemeTarihi)
             KalanTarih = view.findViewById(R.id.kalanTarih)
+            Kg = view.findViewById(R.id.KgMiktari)
+            Fiyat = view.findViewById(R.id.SatisFiyati)
         }
     }
 
@@ -47,6 +51,11 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         viewHolder.OdemeMiktari.text = dataSet[position].money.toString()
         viewHolder.CompanyName.text = dataSet[position].company
 
+        val kgText = "${dataSet[position].Kg} Kg"
+        val fiyatText = "${dataSet[position].satisFiyati} TL"
+
+        viewHolder.Kg.text = kgText
+        viewHolder.Fiyat.text = fiyatText
         val today = LocalDate.now()
         val vadeTarihi = dataSet[position].paymentDate
 

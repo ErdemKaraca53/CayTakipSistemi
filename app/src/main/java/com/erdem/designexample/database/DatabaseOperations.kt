@@ -202,8 +202,8 @@ class DatabaseOperations {
     fun getPaymentData(helper: DatabaseHelper) : ArrayList<paymentData> {
 
         val db = helper.readableDatabase
-        val cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, company " +
-                "FROM TeaHarverst GROUP BY paymentDate", null)
+        val cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, company, weight_kg, price " +
+                "FROM TeaHarverst GROUP BY paymentDate, price", null)
 
         val paymenDataSet = ArrayList<paymentData>()
 
@@ -212,6 +212,8 @@ class DatabaseOperations {
             val paymentDate = cursor.getString(cursor.getColumnIndexOrThrow("paymentDate"))
             val money = cursor.getFloat(cursor.getColumnIndexOrThrow("totalPayment"))
             val company = cursor.getString(cursor.getColumnIndexOrThrow("company"))
+            val kg = cursor.getFloat(cursor.getColumnIndexOrThrow("weight_kg"))
+            val fiyat = cursor.getFloat(cursor.getColumnIndexOrThrow("price"))
 
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")  // Formatı belirle
             val parsedDate = LocalDate.parse(paymentDate, formatter)  // String -> LocalDate
@@ -220,7 +222,7 @@ class DatabaseOperations {
 
             Log.e("vadeTarihi", parsedDate.toString())
 
-            val tmp = paymentData(parsedDate, money, company)
+            val tmp = paymentData(parsedDate, money, company, kg, fiyat)
             paymenDataSet.add(tmp)
         }
         cursor.close()
