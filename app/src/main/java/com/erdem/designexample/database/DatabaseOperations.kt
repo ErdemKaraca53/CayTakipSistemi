@@ -217,7 +217,7 @@ class DatabaseOperations {
             val year = "${paymentDate.get(6)}${paymentDate[7]}${paymentDate[8]}${paymentDate[9]}"
 
             val date = Calendar.getInstance()
-            Log.e("paymentDate", "$day/$month/$year")
+            //Log.e("paymentDate", "$day/$month/$year")
             date.set(year.toInt(), month.toInt(), day.toInt())
 
             val tmp = paymentData(date, money, company)

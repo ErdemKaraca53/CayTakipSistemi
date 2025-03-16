@@ -20,6 +20,10 @@ import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentDevletBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.YearMonth
 
 class DevletFragment : Fragment() {
 
@@ -34,15 +38,22 @@ class DevletFragment : Fragment() {
         val view = binding.root
 
         val dbHelper = DatabaseHelper(requireContext())
-        val calendar = Calendar.getInstance()
-        val gun = calendar.get(Calendar.DAY_OF_MONTH)
-        val yil = calendar.get(Calendar.YEAR)
-        val ay = calendar.get(Calendar.MONTH)
+        val time = LocalDate.now()
+        val gun = time.dayOfMonth
+        val yil = time.year
+        val ay = time.monthValue
 
-        val hasat = TeaHarverst(yil, 0, 0, 0, "", 0.0f, "DEVLET", 0.0f, "")
+        val hasat = TeaHarverst(yil, ay, gun, 0, "", 0.0f, "DEVLET", 0.0f, "")
 
-        binding.TarihEditText.text = "$gun/0${(ay + 1) % 12}/$yil"
-        binding.VadeTarihiEdit.text = "31/0${(ay + 2) % 12}/$yil"
+        binding.TarihEditText.text = "$gun/0${(ay)}/$yil"
+
+        val vadeTarihi = LocalDate.now()
+        val nextMonth = vadeTarihi.plusMonths(1).monthValue  // Sonraki ayı al
+        val year = vadeTarihi.plusMonths(1).year  // Yılı güncelle
+        val lastDayOfNextMonth = YearMonth.of(year, nextMonth).atEndOfMonth()
+
+        binding.VadeTarihiEdit.text = "${lastDayOfNextMonth.dayOfMonth}/0${(nextMonth)}/${year}"
+        //hasat.VadeTarihi =
 
         binding.TarlaEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -64,14 +75,22 @@ class DevletFragment : Fragment() {
 
         binding.TarihEditText.setOnClickListener {
             DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
-                binding.TarihEditText.text = "$dayOfMonth/0${month + 1}/$year"
-                binding.VadeTarihiEdit.text = "31/0${(month + 2) % 12}/$year"
+                binding.TarihEditText.text = "$dayOfMonth/${month + 1}/$year"
+
+                val vadeTarihi = LocalDate.of(year,month+1,dayOfMonth)
+                val nextMonth = vadeTarihi.plusMonths(1).monthValue  // Sonraki ayı al
+                val year = vadeTarihi.plusMonths(1).year  // Yılı güncelle
+                val lastDayOfNextMonth = YearMonth.of(year, nextMonth).atEndOfMonth()
+                Log.e("vadeTarihi", vadeTarihi.toString())
+
+                binding.VadeTarihiEdit.text = "${lastDayOfNextMonth.dayOfMonth}/${(nextMonth)}/${year}"
                 hasat.apply {
                     this.year = year
-                    this.month = month + 1
+                    this.month = month
                     this.day = dayOfMonth
+                    //this.VadeTarihi = "$lastDayOfMonth/0${(month + 2) % 12}/$year"
                 }
-            }, yil, ay, gun).apply {
+            }, yil, ay-1, gun).apply {
                 setTitle("Tarih seçiniz")
                 setButton(DialogInterface.BUTTON_POSITIVE, "AYARLA", this)
                 setButton(DialogInterface.BUTTON_NEGATIVE, "İPTAL", this)
@@ -94,7 +113,7 @@ class DevletFragment : Fragment() {
             hasat.apply {
                 season = binding.SurumEditText.text.toString().toInt()
                 weight_kg = binding.KgEditText.text.toString().toFloat()
-                VadeTarihi = binding.VadeTarihiEdit.text.toString()
+                //VadeTarihi = binding.VadeTarihiEdit.text.toString()
                 SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
             }
 

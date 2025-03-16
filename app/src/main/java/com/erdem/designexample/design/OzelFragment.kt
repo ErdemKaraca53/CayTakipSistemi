@@ -38,10 +38,16 @@ class OzelFragment : Fragment() {
         _binding = FragmentOzelBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        val calendar = Calendar.getInstance()
+        val gun = calendar.get(Calendar.DAY_OF_MONTH)
+        val yil = calendar.get(Calendar.YEAR)
+        val ay = calendar.get(Calendar.MONTH)
 
         val tarla = TeaGardens("")
         val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
+
+        binding.TarihEditText.text = "$gun/0${(ay + 1) % 12}/$yil"
 
         binding.TarlaEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -98,8 +104,11 @@ class OzelFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-                    val tarih = "$dayOfMonth/0${month+1}/$year"
+                    var tarih = "$dayOfMonth/0${month}/$year"
+                    hasat.VadeTarihi = tarih
+                    tarih = "$dayOfMonth/0${month+1}/$year"
                     binding.VadeTarihiEditOzel.text = tarih
+
 
                     //Toast.makeText(context, binding.textView6.text, Toast.LENGTH_SHORT).show()
 

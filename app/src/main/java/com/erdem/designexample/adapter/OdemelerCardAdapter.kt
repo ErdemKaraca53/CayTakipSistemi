@@ -1,5 +1,6 @@
 package com.erdem.designexample.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,23 +44,20 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         viewHolder.CompanyName.text = dataSet[position].company
 
         val today = Calendar.getInstance()
-
         val tmp = dataSet[position].paymentDate
+        tmp.add(Calendar.MONTH, -1)
 
         val kalanSure = tmp.timeInMillis - today.timeInMillis
         val kalanGun = TimeUnit.MILLISECONDS.toDays(kalanSure)
-
+        //tmp.add(Calendar.MONTH, 2)
         val time = "${tmp.get(Calendar.DAY_OF_MONTH)}/0${tmp.get(Calendar.MONTH)}/${tmp.get(Calendar.YEAR)}"
         viewHolder.OdemeTarihi.text = time
-
+        Log.e("paymentDate", tmp.time.toString())
         if(kalanGun > 0) {
             viewHolder.KalanTarih.text = "$kalanGun gün kaldı."
         } else {
             viewHolder.KalanTarih.text = ""
         }
-
-
-
     }
 
     override fun getItemCount() = dataSet.size
