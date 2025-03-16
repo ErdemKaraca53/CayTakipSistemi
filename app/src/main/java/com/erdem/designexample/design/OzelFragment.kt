@@ -22,6 +22,7 @@ import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentOzelBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.time.LocalDate
 
 
 class OzelFragment : Fragment() {
@@ -38,16 +39,16 @@ class OzelFragment : Fragment() {
         _binding = FragmentOzelBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val calendar = Calendar.getInstance()
-        val gun = calendar.get(Calendar.DAY_OF_MONTH)
-        val yil = calendar.get(Calendar.YEAR)
-        val ay = calendar.get(Calendar.MONTH)
+        val time = LocalDate.now()
+        val gun = time.dayOfMonth
+        val yil = time.year
+        val ay = time.monthValue
 
         val tarla = TeaGardens("")
         val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
         val dbHelper = DatabaseHelper(requireContext())
 
-        binding.TarihEditText.text = "$gun/0${(ay + 1) % 12}/$yil"
+        binding.TarihEditText.text = "$gun/0${(ay)}/$yil"
 
         binding.TarlaEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -96,10 +97,10 @@ class OzelFragment : Fragment() {
         }
 
         binding.VadeTarihiEditOzel.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val yil = calendar.get(Calendar.YEAR)
-            val ay = calendar.get(Calendar.MONTH)
-            val gun = calendar.get(Calendar.DAY_OF_MONTH)
+            val time = LocalDate.now()
+            val gun = time.dayOfMonth
+            val yil = time.year
+            val ay = time.monthValue
 
             val datePickerDialog = DatePickerDialog(requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -124,10 +125,10 @@ class OzelFragment : Fragment() {
 
         binding.TarihEditText.setOnClickListener {
 
-            val calendar = Calendar.getInstance()
-            val yil = calendar.get(Calendar.YEAR)
-            val ay = calendar.get(Calendar.MONTH)
-            val gun = calendar.get(Calendar.DAY_OF_MONTH)
+            val time = LocalDate.now()
+            val gun = time.dayOfMonth
+            val yil = time.year
+            val ay = time.monthValue
 
             val datePickerDialog = DatePickerDialog(requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
