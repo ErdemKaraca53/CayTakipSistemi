@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.dataClass.paymentData
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class DatabaseOperations {
@@ -15,7 +17,7 @@ class DatabaseOperations {
 
         val harverstValues = ContentValues()
         val gardenValues = ContentValues()
-
+        Log.e("vadeTarihi","vade tarihi: " + harverst.VadeTarihi.toString())
         gardenValues.put("gardenName", garden.gardenName)
         harverstValues.put("year", harverst.year)
         harverstValues.put("month", harverst.month)
@@ -211,15 +213,14 @@ class DatabaseOperations {
             val money = cursor.getFloat(cursor.getColumnIndexOrThrow("totalPayment"))
             val company = cursor.getString(cursor.getColumnIndexOrThrow("company"))
 
-            val day = "${paymentDate[0]}${paymentDate[1]}"
-            val month ="${paymentDate[4]}"
-            val year = "${paymentDate.get(6)}${paymentDate[7]}${paymentDate[8]}${paymentDate[9]}"
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")  // Formatı belirle
+            val parsedDate = LocalDate.parse(paymentDate, formatter)  // String -> LocalDate
+            println("Parsed LocalDate: $parsedDate")  // Çıktı: 2025-03-16
 
-            val date = Calendar.getInstance()
-            //Log.e("paymentDate", "$day/$month/$year")
-            date.set(year.toInt(), month.toInt(), day.toInt())
 
-            val tmp = paymentData(date, money, company)
+            Log.e("vadeTarihi", parsedDate.toString())
+
+            val tmp = paymentData(parsedDate, money, company)
             paymenDataSet.add(tmp)
         }
         cursor.close()

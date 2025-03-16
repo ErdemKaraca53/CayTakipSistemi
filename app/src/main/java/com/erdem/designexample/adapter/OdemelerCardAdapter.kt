@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.paymentData
+import java.time.LocalDate
+import java.time.Period
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
@@ -43,21 +47,22 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         viewHolder.OdemeMiktari.text = dataSet[position].money.toString()
         viewHolder.CompanyName.text = dataSet[position].company
 
-        val today = Calendar.getInstance()
-        val tmp = dataSet[position].paymentDate
-        tmp.add(Calendar.MONTH, -1)
+        val today = LocalDate.now()
+        val vadeTarihi = dataSet[position].paymentDate
 
-        val kalanSure = tmp.timeInMillis - today.timeInMillis
-        val kalanGun = TimeUnit.MILLISECONDS.toDays(kalanSure)
-        //tmp.add(Calendar.MONTH, 2)
-        val time = "${tmp.get(Calendar.DAY_OF_MONTH)}/0${tmp.get(Calendar.MONTH)}/${tmp.get(Calendar.YEAR)}"
-        viewHolder.OdemeTarihi.text = time
-        Log.e("paymentDate", tmp.time.toString())
-        if(kalanGun > 0) {
-            viewHolder.KalanTarih.text = "$kalanGun gün kaldı."
+        val kalanGun =  ChronoUnit.DAYS.between(today, vadeTarihi)
+
+        val kalanTarih = "Kalan gün: $kalanGun"
+
+        if (kalanGun > 0) {
+            viewHolder.KalanTarih.text = kalanTarih
+            viewHolder.OdemeDurumu.text = "Odeme tarihi gelmedi"
         } else {
-            viewHolder.KalanTarih.text = ""
+            val context = viewHolder.itemView.context
+            viewHolder.OdemeDurumu.text = "Odeme $vadeTarihi'de yapılmış"
+            viewHolder.OdemeDurumu.setTextColor(ContextCompat.getColor(context, R.color.purple_500))
         }
+
     }
 
     override fun getItemCount() = dataSet.size

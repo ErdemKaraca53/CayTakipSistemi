@@ -105,7 +105,7 @@ class OzelFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-                    time = time.withYear(year).withMonth(month).withDayOfMonth(dayOfMonth)
+                    time = time.withYear(year).withMonth(month+1).withDayOfMonth(dayOfMonth)
                     var tarih = "${time.dayOfMonth}/${time.monthValue}/${time.year}"
                     hasat.VadeTarihi = time
                     tarih = "$dayOfMonth/0${month+1}/$year"

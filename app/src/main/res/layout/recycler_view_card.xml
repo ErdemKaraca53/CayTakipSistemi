@@ -1,4 +1,3 @@
-<!-- card_item.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,20 +9,17 @@
     app:cardUseCompatPadding="true"
     app:cardPreventCornerOverlap="true">
 
-    <!-- İç düzeni oluşturmak için bir dikey LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 1. Satır: Ay (October) solda, Tarih (30/10/2019) sağda -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Boşlukla ayırmak isterseniz layout_weight kullanabilirsiniz. -->
             <TextView
                 android:id="@+id/CompanyName"
                 android:layout_width="wrap_content"
@@ -43,24 +39,19 @@
                 android:id="@+id/kalanTarih"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5 Gün kaldı"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="14sp" />
-
         </LinearLayout>
 
-        <!-- İki satır arasında boşluk -->
         <Space
             android:layout_width="match_parent"
             android:layout_height="8dp" />
 
-        <!-- 2. Satır: Status - Unsuccessfully, Amount - $50 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Sol tarafta Status -->
             <TextView
                 android:id="@+id/tvStatusLabel"
                 android:layout_width="wrap_content"
@@ -77,19 +68,22 @@
                 android:text="Unsuccessfully"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="14sp" />
+        </LinearLayout>
 
-            <!-- Ortada boşluk, Amount sağa yaslansın diye -->
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
-            <!-- Sağ tarafta Amount -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/tvAmountLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mİktar"
+                android:text="Miktar"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -103,12 +97,10 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- İki satır arasında boşluk -->
         <Space
             android:layout_width="match_parent"
             android:layout_height="8dp" />
 
-        <!-- 3. Satır: Company - Capi Telecom -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
