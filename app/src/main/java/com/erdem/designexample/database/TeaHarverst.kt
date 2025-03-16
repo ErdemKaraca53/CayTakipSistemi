@@ -1,5 +1,7 @@
 package com.erdem.designexample.database
 
+import java.time.LocalDate
+
 data class TeaHarverst(
     var year: Int,
     var month: Int,
@@ -9,6 +11,6 @@ data class TeaHarverst(
     var weight_kg: Float,
     var SatisYeri: String,
     var SatisFiyati: Float,
-    var VadeTarihi: String
+    var VadeTarihi: LocalDate
 ) {
 }

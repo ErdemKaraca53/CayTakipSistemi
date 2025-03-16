@@ -25,6 +25,7 @@ import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentIkiniciBinding
+import java.time.LocalDate
 
 
 class ikinciFragment : Fragment() {
@@ -53,7 +54,7 @@ class ikinciFragment : Fragment() {
         binding.vadeTextView.text = "$tarih"
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
+        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, LocalDate.now())
         val dbHelper = DatabaseHelper(requireContext())
 
         binding.devletButton.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -221,7 +222,6 @@ class ikinciFragment : Fragment() {
             hasat.season = binding.surumEditText.text.toString().toInt()
             hasat.weight_kg = binding.kgEditText.text.toString().toFloat()
 
-            hasat.VadeTarihi = binding.vadeTextView.text.toString()
             hasat.SatisFiyati = binding.fiyatEditText.text.toString().toFloat()
 
             if(binding.ozelButton.isChecked) {

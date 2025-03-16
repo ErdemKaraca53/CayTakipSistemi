@@ -38,14 +38,14 @@ class DevletFragment : Fragment() {
         val yil = time.year
         val ay = time.monthValue
 
-        val hasat = TeaHarverst(yil, ay, gun, 0, "", 0.0f, "DEVLET", 0.0f, "")
-
         binding.TarihEditText.text = "$gun/0${(ay)}/$yil"
 
-        val vadeTarihi = LocalDate.now()
+        var vadeTarihi = LocalDate.now()
         val nextMonth = vadeTarihi.plusMonths(1).monthValue  // Sonraki ayı al
         val year = vadeTarihi.plusMonths(1).year  // Yılı güncelle
         val lastDayOfNextMonth = YearMonth.of(year, nextMonth).atEndOfMonth()
+        vadeTarihi = vadeTarihi.withYear(year).withMonth(nextMonth).withDayOfMonth(lastDayOfNextMonth.dayOfMonth)
+        val hasat = TeaHarverst(yil, ay, gun, 0, "", 0.0f, "DEVLET", 0.0f, vadeTarihi)
 
         binding.VadeTarihiEdit.text = "${lastDayOfNextMonth.dayOfMonth}/0${(nextMonth)}/${year}"
         //hasat.VadeTarihi =
@@ -72,10 +72,11 @@ class DevletFragment : Fragment() {
             DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
                 binding.TarihEditText.text = "$dayOfMonth/${month + 1}/$year"
 
-                val vadeTarihi = LocalDate.of(year,month+1,dayOfMonth)
+                var vadeTarihi = LocalDate.of(year,month+1,dayOfMonth)
                 val nextMonth = vadeTarihi.plusMonths(1).monthValue  // Sonraki ayı al
                 val year = vadeTarihi.plusMonths(1).year  // Yılı güncelle
                 val lastDayOfNextMonth = YearMonth.of(year, nextMonth).atEndOfMonth()
+                vadeTarihi = vadeTarihi.withYear(year).withMonth(nextMonth).withDayOfMonth(lastDayOfNextMonth.dayOfMonth)
                 Log.e("vadeTarihi", vadeTarihi.toString())
 
                 binding.VadeTarihiEdit.text = "${lastDayOfNextMonth.dayOfMonth}/${(nextMonth)}/${year}"
@@ -83,7 +84,7 @@ class DevletFragment : Fragment() {
                     this.year = year
                     this.month = month
                     this.day = dayOfMonth
-                    //this.VadeTarihi = "$lastDayOfMonth/0${(month + 2) % 12}/$year"
+                    this.VadeTarihi = vadeTarihi
                 }
             }, yil, ay-1, gun).apply {
                 setTitle("Tarih seçiniz")

@@ -45,7 +45,7 @@ class OzelFragment : Fragment() {
         val ay = time.monthValue
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, "")
+        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, time)
         val dbHelper = DatabaseHelper(requireContext())
 
         binding.TarihEditText.text = "$gun/0${(ay)}/$yil"
@@ -97,7 +97,7 @@ class OzelFragment : Fragment() {
         }
 
         binding.VadeTarihiEditOzel.setOnClickListener {
-            val time = LocalDate.now()
+            var time = LocalDate.now()
             val gun = time.dayOfMonth
             val yil = time.year
             val ay = time.monthValue
@@ -105,8 +105,9 @@ class OzelFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-                    var tarih = "$dayOfMonth/0${month}/$year"
-                    hasat.VadeTarihi = tarih
+                    time = time.withYear(year).withMonth(month).withDayOfMonth(dayOfMonth)
+                    var tarih = "${time.dayOfMonth}/${time.monthValue}/${time.year}"
+                    hasat.VadeTarihi = time
                     tarih = "$dayOfMonth/0${month+1}/$year"
                     binding.VadeTarihiEditOzel.text = tarih
 
@@ -194,8 +195,6 @@ class OzelFragment : Fragment() {
             tarla.gardenName = binding.TarlaEditText.text.toString().trim()
             hasat.season = binding.SurumEditText.text.toString().toInt()
             hasat.weight_kg = binding.KgEditText.text.toString().toFloat()
-
-            hasat.VadeTarihi = binding.VadeTarihiEditOzel.text.toString()
             hasat.SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
             hasat.SatisYeri = binding.OzelSatisYeriEditText.text.toString().toString()
 

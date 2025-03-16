@@ -37,11 +37,10 @@ class DatabaseOperations {
             db.insertOrThrow("TeaHarverst", null, harverstValues)
 
         } else {
-            if (!checkSeasonAndYear(helper, harverst.year, harverst.season, isGardenExists(helper, garden.gardenName), harverst.VadeTarihi)) {
+            if (!checkSeasonAndYear(helper, harverst.year, harverst.season, isGardenExists(helper, garden.gardenName), harverst.VadeTarihi.toString())) {
                 harverstValues.put("garden_id", isGardenExists(helper,garden.gardenName))
                 db.insertOrThrow("TeaHarverst", null, harverstValues)
             } else {
-                Log.e("hata", harverst.VadeTarihi)
                 val db = helper.writableDatabase
                 val updateQuery = """
                                 UPDATE TeaHarverst
@@ -55,7 +54,7 @@ class DatabaseOperations {
                 statement.bindString(2, harverst.year.toString()) // İkinci "?" -> year
                 statement.bindString(3, harverst.season.toString()) // Üçüncü "?" -> season
                 statement.bindLong(4, isGardenExists(helper, garden.gardenName).toLong()) // Dördüncü "?" -> garden_id
-                statement.bindString(5, harverst.VadeTarihi) // Beşinci "?" -> paymentDate
+                statement.bindString(5, harverst.VadeTarihi.toString()) // Beşinci "?" -> paymentDate
 
                 // Sorguyu çalıştır
                 statement.execute()
