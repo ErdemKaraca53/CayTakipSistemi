@@ -2,18 +2,15 @@ package com.erdem.designexample.design
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
-import android.graphics.Color
-import android.icu.util.Calendar
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.TeaGardens
@@ -21,8 +18,6 @@ import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentDevletBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.YearMonth
 
 class DevletFragment : Fragment() {
