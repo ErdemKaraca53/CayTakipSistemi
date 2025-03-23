@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_nav"
-    app:startDestination="@id/new_design">
+    app:startDestination="@id/signUp2">
 
     <fragment
         android:id="@+id/ikinciFragment"
@@ -33,4 +33,23 @@
         android:name="com.erdem.designexample.design.OdemeSayfasiFragment"
         android:label="fragment_odeme_sayfasi"
         tools:layout="@layout/fragment_odeme_sayfasi" />
+    <fragment
+        android:id="@+id/signUp2"
+        android:name="com.erdem.designexample.SignUp"
+        android:label="SignUp" >
+        <action
+            android:id="@+id/action_signUp2_to_new_design"
+            app:destination="@id/new_design" />
+        <action
+            android:id="@+id/action_signUp2_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.erdem.designexample.Login"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_new_design"
+            app:destination="@id/new_design" />
+    </fragment>
 </navigation>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "826023062806",
+    "project_id": "caytakipsistemi-5353",
+    "storage_bucket": "caytakipsistemi-5353.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826023062806:android:ba220db2726ec5e0dbf437",
+        "android_client_info": {
+          "package_name": "com.erdem.designexample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcN8NMldK2vl7FJ9jG4_DzsNWV__4LtbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

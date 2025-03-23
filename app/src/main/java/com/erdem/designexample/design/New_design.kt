@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.erdem.designexample.R
 import com.erdem.designexample.adapter.ViewPagerAdapter
 import com.erdem.designexample.databinding.FragmentNewDesignBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -25,6 +26,9 @@ class new_design : Fragment() {
     ): View? {
         _binding = FragmentNewDesignBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationBar)
+        bottomNavigationView.visibility = View.VISIBLE
 
         binding.viewPager.adapter = ViewPagerAdapter(requireActivity())
         TabLayoutMediator(binding.tabLayout, binding.viewPager) {tab, position ->
