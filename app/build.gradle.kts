@@ -49,7 +49,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
-    implementation ("com.google.firebase:firebase-auth-ktx:22.1.1")
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
@@ -64,4 +63,12 @@ dependencies {
     implementation (libs.androidx.constraintlayout.v220)
     implementation(libs.mpandroidchart)
     implementation(libs.material.v1110)
+
+    // Import the BoM for the Firebase platform
+    implementation(platform(libs.firebase.bom))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.google.firebase.auth)
+
 }
