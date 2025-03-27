@@ -1,11 +1,11 @@
 [versions]
-agp = "8.9.0-rc02"
+agp = "8.9.1"
 anychartAndroid = "0.0.3"
 constraintlayoutVersion = "2.2.0"
 firebaseBom = "33.11.0"
 firebaseBomVersion = "32.7.0"
 googleMaterial = "1.10.0"
-kotlin = "1.9.0"
+kotlin = "2.1.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
