@@ -1,6 +1,5 @@
 package com.erdem.designexample
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.databinding.FragmentLoginBinding
-import com.erdem.designexample.databinding.FragmentNewDesignBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
@@ -36,6 +34,10 @@ class Login : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+        /**
+        Navigation bar sign-up ve login sayfalarında gerekli değil.
+        Bu yüzden sign-up ve login sayfalarından geçiş yapılana kadar kaldırılıyor.
+         **/
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationBar)
         bottomNavigationView.visibility = View.GONE
 
@@ -47,6 +49,11 @@ class Login : Fragment() {
         _binding = null
     }
 
+    /**
+    Kullanıcı giriş işlemi burada yapılıyor.
+    email ve şifre bilgileri kontrol ediliyor.
+    email ve şifre boş değilse ve email doğru formatta ise @loginuser fonksiyonu çağrılır
+     **/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,6 +76,20 @@ class Login : Fragment() {
         }
     }
 
+    /**
+     * Kullanıcının giriş yapmasını sağlar. Bilgiler doğruysa veritabanı Firebase ile senkronize edilir.
+     *
+     * Giriş başarılı olduğunda
+     * - Kullanınıcıya bir toast mesajı verilir.
+     * - Sqlite veritabanı Firebase veritabanı ile senkronize olur
+     * - Kullanıcı ana ekrana yönlendirilir.
+     *
+     * Giriş başarısız olursa.
+     * - Kullanıcıya giriş işleminin başarısız olduğu ile ilgili toast mesaj gönderilir.
+     *
+     * @param email kullanıcı emaili
+     * @param password  kullanıcı şifresi
+     */
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
@@ -92,9 +113,26 @@ class Login : Fragment() {
     }
 
 
+    /**
+     * Parametre olarak alınan stringin email formatında olup olmadığını kontrol eder.
+     *
+     * @param email Kulllanıcı email bilgisi.
+     *
+     * @return E-posta geçerli formatta ise 'true', yanlış  formatta ise 'false' döner
+     */
+
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+
+    /**
+     * Girilen şifrenin boyutunu kontrol eder.
+     *
+     * @param password Kullanıcı şifre bilgisi.
+     *
+     * @return Şifre boyutu 6'dan büyükse 'true', 6'dan  küçükse false döner.
+     *
+     */
 
     private fun isValidPassword(password: String): Boolean {
         return password.length >= 6
