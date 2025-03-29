@@ -9,10 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.databinding.FragmentLoginBinding
 import com.erdem.designexample.databinding.FragmentNewDesignBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class Login : Fragment() {
 
@@ -71,13 +75,22 @@ class Login : Fragment() {
                 if (task.isSuccessful) {
                     Toast.makeText(requireContext(), "Giriş başarılı!", Toast.LENGTH_SHORT).show()
 
+                    val syncHelper = FirebaseSyncHelper(requireContext())
+
+                    // ✅ Firestore senkronizasyonunu arka planda çalıştır
+                    CoroutineScope(Dispatchers.IO).launch {
+                        syncHelper.syncFirestoreToSQLite()
+                    }
+
+                    // Ana ekrana yönlendirme
                     val navController = findNavController()
-                    navController.navigate(R.id.action_login_to_new_design) // HomeFragment'in id'si
+                    navController.navigate(R.id.action_login_to_new_design)
                 } else {
                     Toast.makeText(requireContext(), "Giriş başarısız! Bilgilerinizi kontrol edin.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
 
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()

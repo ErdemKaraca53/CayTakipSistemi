@@ -9,10 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.databinding.FragmentSignUpBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SignUp : Fragment() {
@@ -45,6 +49,12 @@ class SignUp : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             reload()
+            val syncHelper = FirebaseSyncHelper(requireContext())
+
+            // ✅ Coroutine ile Firestore'dan SQLite'a veri çekme işlemini arka planda çalıştır
+            CoroutineScope(Dispatchers.IO).launch {
+                syncHelper.syncFirestoreToSQLite()
+            }
         }
     }
 
