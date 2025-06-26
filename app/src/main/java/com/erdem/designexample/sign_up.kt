@@ -246,7 +246,7 @@ class SignUp : Fragment() {
      * - Ana sayfa olarak belirlenen fragment'a yönlendirme yapılır.
      */
     private fun reload() {
-        Toast.makeText(requireContext(), "Sayfa yenilendi!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Sayfa yenilendi sign-up!", Toast.LENGTH_SHORT).show()
         val navController = findNavController()
         navController.navigate(R.id.action_signUp2_to_new_design) // HomeFragment'in id'si
     }
