@@ -69,7 +69,7 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
             viewHolder.OdemeDurumu.text = "Odeme tarihi gelmedi"
         } else {
             val context = viewHolder.itemView.context
-            viewHolder.OdemeTarihi.text = "$formattedString'de yapılmış"
+            viewHolder.OdemeTarihi.text = "$formattedString"
             viewHolder.OdemeTarihi.setTextColor(ContextCompat.getColor(context, R.color.purple_500))
         }
 
