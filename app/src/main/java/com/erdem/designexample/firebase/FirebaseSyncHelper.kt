@@ -248,35 +248,41 @@ class FirebaseSyncHelper(private val context: Context) {
      *
      * @return **true** → İnternet var, **false** → İnternet yok.
      */
-    private suspend fun isInternetAvailable(): Boolean {
-        return withContext(Dispatchers.IO) {
-            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            // ✅ 1️⃣ Cihazın bir ağa bağlı olup olmadığını kontrol et
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val network = connectivityManager.activeNetwork ?: return@withContext false
-                val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return@withContext false
-                if (!capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
-                    return@withContext false
-                }
-            } else {
-                val activeNetworkInfo = connectivityManager.activeNetworkInfo
-                if (activeNetworkInfo == null || !activeNetworkInfo.isConnected) {
-                    return@withContext false
-                }
-            }
+     fun isInternetAvailable(): Boolean {
+        // register activity with the connectivity manager service
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            // ✅ 2️⃣ Google’a bir HTTP isteği atarak gerçek internet var mı kontrol et
-            try {
-                val url = URL("https://www.google.com")
-                val urlConnection = url.openConnection() as HttpURLConnection
-                urlConnection.connectTimeout = 1500
-                urlConnection.readTimeout = 1500
-                urlConnection.connect()
-                return@withContext (urlConnection.responseCode == 200)
-            } catch (e: Exception) {
-                return@withContext false
+        // if the android version is equal to M
+        // or greater we need to use the
+        // NetworkCapabilities to check what type of
+        // network has the internet connection
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            // Returns a Network object corresponding to
+            // the currently active default data network.
+            val network = connectivityManager.activeNetwork ?: return false
+
+            // Representation of the capabilities of an active network.
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+            return when {
+                // Indicates this network uses a Wi-Fi transport,
+                // or WiFi has network connectivity
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+
+                // Indicates this network uses a Cellular transport. or
+                // Cellular has network connectivity
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                // else return false
+                else -> false
             }
+        } else {
+            // if the android version is below M
+            @Suppress("DEPRECATION") val networkInfo =
+                connectivityManager.activeNetworkInfo ?: return false
+            @Suppress("DEPRECATION")
+            return networkInfo.isConnected
         }
     }
 
