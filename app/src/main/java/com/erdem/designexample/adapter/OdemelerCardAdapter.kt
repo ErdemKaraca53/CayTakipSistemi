@@ -24,6 +24,9 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         val KalanTarih: TextView
         val Kg: TextView
         val Fiyat: TextView
+        val btnDetay: TextView = view.findViewById(R.id.btnDetay)
+        val statusBadge: View = view.findViewById(R.id.status_badge) // Badge container
+        val statusDot: View = itemView.findViewById(R.id.statusDot)
         init {
             // Define click listener for the ViewHolder's View
             CompanyName = view.findViewById(R.id.CompanyName)
@@ -62,15 +65,27 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
 
         val kalanGun =  ChronoUnit.DAYS.between(today, vadeTarihi)
 
-        val kalanTarih = "Kalan gün: $kalanGun"
+        val kalanTarih = "$kalanGun gün kaldı"
 
         if (kalanGun > 0) {
+            val context = viewHolder.itemView.context
             viewHolder.KalanTarih.text = kalanTarih
-            viewHolder.OdemeDurumu.text = "Odeme tarihi gelmedi"
+            viewHolder.statusBadge.setBackgroundResource(R.drawable.status_badge_pending_bg)
+            viewHolder.statusDot.setBackgroundResource(R.drawable.status_dot_pending)
+            viewHolder.OdemeDurumu.text = "Ödeme tarihi gelmedi"
+            viewHolder.KalanTarih.text = kalanTarih
+            viewHolder.KalanTarih.visibility = View.VISIBLE
+            viewHolder.OdemeDurumu.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark))
         } else {
             val context = viewHolder.itemView.context
             viewHolder.OdemeTarihi.text = "$formattedString"
             viewHolder.OdemeTarihi.setTextColor(ContextCompat.getColor(context, R.color.purple_500))
+            viewHolder.statusBadge.setBackgroundResource(R.drawable.status_badge_success_bg)
+            viewHolder.statusDot.setBackgroundResource(R.drawable.status_dot_success)
+            viewHolder.OdemeDurumu.text = "Odeme yapıldı"
+            //Burada yaptığımızda üsttede yapmamız gerekir
+            viewHolder.KalanTarih.visibility = View.GONE
+            viewHolder.OdemeDurumu.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark))
         }
 
     }
