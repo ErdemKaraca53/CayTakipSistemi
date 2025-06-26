@@ -1,6 +1,5 @@
 package com.erdem.designexample.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.paymentData
 import java.time.LocalDate
-import java.time.Period
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.Calendar
-import java.util.concurrent.TimeUnit
+
 
 class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
     RecyclerView.Adapter<OdemelerCardAdapter.ViewHolder>() {
@@ -48,7 +46,7 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        viewHolder.OdemeMiktari.text = dataSet[position].money.toString()
+        viewHolder.OdemeMiktari.text = dataSet[position].money.toInt().toString() + " TL"
         viewHolder.CompanyName.text = dataSet[position].company
 
         val kgText = "${dataSet[position].Kg} Kg"
@@ -59,6 +57,9 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         val today = LocalDate.now()
         val vadeTarihi = dataSet[position].paymentDate
 
+        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
+        val formattedString: String? = vadeTarihi.format(formatter)
+
         val kalanGun =  ChronoUnit.DAYS.between(today, vadeTarihi)
 
         val kalanTarih = "Kalan gün: $kalanGun"
@@ -68,8 +69,8 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
             viewHolder.OdemeDurumu.text = "Odeme tarihi gelmedi"
         } else {
             val context = viewHolder.itemView.context
-            viewHolder.OdemeDurumu.text = "Odeme $vadeTarihi'de yapılmış"
-            viewHolder.OdemeDurumu.setTextColor(ContextCompat.getColor(context, R.color.purple_500))
+            viewHolder.OdemeTarihi.text = "$formattedString'de yapılmış"
+            viewHolder.OdemeTarihi.setTextColor(ContextCompat.getColor(context, R.color.purple_500))
         }
 
     }

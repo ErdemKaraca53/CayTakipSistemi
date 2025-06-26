@@ -38,7 +38,7 @@ class OdemeSayfasiFragment : Fragment() {
 
         //sortedBy methodu List olarak return ediyor listeyi. Bu yüzden Arrayliste çevirdim
         val sortedDataSet = ArrayList(dataSet.sortedBy { it.paymentDate })
-
+        Log.e("paymentData", sortedDataSet.toString())
         val customAdapter = OdemelerCardAdapter(sortedDataSet)
 
         binding.OdemeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
