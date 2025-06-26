@@ -40,15 +40,12 @@ class SignUp : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
-
         /**
         Navigation bar sign-up ve login sayfalarında gerekli değil.
         Bu yüzden sign-up ve login sayfalarından geçiş yapılana kadar kaldırılıyor.
          **/
         val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationBar)
         bottomNavigationView.visibility = View.GONE
-
-
         return binding.root
     }
 
