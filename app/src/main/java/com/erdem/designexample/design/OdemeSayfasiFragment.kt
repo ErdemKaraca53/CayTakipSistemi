@@ -38,7 +38,7 @@ class OdemeSayfasiFragment : Fragment() {
 
         //sortedBy methodu List olarak return ediyor listeyi. Bu yüzden Arrayliste çevirdim
         val sortedDataSet = ArrayList(dataSet.sortedBy { it.paymentDate })
-        Log.e("paymentData", sortedDataSet.toString())
+
         val customAdapter = OdemelerCardAdapter(sortedDataSet)
 
         binding.OdemeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -48,7 +48,9 @@ class OdemeSayfasiFragment : Fragment() {
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = format.parse(dateString)!!
 
-        Log.e("payment", date.getDay().toString())
+        binding.filtreFAB.setOnClickListener {
+            Toast.makeText(requireContext(), "selam", Toast.LENGTH_SHORT).show()
+        }
 
         helper.close()
         return view
