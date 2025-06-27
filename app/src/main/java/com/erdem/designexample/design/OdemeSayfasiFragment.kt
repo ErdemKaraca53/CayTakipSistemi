@@ -45,6 +45,7 @@ class OdemeSayfasiFragment : Fragment() {
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = format.parse(dateString)!!
 
+
         //Modal bottomSheeti açıyoruz.
         binding.filtreFAB.setOnClickListener {
             val modalBottomSheet = filterListDialogFragment()

@@ -7,7 +7,6 @@ import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.dataClass.paymentData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
 
 class DatabaseOperations {
 
@@ -198,6 +197,7 @@ class DatabaseOperations {
         cursor.close()
         return years
     }
+
 
     fun readCompany(helper: DatabaseHelper) :ArrayList<String> {
 
