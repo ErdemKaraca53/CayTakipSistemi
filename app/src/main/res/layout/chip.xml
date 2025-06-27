@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Modern Chip Tasarımı -->
 <com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
+    style="@style/Widget.Material3.Chip.Filter"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="12dp">
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+    android:textColor="?attr/colorOnSurface"
+    android:checkable="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="2dp"
+    android:stateListAnimator="@null"
+    app:chipCornerRadius="16dp"
+    app:chipMinHeight="32dp"
+    app:chipStrokeColor="@color/common_google_signin_btn_text_dark"
+    app:chipStrokeWidth="1dp"
+    app:ensureMinTouchTargetSize="true"
+    app:rippleColor="?attr/colorPrimary"
+    app:chipIconTint="?attr/colorPrimary"
+    app:closeIconTint="?attr/colorOnSurface"
+    app:textStartPadding="12dp"
+    app:textEndPadding="12dp"
+    android:checked="false"
+    app:chipBackgroundColor="@color/chip_background_color"
+    >
 
 </com.google.android.material.chip.Chip>

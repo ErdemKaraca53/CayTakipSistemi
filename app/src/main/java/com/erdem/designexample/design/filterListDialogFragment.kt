@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
@@ -53,10 +55,15 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         data.forEach { topic ->
             val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.chipGroup, false) as Chip
 
-            chip.id = Random(1).nextInt()
+            chip.id = View.generateViewId()
             chip.text = topic
+            chip.isCheckable = true
+            chip.isClickable = true
+            //chip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple)
             binding.chipGroup.addView(chip)
         }
+        
+
 
 
     }
