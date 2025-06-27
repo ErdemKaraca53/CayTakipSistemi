@@ -182,6 +182,41 @@ class DatabaseOperations {
         return gardens
     }
 
+    fun readYear(helper: DatabaseHelper) :ArrayList<String> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT DISTINCT year FROM TeaHarverst", null)
+
+        var years = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("year"))
+
+            years.add(tmp)
+
+        }
+        cursor.close()
+        return years
+    }
+
+    fun readCompany(helper: DatabaseHelper) :ArrayList<String> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT DISTINCT company FROM TeaHarverst", null)
+
+        var years = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("company"))
+
+            years.add(tmp)
+
+        }
+        cursor.close()
+        return years
+    }
+
+
     fun readGardenName(helper: DatabaseHelper) :ArrayList<String> {
 
         val db = helper.readableDatabase

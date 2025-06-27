@@ -9,7 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
+import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlin.random.Random
@@ -49,22 +52,57 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         activity?.findViewById<RecyclerView>(R.id.list)?.layoutManager =
             LinearLayoutManager(context)
 
+        val helper = DatabaseHelper(requireContext())
 
-        val data = arrayListOf("ÇAYKUR", "LİPTON", "DOĞUŞ", "KARALİ", "KARACA ÇAY")
+        val firma = DatabaseOperations().readCompany(helper)
 
-        data.forEach { topic ->
-            val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.chipGroup, false) as Chip
+        firma.forEach { topic ->
+            val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.firmaChipGroup, false) as Chip
 
             chip.id = View.generateViewId()
             chip.text = topic
             chip.isCheckable = true
             chip.isClickable = true
             //chip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple)
-            binding.chipGroup.addView(chip)
+            binding.firmaChipGroup.addView(chip)
         }
-        
 
+        val tarih = DatabaseOperations().readYear(helper)
+        tarih.add("Tüm Yıllar")
 
+        tarih.forEach { topic ->
+            val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.firmaChipGroup, false) as Chip
+
+            chip.id = View.generateViewId()
+            chip.text = topic
+            chip.isCheckable = true
+            chip.isClickable = true
+            //chip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple)
+            chip.setOnClickListener {
+                if(chip.text == "Tüm Yıllar") {
+                    for(i in 0 until binding.tarihChipGroup.childCount) {
+
+                        val tmp = binding.tarihChipGroup.getChildAt(i)
+                        if(tmp is Chip && tmp.isChecked && tmp.text != "Tüm Yıllar") {
+                           tmp.isChecked = false
+                        }
+
+                    }
+                }
+
+                if(chip.text != "Tüm Yıllar") {
+                    for(i in 0 until binding.tarihChipGroup.childCount) {
+
+                        val tmp = binding.tarihChipGroup.getChildAt(i)
+                        if(tmp is Chip && tmp.isChecked && tmp.text == "Tüm Yıllar") {
+                            tmp.isChecked = false
+                        }
+
+                    }
+                }
+            }
+            binding.tarihChipGroup.addView(chip)
+        }
 
     }
 
@@ -84,4 +122,18 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    fun getSelectedChip(flexboxLayout: FlexboxLayout): List<String> {
+
+        val selectedChips = mutableListOf<String>()
+
+        for(i in 0 until flexboxLayout.childCount) {
+            val child = flexboxLayout.getChildAt(i)
+            if(child is Chip && child.isChecked) {
+                selectedChips.add(child.text.toString())
+            }
+        }
+        return selectedChips
+    }
+
 }

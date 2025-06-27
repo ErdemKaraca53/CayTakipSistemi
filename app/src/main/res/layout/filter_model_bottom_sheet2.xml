@@ -9,20 +9,47 @@
     android:paddingTop="@dimen/list_item_spacing_half"
     android:paddingBottom="@dimen/list_item_spacing_half"
     tools:context=".design.filterListDialogFragment"
+    android:backgroundTint="@color/white"
 >
 
     <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/chipGroup"
+        android:id="@+id/firmaChipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="32dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:padding="32dp"
         app:flexWrap="wrap"
         app:justifyContent="center"
+        app:layout_constraintBottom_toTopOf="@+id/tarihChipGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.google.android.flexbox.FlexboxLayout>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/firmaChipGroup"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/tarihChipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="32dp"
+        app:flexWrap="wrap"
+        app:justifyContent="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
