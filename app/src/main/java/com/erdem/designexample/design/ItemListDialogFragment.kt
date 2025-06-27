@@ -78,7 +78,7 @@ class ItemListDialogFragment : BottomSheetDialogFragment(), RecyclerViewEvent  {
         fun newInstance(itemCount: Int): ItemListDialogFragment =
             ItemListDialogFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_ITEM_COUNT2, itemCount)
+                    //putInt(ARG_ITEM_COUNT2, itemCount)
                 }
             }
 

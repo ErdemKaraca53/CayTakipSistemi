@@ -1,22 +1,19 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.erdem.designexample.R
 import com.erdem.designexample.adapter.OdemelerCardAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentOdemeSayfasiBinding
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 
 class OdemeSayfasiFragment : Fragment() {
 
@@ -48,8 +45,10 @@ class OdemeSayfasiFragment : Fragment() {
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = format.parse(dateString)!!
 
+        //Modal bottomSheeti açıyoruz.
         binding.filtreFAB.setOnClickListener {
-            Toast.makeText(requireContext(), "selam", Toast.LENGTH_SHORT).show()
+            val modalBottomSheet = filterListDialogFragment()
+            modalBottomSheet.show(parentFragmentManager, filterListDialogFragment.TAG)
         }
 
         helper.close()

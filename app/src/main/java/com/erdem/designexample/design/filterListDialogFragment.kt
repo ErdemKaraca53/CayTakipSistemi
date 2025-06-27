@@ -1,14 +1,19 @@
-package com.erdem.designexample
+package com.erdem.designexample.design
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.erdem.designexample.R
 import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
+import kotlin.random.Random
 
 // TODO: Customize parameter argument names
-const val ARG_ITEM_COUNT = "item_count"
+//const val ARG_ITEM_COUNT = "item_count"
 
 /**
  *
@@ -33,16 +38,31 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
     ): View? {
 
         _binding = FilterModelBottomSheet2Binding.inflate(inflater, container, false)
+
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activity?.findViewById<RecyclerView>(R.id.list)?.layoutManager =
+            LinearLayoutManager(context)
+
+
+        val data = arrayListOf("ÇAYKUR", "LİPTON", "DOĞUŞ", "KARALİ", "KARACA ÇAY")
+
+        data.forEach { topic ->
+            val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.chipGroup, false) as Chip
+
+            chip.id = Random(1).nextInt()
+            chip.text = topic
+            binding.chipGroup.addView(chip)
+        }
+
 
     }
 
     companion object {
-
+        const val TAG = "ModalBottomSheet"
         // TODO: Customize parameters
         fun newInstance(itemCount: Int): filterListDialogFragment =
             filterListDialogFragment().apply {
