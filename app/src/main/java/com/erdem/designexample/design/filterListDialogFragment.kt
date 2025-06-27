@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
@@ -15,7 +13,6 @@ import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
-import kotlin.random.Random
 
 // TODO: Customize parameter argument names
 //const val ARG_ITEM_COUNT = "item_count"
@@ -63,7 +60,6 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
             chip.text = topic
             chip.isCheckable = true
             chip.isClickable = true
-            //chip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple)
             binding.firmaChipGroup.addView(chip)
         }
 
@@ -77,7 +73,6 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
             chip.text = topic
             chip.isCheckable = true
             chip.isClickable = true
-            //chip.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.purple)
             chip.setOnClickListener {
                 if(chip.text == "Tüm Yıllar") {
                     for(i in 0 until binding.tarihChipGroup.childCount) {
