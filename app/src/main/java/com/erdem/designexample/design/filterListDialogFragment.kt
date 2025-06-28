@@ -52,6 +52,7 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         val helper = DatabaseHelper(requireContext())
 
         val firma = DatabaseOperations().readCompany(helper)
+        firma.add("Tüm Firmalar")
 
         firma.forEach { topic ->
             val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.firmaChipGroup, false) as Chip
@@ -60,6 +61,31 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
             chip.text = topic
             chip.isCheckable = true
             chip.isClickable = true
+
+            chip.setOnClickListener {
+                if(chip.text == "Tüm Firmalar") {
+                    for(i in 0 until binding.tarihChipGroup.childCount) {
+
+                        val tmp = binding.firmaChipGroup.getChildAt(i)
+                        if(tmp is Chip && tmp.isChecked && tmp.text != "Tüm Firmalar") {
+                            tmp.isChecked = false
+                        }
+
+                    }
+                }
+
+                if(chip.text != "Tüm Firmalar") {
+                    for(i in 0 until binding.firmaChipGroup.childCount) {
+
+                        val tmp = binding.firmaChipGroup.getChildAt(i)
+                        if(tmp is Chip && tmp.isChecked && tmp.text == "Tüm Firmalar") {
+                            tmp.isChecked = false
+                        }
+
+                    }
+                }
+            }
+
             binding.firmaChipGroup.addView(chip)
         }
 
