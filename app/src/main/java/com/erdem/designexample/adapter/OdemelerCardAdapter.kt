@@ -91,4 +91,10 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
     }
 
     override fun getItemCount() = dataSet.size
+
+    fun updateData(newList: ArrayList<paymentData>) {
+        dataSet.clear()
+        dataSet.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

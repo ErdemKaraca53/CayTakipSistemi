@@ -1,5 +1,6 @@
 package com.erdem.designexample.design
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import com.erdem.designexample.adapter.OdemelerCardAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentOdemeSayfasiBinding
-import com.erdem.designexample.filtreViewModel
+import com.erdem.designexample.viewModels.filtreViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -36,8 +37,24 @@ class OdemeSayfasiFragment : Fragment() {
         _binding = FragmentOdemeSayfasiBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        //Modal bottomSheeti açıyoruz.
+        binding.filtreFAB.setOnClickListener {
+            val modalBottomSheet = filterListDialogFragment()
+            modalBottomSheet.show(parentFragmentManager, filterListDialogFragment.TAG)
+        }
+
+
+        return view
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewModel: filtreViewModel by activityViewModels()
+        var list = ArrayList<String>()
+
         val helper = DatabaseHelper(requireContext())
-        val dataSet = DatabaseOperations().getPaymentData(helper)
+        var dataSet = DatabaseOperations().getPaymentData(helper, list)
 
         //sortedBy methodu List olarak return ediyor listeyi. Bu yüzden Arrayliste çevirdim
         val sortedDataSet = ArrayList(dataSet.sortedBy { it.paymentDate })
@@ -47,30 +64,21 @@ class OdemeSayfasiFragment : Fragment() {
         binding.OdemeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.OdemeRecyclerView.adapter = customAdapter
 
+        viewModel.times.observe(viewLifecycleOwner, { time ->
+
+            Log.e("shareeed", time.size.toString())
+
+            dataSet = DatabaseOperations().getPaymentData(helper, time)
+
+            customAdapter.updateData(dataSet)
+            // Perform an action with the latest item data.
+        })
+
         val dateString = "2024-03-02"
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = format.parse(dateString)!!
 
-        Toast.makeText(requireContext(), "veri geldi", Toast.LENGTH_SHORT).show()
-        //Modal bottomSheeti açıyoruz.
-        binding.filtreFAB.setOnClickListener {
-            val modalBottomSheet = filterListDialogFragment()
-            modalBottomSheet.show(parentFragmentManager, filterListDialogFragment.TAG)
-        }
-
         helper.close()
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val viewModel: filtreViewModel by activityViewModels()
-
-        viewModel.times.observe(viewLifecycleOwner, { time ->
-            //binding.filtreFAB.text = time.toString()
-            Log.e("shareeed", time.toString())
-            // Perform an action with the latest item data.
-        })
     }
 
     override fun onDestroyView() {

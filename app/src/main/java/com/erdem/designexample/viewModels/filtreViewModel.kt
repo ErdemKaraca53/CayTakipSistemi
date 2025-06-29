@@ -1,4 +1,4 @@
-package com.erdem.designexample
+package com.erdem.designexample.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

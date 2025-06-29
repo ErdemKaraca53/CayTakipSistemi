@@ -14,7 +14,7 @@ import com.erdem.designexample.R
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
-import com.erdem.designexample.filtreViewModel
+import com.erdem.designexample.viewModels.filtreViewModel
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip

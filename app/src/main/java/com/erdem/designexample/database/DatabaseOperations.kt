@@ -2,6 +2,7 @@ package com.erdem.designexample.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.util.Log
 import com.erdem.designexample.dataClass.PieChartData
 import com.erdem.designexample.dataClass.paymentData
@@ -234,12 +235,24 @@ class DatabaseOperations {
         return gardens
     }
 
-    fun getPaymentData(helper: DatabaseHelper) : ArrayList<paymentData> {
+    fun getPaymentData(helper: DatabaseHelper, time: ArrayList<String>) : ArrayList<paymentData> {
 
         val db = helper.readableDatabase
-        val cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
-                                "sum(weight_kg) as total_kg, company, weight_kg, price " +
-                "FROM TeaHarverst GROUP BY paymentDate, price, company", null)
+        val cursor: Cursor
+
+        val str = List(time.size) { "?" }.joinToString(",")
+
+        if(time.isEmpty() || time.get(0) == "Tüm Yıllar") {
+
+            cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
+                    "sum(weight_kg) as total_kg, company, weight_kg, price " +
+                    "FROM TeaHarverst GROUP BY paymentDate, price, company", null)
+
+        }else {
+            cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
+                    "sum(weight_kg) as total_kg, company, weight_kg, price " +
+                    "FROM TeaHarverst WHERE year IN ($str) GROUP BY paymentDate, price, company", time.toTypedArray())
+        }
 
         val paymenDataSet = ArrayList<paymentData>()
 
