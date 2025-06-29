@@ -1,15 +1,20 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
+import com.erdem.designexample.filtreViewModel
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -121,6 +126,20 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
 
                     }
                 }
+
+                //viewmodele seçilen tarihleri aktarıyor.
+                var times = ArrayList<String>()
+                for(i in 0 until binding.tarihChipGroup.childCount) {
+
+                    val tmp = binding.tarihChipGroup.getChildAt(i)
+                    if(tmp is Chip && tmp.isChecked) {
+                        times.add(tmp.text.toString())
+                    }
+
+                }
+
+                val viewModel: filtreViewModel by activityViewModels()
+                viewModel.saveTimes(times)
             }
             binding.tarihChipGroup.addView(chip)
         }

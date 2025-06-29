@@ -1,18 +1,24 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.adapter.OdemelerCardAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentOdemeSayfasiBinding
+import com.erdem.designexample.filtreViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.getValue
 
 
 class OdemeSayfasiFragment : Fragment() {
@@ -45,7 +51,7 @@ class OdemeSayfasiFragment : Fragment() {
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date: Date = format.parse(dateString)!!
 
-
+        Toast.makeText(requireContext(), "veri geldi", Toast.LENGTH_SHORT).show()
         //Modal bottomSheeti açıyoruz.
         binding.filtreFAB.setOnClickListener {
             val modalBottomSheet = filterListDialogFragment()
@@ -54,6 +60,17 @@ class OdemeSayfasiFragment : Fragment() {
 
         helper.close()
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewModel: filtreViewModel by activityViewModels()
+
+        viewModel.times.observe(viewLifecycleOwner, { time ->
+            //binding.filtreFAB.text = time.toString()
+            Log.e("shareeed", time.toString())
+            // Perform an action with the latest item data.
+        })
     }
 
     override fun onDestroyView() {
