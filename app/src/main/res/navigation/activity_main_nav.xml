@@ -35,7 +35,7 @@
         tools:layout="@layout/fragment_odeme_sayfasi" />
     <fragment
         android:id="@+id/signUp2"
-        android:name="com.erdem.designexample.SignUp"
+        android:name="com.erdem.designexample.design.SignUp"
         android:label="SignUp" >
         <action
             android:id="@+id/action_signUp2_to_new_design"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.erdem.designexample.Login"
+        android:name="com.erdem.designexample.design.Login"
         android:label="Login" >
         <action
             android:id="@+id/action_login_to_new_design"
