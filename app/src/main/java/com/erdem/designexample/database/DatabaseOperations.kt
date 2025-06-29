@@ -235,23 +235,41 @@ class DatabaseOperations {
         return gardens
     }
 
-    fun getPaymentData(helper: DatabaseHelper, time: ArrayList<String>) : ArrayList<paymentData> {
+    fun getPaymentData(helper: DatabaseHelper, time: ArrayList<String>, company: ArrayList<String>) : ArrayList<paymentData> {
 
         val db = helper.readableDatabase
         val cursor: Cursor
 
-        val str = List(time.size) { "?" }.joinToString(",")
+        val timeStr = List(time.size) { "?" }.joinToString(",")
+        val companyStr = List(company.size) { "?" }.joinToString(",")
 
-        if(time.isEmpty() || time.get(0) == "Tüm Yıllar") {
+        Log.e("shareeed", company.toString())
+        Log.e("shareeed", time.toString())
+        if( (time.isEmpty() && company.isEmpty())) {
 
             cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
                     "sum(weight_kg) as total_kg, company, weight_kg, price " +
                     "FROM TeaHarverst GROUP BY paymentDate, price, company", null)
-
-        }else {
+            Log.e("shareeed", "girdim1")
+        }else if(time.isEmpty() && company.isNotEmpty()){
             cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
                     "sum(weight_kg) as total_kg, company, weight_kg, price " +
-                    "FROM TeaHarverst WHERE year IN ($str) GROUP BY paymentDate, price, company", time.toTypedArray())
+                    "FROM TeaHarverst WHERE company IN ($companyStr) GROUP BY paymentDate, price, company", company.toTypedArray())
+            Log.e("shareeed", "time boş, company dolu")
+        }
+        else if(company.isEmpty() && time.isNotEmpty()){
+            cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
+                    "sum(weight_kg) as total_kg, company, weight_kg, price " +
+                    "FROM TeaHarverst WHERE year IN ($timeStr) GROUP BY paymentDate, price, company", time.toTypedArray())
+            Log.e("shareeed", "time dolu, company boş")
+        } else {
+            //Log.e("shareeed", "girdim2")
+            val selectionArgs = (time + company).toTypedArray()
+            cursor = db.rawQuery("SELECT paymentDate, sum(weight_kg * price) as totalPayment, " +
+                    "sum(weight_kg) as total_kg, company, weight_kg, price " +
+                    "FROM TeaHarverst " +
+                    "WHERE year IN ($timeStr) AND company IN ($companyStr) " +
+                    "GROUP BY paymentDate, price, company", selectionArgs)
         }
 
         val paymenDataSet = ArrayList<paymentData>()
@@ -269,7 +287,7 @@ class DatabaseOperations {
             println("Parsed LocalDate: $parsedDate")  // Çıktı: 2025-03-16
 
 
-            Log.e("vadeTarihi", parsedDate.toString())
+            //Log.e("vadeTarihi", parsedDate.toString())
 
             val tmp = paymentData(parsedDate, money, company, kg, fiyat)
             paymenDataSet.add(tmp)

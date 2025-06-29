@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class filtreViewModel: ViewModel() {
+class tarihViewModel: ViewModel() {
 
     private var _times = MutableLiveData<ArrayList<String>>()
     val times: LiveData<ArrayList<String>> = _times

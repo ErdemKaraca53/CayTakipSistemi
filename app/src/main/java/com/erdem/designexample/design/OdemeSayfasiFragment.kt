@@ -6,16 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erdem.designexample.adapter.OdemelerCardAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentOdemeSayfasiBinding
-import com.erdem.designexample.viewModels.filtreViewModel
+import com.erdem.designexample.viewModels.companyViewModel
+import com.erdem.designexample.viewModels.tarihViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -50,11 +49,13 @@ class OdemeSayfasiFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel: filtreViewModel by activityViewModels()
-        var list = ArrayList<String>()
 
+        val timeViewModel: tarihViewModel by activityViewModels()
+        val companyViewModel : companyViewModel by activityViewModels()
+        var tarih = ArrayList<String>()
+        var firma = ArrayList<String>()
         val helper = DatabaseHelper(requireContext())
-        var dataSet = DatabaseOperations().getPaymentData(helper, list)
+        var dataSet = DatabaseOperations().getPaymentData(helper, tarih, firma)
 
         //sortedBy methodu List olarak return ediyor listeyi. Bu yüzden Arrayliste çevirdim
         val sortedDataSet = ArrayList(dataSet.sortedBy { it.paymentDate })
@@ -64,15 +65,20 @@ class OdemeSayfasiFragment : Fragment() {
         binding.OdemeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.OdemeRecyclerView.adapter = customAdapter
 
-        viewModel.times.observe(viewLifecycleOwner, { time ->
+        companyViewModel.company.observe(viewLifecycleOwner, {company ->
 
-            Log.e("shareeed", time.size.toString())
-
-            dataSet = DatabaseOperations().getPaymentData(helper, time)
-
+            dataSet = DatabaseOperations().getPaymentData(helper, tarih, company)
+            firma = company
             customAdapter.updateData(dataSet)
-            // Perform an action with the latest item data.
         })
+
+        timeViewModel.times.observe(viewLifecycleOwner, { time ->
+
+            dataSet = DatabaseOperations().getPaymentData(helper, time, firma)
+            tarih = time
+            customAdapter.updateData(dataSet)
+        })
+
 
         val dateString = "2024-03-02"
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

@@ -6,18 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
-import com.erdem.designexample.viewModels.filtreViewModel
+import com.erdem.designexample.viewModels.companyViewModel
+import com.erdem.designexample.viewModels.tarihViewModel
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
+import kotlin.getValue
 
 // TODO: Customize parameter argument names
 //const val ARG_ITEM_COUNT = "item_count"
@@ -54,11 +54,15 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         activity?.findViewById<RecyclerView>(R.id.list)?.layoutManager =
             LinearLayoutManager(context)
 
-        val helper = DatabaseHelper(requireContext())
+        val companyViewModel: companyViewModel by activityViewModels()
+        val tarihViewModel: tarihViewModel by activityViewModels()
 
+        val helper = DatabaseHelper(requireContext())
         val firma = DatabaseOperations().readCompany(helper)
         firma.add("Tüm Firmalar")
 
+        var times: ArrayList<String> = ArrayList<String>()
+        var company: ArrayList<String> = ArrayList<String>()
         firma.forEach { topic ->
             val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.firmaChipGroup, false) as Chip
 
@@ -89,8 +93,21 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
 
                     }
                 }
-            }
 
+                //viewmodele seçilen tarihleri aktarıyor.
+                company = ArrayList<String>()
+                for(i in 0 until binding.firmaChipGroup.childCount) {
+
+                    val tmp = binding.firmaChipGroup.getChildAt(i)
+                    if(tmp is Chip && tmp.isChecked) {
+                        company.add(tmp.text.toString())
+                    }
+
+                }
+                tarihViewModel.saveTimes(times)
+                companyViewModel.saveCompany(company)
+
+            }
             binding.firmaChipGroup.addView(chip)
         }
 
@@ -128,7 +145,7 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
                 }
 
                 //viewmodele seçilen tarihleri aktarıyor.
-                var times = ArrayList<String>()
+                times = ArrayList<String>()
                 for(i in 0 until binding.tarihChipGroup.childCount) {
 
                     val tmp = binding.tarihChipGroup.getChildAt(i)
@@ -138,8 +155,8 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
 
                 }
 
-                val viewModel: filtreViewModel by activityViewModels()
-                viewModel.saveTimes(times)
+                companyViewModel.saveCompany(company)
+                tarihViewModel.saveTimes(times)
             }
             binding.tarihChipGroup.addView(chip)
         }
