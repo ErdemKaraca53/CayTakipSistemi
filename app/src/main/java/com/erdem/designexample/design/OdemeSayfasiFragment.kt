@@ -77,6 +77,14 @@ class OdemeSayfasiFragment : Fragment() {
             dataSet = DatabaseOperations().getPaymentData(helper, time, firma)
             tarih = time
             customAdapter.updateData(dataSet)
+            var timeText: String = ""
+            if(time.isEmpty()) {
+                timeText = "Tüm yıllar"
+            } else {
+                timeText = tarih.joinToString("-")
+            }
+
+            binding.filterInformationText.text = timeText
         })
 
 

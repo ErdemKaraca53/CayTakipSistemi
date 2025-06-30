@@ -112,7 +112,6 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         }
 
         val tarih = DatabaseOperations().readYear(helper)
-        tarih.add("Tüm Yıllar")
 
         tarih.forEach { topic ->
             val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip, binding.firmaChipGroup, false) as Chip
