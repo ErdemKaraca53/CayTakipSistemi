@@ -1,5 +1,6 @@
 package com.erdem.designexample.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.erdem.designexample.dataClass.paymentData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 
 class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
@@ -59,16 +61,18 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         viewHolder.Fiyat.text = fiyatText
         val today = LocalDate.now()
         val vadeTarihi = dataSet[position].paymentDate
+        Log.e("vadeTarihi2", vadeTarihi.toString())
 
-        val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy")
-        val formattedString: String? = vadeTarihi.format(formatter)
-
+        val outputFormatter = DateTimeFormatter.ofPattern("dd LLLL yyyy", Locale("tr"))
+        val formatted = vadeTarihi.format(outputFormatter)
+        Log.e("vadeTarihi2", formatted)
         val kalanGun =  ChronoUnit.DAYS.between(today, vadeTarihi)
 
         val kalanTarih = "$kalanGun gün kaldı"
 
         if (kalanGun > 0) {
             val context = viewHolder.itemView.context
+            viewHolder.OdemeTarihi.text = "$formatted"
             viewHolder.KalanTarih.text = kalanTarih
             viewHolder.statusBadge.setBackgroundResource(R.drawable.status_badge_pending_bg)
             viewHolder.statusDot.setBackgroundResource(R.drawable.status_dot_pending)
@@ -78,7 +82,7 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
             viewHolder.OdemeDurumu.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark))
         } else {
             val context = viewHolder.itemView.context
-            viewHolder.OdemeTarihi.text = "$formattedString"
+            viewHolder.OdemeTarihi.text = "$formatted"
             viewHolder.OdemeTarihi.setTextColor(ContextCompat.getColor(context, R.color.purple_500))
             viewHolder.statusBadge.setBackgroundResource(R.drawable.status_badge_success_bg)
             viewHolder.statusDot.setBackgroundResource(R.drawable.status_dot_success)
