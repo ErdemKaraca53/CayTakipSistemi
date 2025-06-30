@@ -287,7 +287,7 @@ class DatabaseOperations {
             println("Parsed LocalDate: $parsedDate")  // Çıktı: 2025-03-16
 
 
-            //Log.e("vadeTarihi", parsedDate.toString())
+            Log.e("vadeTarihi", parsedDate.toString())
 
             val tmp = paymentData(parsedDate, money, company, kg, fiyat)
             paymenDataSet.add(tmp)
