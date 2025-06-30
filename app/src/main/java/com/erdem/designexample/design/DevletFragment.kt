@@ -13,10 +13,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentDevletBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -24,13 +29,15 @@ class DevletFragment : Fragment() {
 
     private var _binding: FragmentDevletBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDevletBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        auth = FirebaseAuth.getInstance()
 
         val dbHelper = DatabaseHelper(requireContext())
         val time = LocalDate.now()
@@ -128,8 +135,21 @@ class DevletFragment : Fragment() {
                     clearTextFields(view)
                     binding.SurumEditText.text = ""
                     Toast.makeText(requireContext(), "Kaydedildi", Toast.LENGTH_SHORT).show()
+
+                    val currentUser = auth.currentUser
+                    if (currentUser != null) {
+                        val syncHelper = FirebaseSyncHelper(requireContext())
+                        // ✅ Coroutine ile Firestore'dan SQLite'a veri çekme işlemini arka planda çalıştır
+                        CoroutineScope(Dispatchers.IO).launch {
+                            syncHelper.backupSQLiteToFirestore()
+                        }
+                    }
+
                 }
                 .show()
+
+
+
         }
         return view
     }

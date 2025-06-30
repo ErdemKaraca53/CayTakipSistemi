@@ -18,10 +18,15 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentOzelBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 
@@ -31,13 +36,15 @@ class OzelFragment : Fragment() {
     // This property is only valid between onCreateView and
 // onDestroyView.
     private val binding get() = _binding!!
-
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentOzelBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        auth = FirebaseAuth.getInstance()
 
         val time = LocalDate.now()
         val gun = time.dayOfMonth
@@ -107,6 +114,7 @@ class OzelFragment : Fragment() {
 
                     time = time.withYear(year).withMonth(month+1).withDayOfMonth(dayOfMonth)
                     var tarih = "${time.dayOfMonth}/${time.monthValue}/${time.year}"
+                    Log.e("timee", time.toString())
                     hasat.VadeTarihi = time
                     tarih = "$dayOfMonth/0${month+1}/$year"
                     binding.VadeTarihiEditOzel.text = tarih
@@ -214,6 +222,16 @@ class OzelFragment : Fragment() {
                     clearTextFields(view)
                     binding.SurumEditText.text = ""
                     Toast.makeText(requireContext(), "Kaydedildi", Toast.LENGTH_SHORT).show()
+
+                    val currentUser = auth.currentUser
+                    if (currentUser != null) {
+                        val syncHelper = FirebaseSyncHelper(requireContext())
+                        // ✅ Coroutine ile Firestore'dan SQLite'a veri çekme işlemini arka planda çalıştır
+                        CoroutineScope(Dispatchers.IO).launch {
+                            syncHelper.backupSQLiteToFirestore()
+                        }
+                    }
+
                 }
                 .show()
         }
