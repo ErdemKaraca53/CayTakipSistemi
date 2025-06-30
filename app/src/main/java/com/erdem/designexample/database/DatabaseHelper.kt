@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "db", null, 26) { // 🔹 Versiyon 24'ten 25'e çıkarıldı!
+class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "db", null, 27) { // 🔹 Versiyon 24'ten 25'e çıkarıldı!
 
     // onCreate: Veritabanı üzerindeki tabloların tanımlandığı yer
     override fun onCreate(db: SQLiteDatabase?) {

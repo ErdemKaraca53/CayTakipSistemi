@@ -45,7 +45,7 @@ class DevletFragment : Fragment() {
         val year = vadeTarihi.plusMonths(1).year  // Yılı güncelle
         val lastDayOfNextMonth = YearMonth.of(year, nextMonth).atEndOfMonth()
         vadeTarihi = vadeTarihi.withYear(year).withMonth(nextMonth).withDayOfMonth(lastDayOfNextMonth.dayOfMonth)
-        val hasat = TeaHarverst(yil, ay, gun, 0, "", 0.0f, "DEVLET", 0.0f, vadeTarihi)
+        val hasat = TeaHarverst(yil, ay, gun, 0, "", 0.0f, "ÇAYKUR", 0.0f, vadeTarihi)
 
         binding.VadeTarihiEdit.text = "${lastDayOfNextMonth.dayOfMonth}/0${(nextMonth)}/${year}"
         //hasat.VadeTarihi =
