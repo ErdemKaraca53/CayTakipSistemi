@@ -1,24 +1,18 @@
 package com.erdem.designexample.database
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
+import androidx.core.content.edit
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
-import androidx.core.content.edit
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
-import java.net.HttpURLConnection
-import java.net.InetSocketAddress
-import java.net.Socket
-import java.net.URL
 
 class FirebaseSyncHelper(private val context: Context) {
     private val dbHelper = DatabaseHelper(context) // SQLite veritabanı erişimi
