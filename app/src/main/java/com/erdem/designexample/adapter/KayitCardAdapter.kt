@@ -1,9 +1,11 @@
 package com.erdem.designexample.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -15,43 +17,39 @@ import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 
-class KayitCardAdapter (val dataSet: ArrayList<paymentData>) :
+class KayitCardAdapter (val dataSet: ArrayList<String>) :
     RecyclerView.Adapter<KayitCardAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val kayıtTarih: TextView
-        val kayıtSurgun: TextView
-        val kayıtFiyat: TextView
-        val KayıtMiktar: TextView
+     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        val textView: TextView
+        val imageView: ImageView
 
         init {
             // Define click listener for the ViewHolder's View
-            kayıtTarih = view.findViewById(R.id.kayit_tarih)
-            kayıtSurgun = view.findViewById(R.id.kayit_surgun)
-            kayıtFiyat = view.findViewById(R.id.kayit_fiyat)
-            KayıtMiktar = view.findViewById(R.id.kayit_kg)
+            textView = view.findViewById(R.id.recyclerViewTextView)
+            imageView = view.findViewById(R.id.recyclerViewImageView)
+
         }
     }
 
+    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
+        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.recycler_view_kayit_card, viewGroup, false)
+            .inflate(R.layout.fragment_item_list_dialog_list_dialog_item, viewGroup, false)
 
         return ViewHolder(view)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-
-
+        viewHolder.textView.text = dataSet[position]
     }
 
-    override fun getItemCount() = dataSet.size
 
-    fun updateData(newList: ArrayList<paymentData>) {
-        dataSet.clear()
-        dataSet.addAll(newList)
-        notifyDataSetChanged()
+    override fun getItemCount(): Int {
+        Log.d("AdapterTest", "getItemCount: ${dataSet.size}")
+        return dataSet.size
     }
+
 }
