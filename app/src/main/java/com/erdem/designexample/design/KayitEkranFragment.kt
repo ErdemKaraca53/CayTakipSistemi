@@ -1,11 +1,14 @@
 package com.erdem.designexample.design
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.erdem.designexample.R
+import com.erdem.designexample.database.DatabaseHelper
+import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.databinding.FragmentKayitSayfasiBinding
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +25,11 @@ class kayit_ekranFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentKayitSayfasiBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,8 +42,26 @@ class kayit_ekranFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kayit_ekran, container, false)
+        _binding = FragmentKayitSayfasiBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val helper = DatabaseHelper(requireContext())
+        val dataset = DatabaseOperations().readYear(helper)
+
+        Log.e("years", dataset.toString())
+
+
+        binding.KayitFiltreFAB.setOnClickListener {
+            val modalBottomSheet = KayitFilterDialogFragment()
+            modalBottomSheet.show(parentFragmentManager, KayitFilterDialogFragment.TAG)
+        }
+
+        helper.close()
     }
 
     companion object {
