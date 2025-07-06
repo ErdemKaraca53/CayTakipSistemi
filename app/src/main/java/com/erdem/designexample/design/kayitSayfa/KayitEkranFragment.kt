@@ -1,4 +1,4 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.kayitSayfa
 
 import android.os.Bundle
 import android.util.Log
@@ -6,9 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentKayitSayfasiBinding
+import com.erdem.designexample.design.kayitSayfa.KayitFilterDialogFragment
+import com.erdem.designexample.viewModels.surgunViewModel
+import com.erdem.designexample.viewModels.tarihViewModel
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,13 +57,24 @@ class kayit_ekranFragment : Fragment() {
         val helper = DatabaseHelper(requireContext())
         val dataset = DatabaseOperations().readYear(helper)
 
-        Log.e("years", dataset.toString())
+        val tarih: tarihViewModel by activityViewModels()
+        val surgun: surgunViewModel by activityViewModels()
 
+        //Log.e("years", dataset.toString())
+
+        tarih.time.observe(viewLifecycleOwner, {tarih ->
+            Log.e("years", tarih.toString())
+        })
+        surgun.surgun.observe(viewLifecycleOwner, {surgun ->
+            Log.e("years", surgun)
+        })
 
         binding.KayitFiltreFAB.setOnClickListener {
             val modalBottomSheet = KayitFilterDialogFragment()
-            modalBottomSheet.show(parentFragmentManager, KayitFilterDialogFragment.TAG)
+            modalBottomSheet.show(parentFragmentManager, KayitFilterDialogFragment.Companion.TAG)
         }
+
+
 
         helper.close()
     }

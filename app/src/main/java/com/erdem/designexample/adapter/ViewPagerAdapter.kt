@@ -3,8 +3,8 @@ package com.erdem.designexample.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.erdem.designexample.design.DevletFragment
-import com.erdem.designexample.design.OzelFragment
+import com.erdem.designexample.design.input.DevletFragment
+import com.erdem.designexample.design.input.OzelFragment
 
 class ViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
