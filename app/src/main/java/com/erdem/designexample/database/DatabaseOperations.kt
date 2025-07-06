@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.util.Log
 import com.erdem.designexample.dataClass.PieChartData
+import com.erdem.designexample.dataClass.kayitRapor
 import com.erdem.designexample.dataClass.paymentData
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -215,6 +216,31 @@ class DatabaseOperations {
         }
         cursor.close()
         return years
+    }
+
+    fun readRecord(helper: DatabaseHelper, year: Int, surgun: Int) :ArrayList<kayitRapor> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT year, season, weight_kg, price, day, month " +
+                "FROM TeaHarverst " +
+                "WHERE year = ? AND season = ?", arrayOf(year.toString(),surgun.toString()))
+
+        var kayit = ArrayList<kayitRapor>()
+        while (cursor.moveToNext()) {
+            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+            val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
+            val weight = cursor.getInt(cursor.getColumnIndexOrThrow("weight_kg"))
+            val price = cursor.getInt(cursor.getColumnIndexOrThrow("price"))
+            val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
+            val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
+
+            val tmp = kayitRapor(year, season, weight, price.toFloat(),
+                                month, day)
+            kayit.add(tmp)
+
+        }
+        cursor.close()
+        return kayit
     }
 
 

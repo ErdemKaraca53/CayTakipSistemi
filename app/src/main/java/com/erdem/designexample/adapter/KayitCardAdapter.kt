@@ -1,55 +1,78 @@
 package com.erdem.designexample.adapter
 
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
+import com.erdem.designexample.dataClass.kayitRapor
 import com.erdem.designexample.dataClass.paymentData
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.util.Locale
 
 
-class KayitCardAdapter (val dataSet: ArrayList<String>) :
+class KayitCardAdapter (val dataSet: ArrayList<kayitRapor>) :
     RecyclerView.Adapter<KayitCardAdapter.ViewHolder>() {
 
-     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val textView: TextView
-        val imageView: ImageView
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val kayıtTarih: TextView
+        val kayıtSurgun: TextView
+        val kayıtFiyat: TextView
+        val KayıtMiktar: TextView
 
         init {
             // Define click listener for the ViewHolder's View
-            textView = view.findViewById(R.id.recyclerViewTextView)
-            imageView = view.findViewById(R.id.recyclerViewImageView)
-
+            kayıtTarih = view.findViewById(R.id.kayit_tarih)
+            kayıtSurgun = view.findViewById(R.id.kayit_surgun)
+            kayıtFiyat = view.findViewById(R.id.kayit_fiyat)
+            KayıtMiktar = view.findViewById(R.id.kayit_kg)
         }
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.fragment_item_list_dialog_list_dialog_item, viewGroup, false)
+            .inflate(R.layout.recycler_view_kayit_card, viewGroup, false)
 
         return ViewHolder(view)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.textView.text = dataSet[position]
+
+        val monthMap = mapOf(
+            1 to "Ocak",
+            2 to "Şubat",
+            3 to "Mart",
+            4 to "Nisan",
+            5 to "Mayıs",
+            6 to "Haziran",
+            7 to "Temmuz",
+            8 to "Ağustos",
+            9 to "Eylül",
+            10 to "Ekim",
+            11 to "Kasım",
+            12 to "Aralık"
+        )
+
+        val monthNumber =dataSet[position].ay
+        val monthName = monthMap[monthNumber] ?: "Bilinmeyen Ay"
+
+        val tarih = dataSet[position].gun.toString() + " " + monthName + " "  + dataSet[position].tarih.toString()
+        val fiyat =dataSet[position].fiyat.toString() + " TL"
+        val surgun = dataSet[position].surgun.toString() + ". Surgun"
+        val miktar = dataSet[position].kg.toString() + " Kg"
+
+        viewHolder.kayıtFiyat.text = fiyat
+        viewHolder.kayıtTarih.text = tarih
+        viewHolder.kayıtSurgun.text = surgun
+        viewHolder.KayıtMiktar.text = dataSet[position].kg.toString()
+
     }
 
+    override fun getItemCount() = dataSet.size
 
-    override fun getItemCount(): Int {
-        Log.d("AdapterTest", "getItemCount: ${dataSet.size}")
-        return dataSet.size
+    fun updateData(newList: ArrayList<kayitRapor>) {
+        dataSet.clear()
+        dataSet.addAll(newList)
+        notifyDataSetChanged()
     }
-
 }

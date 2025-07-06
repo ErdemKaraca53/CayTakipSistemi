@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.erdem.designexample.adapter.KayitCardAdapter
+import com.erdem.designexample.adapter.OdemelerCardAdapter
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentKayitSayfasiBinding
 import com.erdem.designexample.design.kayitSayfa.KayitFilterDialogFragment
 import com.erdem.designexample.viewModels.surgunViewModel
 import com.erdem.designexample.viewModels.tarihViewModel
+import java.sql.Time
+import java.util.Calendar
 
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,13 +65,29 @@ class kayit_ekranFragment : Fragment() {
         val tarih: tarihViewModel by activityViewModels()
         val surgun: surgunViewModel by activityViewModels()
 
-        //Log.e("years", dataset.toString())
+        var year = Calendar.getInstance().get(Calendar.YEAR)
+        var season = 2
+
+        var dataSet = DatabaseOperations().readRecord(helper, year, season)
+        val customAdapter = KayitCardAdapter(dataSet)
+        binding.kayitRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.kayitRecyclerView.adapter = customAdapter
+        Log.e("years", year.toString())
 
         tarih.time.observe(viewLifecycleOwner, {tarih ->
             Log.e("years", tarih.toString())
+            year = tarih.toInt()
+            dataSet = DatabaseOperations().readRecord(helper, year, season)
+            customAdapter.updateData(dataSet)
+            //Log.e("years", x.toString())
+
         })
         surgun.surgun.observe(viewLifecycleOwner, {surgun ->
             Log.e("years", surgun)
+            season = surgun.toInt()
+            val x = DatabaseOperations().readRecord(helper, year, season)
+            Log.e("years", x.toString())
+
         })
 
         binding.KayitFiltreFAB.setOnClickListener {
