@@ -84,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/info_section_bg"
+            android:background="@drawable/modern_info_section_bg"
             android:padding="16dp">
 
             <!-- Row 1: Miktar ve Fiyat -->
@@ -95,7 +95,6 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -106,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:text="Miktar"
                         android:textColor="#718096"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/KgMiktari"
@@ -115,7 +114,7 @@
                         android:layout_marginTop="2dp"
                         android:text="1,800 kg"
                         android:textColor="#1A1A1A"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -130,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:text="Birim Fiyat"
                         android:textColor="#718096"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/SatisFiyati"
@@ -139,7 +138,7 @@
                         android:layout_marginTop="2dp"
                         android:text="36.11 ₺/kg"
                         android:textColor="#1A1A1A"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
@@ -168,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:text="Toplam Tutar"
                         android:textColor="#718096"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/OdemeMiktari"
@@ -177,22 +176,23 @@
                         android:layout_marginTop="2dp"
                         android:text="65,000 ₺"
                         android:textColor="#38A169"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ödeme Tarihi"
                         android:textColor="#718096"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/OdemeTarihi"
@@ -201,7 +201,7 @@
                         android:layout_marginTop="2dp"
                         android:text="15 Temmuz 2024"
                         android:textColor="#1A1A1A"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
