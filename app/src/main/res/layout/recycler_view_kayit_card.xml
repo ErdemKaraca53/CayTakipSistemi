@@ -30,23 +30,30 @@
                 android:id="@+id/kayit_tarih"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:fontFamily="@font/plus_jakarta_sans"
+                android:layout_weight="1"
+                android:fontFamily="@font/sen"
                 android:text="6 Temmuz 2025"
                 android:textColor="#0D5EA6"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <!-- Ayırt Edici Çizgi -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="8dp"
+                android:background="#CBD5E1" />
 
             <TextView
                 android:id="@+id/kayit_surgun"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:fontFamily="@font/plus_jakarta_sans"
+                android:layout_weight="1"
+                android:fontFamily="@font/sen"
                 android:gravity="end"
                 android:text="2. Sürgün"
                 android:textColor="#0D5EA6"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -69,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/sen"
                     android:text="Miktar"
                     android:textColor="#020101"
                     android:textSize="20sp"
@@ -80,9 +87,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/sen"
                     android:text="9999"
                     android:textColor="#0D5EA6"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -104,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="@font/sen"
                     android:text="Kg"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -115,9 +123,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:fontFamily="@font/sen"
                     android:text="150 kg"
                     android:textColor="#0D5EA6"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
