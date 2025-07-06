@@ -53,7 +53,7 @@
             app:destination="@id/new_design" />
     </fragment>
     <fragment
-        android:id="@+id/kayit_ekranFragment2"
+        android:id="@+id/kayit_ekranFragment"
         android:name="com.erdem.designexample.design.kayit_ekranFragment"
         android:label="fragment_kayit_ekran"
         tools:layout="@layout/fragment_kayit_ekran" />
