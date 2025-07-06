@@ -54,7 +54,7 @@ class OdemelerCardAdapter (val dataSet: ArrayList<paymentData>) :
         viewHolder.OdemeMiktari.text = dataSet[position].money.toInt().toString() + " TL"
         viewHolder.CompanyName.text = dataSet[position].company
 
-        val kgText = "${dataSet[position].Kg} Kg"
+        val kgText = "${dataSet[position].Kg.toInt()} Kg"
         val fiyatText = "${dataSet[position].satisFiyati} TL"
 
         viewHolder.Kg.text = kgText
