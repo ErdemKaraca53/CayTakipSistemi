@@ -19,4 +19,8 @@
         android:id="@+id/odemeSayfasiFragment"
         android:icon="@drawable/money_icon"
         android:title="Ödemeler" />
+    <item
+        android:id="@+id/kayit_ekranFragment2"
+        android:icon="@drawable/add_icon"
+        android:title="Kayıt" />
 </menu>
