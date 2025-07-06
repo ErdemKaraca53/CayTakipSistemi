@@ -179,17 +179,4 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    fun getSelectedChip(flexboxLayout: FlexboxLayout): List<String> {
-
-        val selectedChips = mutableListOf<String>()
-
-        for(i in 0 until flexboxLayout.childCount) {
-            val child = flexboxLayout.getChildAt(i)
-            if(child is Chip && child.isChecked) {
-                selectedChips.add(child.text.toString())
-            }
-        }
-        return selectedChips
-    }
-
 }
