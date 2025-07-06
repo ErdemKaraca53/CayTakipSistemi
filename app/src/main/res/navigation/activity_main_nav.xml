@@ -30,12 +30,12 @@
         tools:layout="@layout/fragment_birinci" />
     <fragment
         android:id="@+id/odemeSayfasiFragment"
-        android:name="com.erdem.designexample.design.OdemeSayfasiFragment"
+        android:name="com.erdem.designexample.design.odemelerSayfasi.OdemeSayfasiFragment"
         android:label="fragment_odeme_sayfasi"
         tools:layout="@layout/fragment_odeme_sayfasi" />
     <fragment
         android:id="@+id/signUp2"
-        android:name="com.erdem.designexample.design.SignUp"
+        android:name="com.erdem.designexample.design.log_in.SignUp"
         android:label="SignUp" >
         <action
             android:id="@+id/action_signUp2_to_new_design"
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.erdem.designexample.design.Login"
+        android:name="com.erdem.designexample.design.log_in.Login"
         android:label="Login" >
         <action
             android:id="@+id/action_login_to_new_design"
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/kayit_ekranFragment"
-        android:name="com.erdem.designexample.design.kayit_ekranFragment"
+        android:name="com.erdem.designexample.design.kayitSayfa.kayit_ekranFragment"
         android:label="fragment_kayit_ekran"
         tools:layout="@layout/fragment_kayit_sayfasi" />
 </navigation>

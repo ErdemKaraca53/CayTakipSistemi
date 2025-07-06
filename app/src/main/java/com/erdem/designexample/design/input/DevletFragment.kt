@@ -1,5 +1,6 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.input
 
+import android.R
 import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentDevletBinding
+import com.erdem.designexample.design.clearTextFields
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
@@ -60,7 +62,7 @@ class DevletFragment : Fragment() {
         binding.TarlaEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 val tarlalar = DatabaseOperations().readGardens(dbHelper, binding.TarlaEditText.text.toString()).toTypedArray()
-                val adapter = ArrayAdapter(requireContext(), android.R.layout.select_dialog_item, tarlalar)
+                val adapter = ArrayAdapter(requireContext(), R.layout.select_dialog_item, tarlalar)
                 binding.TarlaEditText.setAdapter(adapter)
             }
         }
@@ -79,21 +81,23 @@ class DevletFragment : Fragment() {
             DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
                 binding.TarihEditText.text = "$dayOfMonth/${month + 1}/$year"
 
-                var vadeTarihi = LocalDate.of(year,month+1,dayOfMonth)
+                var vadeTarihi = LocalDate.of(year, month + 1, dayOfMonth)
                 val nextMonth = vadeTarihi.plusMonths(1).monthValue  // Sonraki ayı al
                 val year = vadeTarihi.plusMonths(1).year  // Yılı güncelle
                 val lastDayOfNextMonth = YearMonth.of(year, nextMonth).atEndOfMonth()
-                vadeTarihi = vadeTarihi.withYear(year).withMonth(nextMonth).withDayOfMonth(lastDayOfNextMonth.dayOfMonth)
+                vadeTarihi = vadeTarihi.withYear(year).withMonth(nextMonth)
+                    .withDayOfMonth(lastDayOfNextMonth.dayOfMonth)
                 Log.e("vadeTarihi", vadeTarihi.toString())
 
-                binding.VadeTarihiEdit.text = "${lastDayOfNextMonth.dayOfMonth}/${(nextMonth)}/${year}"
+                binding.VadeTarihiEdit.text =
+                    "${lastDayOfNextMonth.dayOfMonth}/${(nextMonth)}/${year}"
                 hasat.apply {
                     this.year = year
                     this.month = month
                     this.day = dayOfMonth
                     this.VadeTarihi = vadeTarihi
                 }
-            }, yil, ay-1, gun).apply {
+            }, yil, ay - 1, gun).apply {
                 setTitle("Tarih seçiniz")
                 setButton(DialogInterface.BUTTON_POSITIVE, "AYARLA", this)
                 setButton(DialogInterface.BUTTON_NEGATIVE, "İPTAL", this)

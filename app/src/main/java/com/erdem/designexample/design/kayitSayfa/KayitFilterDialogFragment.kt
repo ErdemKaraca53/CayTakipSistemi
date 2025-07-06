@@ -1,20 +1,21 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.kayitSayfa
 
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.erdem.designexample.R
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FragmentKayitFilterDialogListDialogBinding
+import com.erdem.designexample.design.ARG_ITEM_COUNT
+import com.erdem.designexample.viewModels.surgunViewModel
+import com.erdem.designexample.viewModels.tarihViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
-
 
 class KayitFilterDialogFragment : BottomSheetDialogFragment() {
 
@@ -40,7 +41,11 @@ class KayitFilterDialogFragment : BottomSheetDialogFragment() {
 
         val helper = DatabaseHelper(requireContext())
         val years = DatabaseOperations().readYear(helper)
-        Log.e("years", years.toString())
+
+        val yearViewModel : tarihViewModel by activityViewModels()
+        var selectedYear = ""
+        val surgunViewModel: surgunViewModel by activityViewModels()
+        var surgun = "1"
         if(years.isNotEmpty()) {
             years.forEach { topic ->
 
@@ -59,8 +64,11 @@ class KayitFilterDialogFragment : BottomSheetDialogFragment() {
                         }
                         if(tmp == chip && tmp is Chip) {
                             tmp.isChecked = true
+                            selectedYear = tmp.text.toString()
                         }
                     }
+                    yearViewModel.saveTime(selectedYear)
+                    surgunViewModel.saveSurgun(surgun)
                 }
 
                 binding.yilChipGroup.addView(chip)
@@ -88,8 +96,11 @@ class KayitFilterDialogFragment : BottomSheetDialogFragment() {
                         }
                         if(tmp == chip && tmp is Chip) {
                             tmp.isChecked = true
+                            surgun = tmp.text.toString()
                         }
                     }
+                    surgunViewModel.saveSurgun(surgun)
+                    yearViewModel.saveTime(selectedYear)
                 }
 
                 binding.surgunChipGroup.addView(chip)
@@ -104,7 +115,7 @@ class KayitFilterDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
 
-        // TODO: Customize parameters
+
         const val TAG = "ModalBottomSheet"
         fun newInstance(itemCount: Int): KayitFilterDialogFragment =
             KayitFilterDialogFragment().apply {

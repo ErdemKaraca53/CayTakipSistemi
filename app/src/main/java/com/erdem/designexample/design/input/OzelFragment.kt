@@ -1,34 +1,34 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.input
 
+import android.R
 import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.graphics.Color
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.database.TeaGardens
 import com.erdem.designexample.database.TeaHarverst
 import com.erdem.designexample.databinding.FragmentOzelBinding
+import com.erdem.designexample.design.clearTextFields
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-
 
 class OzelFragment : Fragment() {
 
@@ -52,7 +52,7 @@ class OzelFragment : Fragment() {
         val ay = time.monthValue
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0,0,0,0,"",0.0f, "DEVLET", 0.0f, time)
+        val hasat = TeaHarverst(0, 0, 0, 0, "", 0.0f, "DEVLET", 0.0f, time)
         val dbHelper = DatabaseHelper(requireContext())
 
         binding.TarihEditText.text = "$gun/0${(ay)}/$yil"
@@ -66,7 +66,7 @@ class OzelFragment : Fragment() {
                 //Toast.makeText(requireContext(), s.toString(), Toast.LENGTH_SHORT).show()
                 //val dbHelper = DatabaseHelper(requireContext())
                 val tarlalar = DatabaseOperations().readGardens(dbHelper, s.toString()).toTypedArray()
-                val adapter = ArrayAdapter(requireContext(), android.R.layout.select_dialog_item,tarlalar )
+                val adapter = ArrayAdapter(requireContext(), R.layout.select_dialog_item, tarlalar)
                 binding.TarlaEditText.threshold = 1
                 binding.TarlaEditText.setAdapter(adapter)
                 Log.e("BAHCE", DatabaseOperations().readGardens(dbHelper, s.toString()).toString())
@@ -109,20 +109,22 @@ class OzelFragment : Fragment() {
             val yil = time.year
             val ay = time.monthValue
 
-            val datePickerDialog = DatePickerDialog(requireContext(),
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-                    time = time.withYear(year).withMonth(month+1).withDayOfMonth(dayOfMonth)
+                    time = time.withYear(year).withMonth(month + 1).withDayOfMonth(dayOfMonth)
                     var tarih = "${time.dayOfMonth}/${time.monthValue}/${time.year}"
                     Log.e("timee", time.toString())
                     hasat.VadeTarihi = time
-                    tarih = "$dayOfMonth/0${month+1}/$year"
+                    tarih = "$dayOfMonth/0${month + 1}/$year"
                     binding.VadeTarihiEditOzel.text = tarih
 
 
                     //Toast.makeText(context, binding.textView6.text, Toast.LENGTH_SHORT).show()
 
-                },yil, ay, gun)
+                }, yil, ay, gun
+            )
 
             datePickerDialog.setTitle("Tarih seçiniz")
             datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "AYARLA", datePickerDialog)
@@ -139,16 +141,18 @@ class OzelFragment : Fragment() {
             val yil = time.year
             val ay = time.monthValue
 
-            val datePickerDialog = DatePickerDialog(requireContext(),
+            val datePickerDialog = DatePickerDialog(
+                requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 
-                    val tarih = "$dayOfMonth/0${month+1}/$year"
+                    val tarih = "$dayOfMonth/0${month + 1}/$year"
                     binding.TarihEditText.text = tarih
                     hasat.day = dayOfMonth
-                    hasat.month = month+1
+                    hasat.month = month + 1
                     hasat.year = year
 
-                },yil, ay, gun)
+                }, yil, ay, gun
+            )
 
             datePickerDialog.setTitle("Tarih seçiniz")
             datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "AYARLA", datePickerDialog)
@@ -247,4 +251,3 @@ class OzelFragment : Fragment() {
     }
 
 }
-

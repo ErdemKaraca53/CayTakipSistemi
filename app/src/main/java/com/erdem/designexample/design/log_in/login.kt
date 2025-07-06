@@ -1,4 +1,4 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.log_in
 
 import android.os.Bundle
 import android.util.Patterns

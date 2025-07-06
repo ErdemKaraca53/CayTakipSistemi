@@ -1,8 +1,7 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.odemelerSayfasi
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +17,6 @@ import com.erdem.designexample.viewModels.tarihViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.getValue
-
 
 class OdemeSayfasiFragment : Fragment() {
 
@@ -39,7 +36,7 @@ class OdemeSayfasiFragment : Fragment() {
         //Modal bottomSheeti açıyoruz.
         binding.filtreFAB.setOnClickListener {
             val modalBottomSheet = filterListDialogFragment()
-            modalBottomSheet.show(parentFragmentManager, filterListDialogFragment.TAG)
+            modalBottomSheet.show(parentFragmentManager, filterListDialogFragment.Companion.TAG)
         }
 
 

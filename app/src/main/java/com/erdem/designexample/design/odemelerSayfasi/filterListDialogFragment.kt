@@ -1,7 +1,6 @@
-package com.erdem.designexample.design
+package com.erdem.designexample.design.odemelerSayfasi
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +11,11 @@ import com.erdem.designexample.R
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
 import com.erdem.designexample.databinding.FilterModelBottomSheet2Binding
+import com.erdem.designexample.design.ARG_ITEM_COUNT
 import com.erdem.designexample.viewModels.companyViewModel
 import com.erdem.designexample.viewModels.tarihViewModel
-import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
-import kotlin.getValue
-
-// TODO: Customize parameter argument names
-//const val ARG_ITEM_COUNT = "item_count"
 
 /**
  *
@@ -164,7 +159,7 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "ModalBottomSheet"
-        // TODO: Customize parameters
+
         fun newInstance(itemCount: Int): filterListDialogFragment =
             filterListDialogFragment().apply {
                 arguments = Bundle().apply {
