@@ -8,6 +8,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import androidx.core.content.edit
+import com.erdem.designexample.dataClass.kayitRapor
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -381,6 +382,41 @@ class FirebaseSyncHelper(private val context: Context) {
                 Log.e("FirebaseSync", "❌ Firestore'dan Hasatlar alınamadı!", e)
             }
     }
+
+    fun deleteFromFirestore(record: kayitRapor) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        val collectionRef = db.collection("Users").document(userId)
+            .collection("TeaHarvest")
+        collectionRef
+            .whereEqualTo("year", record.yil)
+            .whereEqualTo("season", record.surgun)
+            .whereEqualTo("weight_kg", record.kg)
+            .whereEqualTo("month", record.ay)
+            .whereEqualTo("day", record.gun)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (querySnapshot.isEmpty) {
+                    Log.d("FirestoreDelete", "Hiçbir eşleşen kayıt bulunamadı.")
+                    return@addOnSuccessListener
+                }
+
+                for (document in querySnapshot.documents) {
+                    collectionRef.document(document.id).delete()
+                        .addOnSuccessListener {
+                            Log.d("FirestoreDelete", "Doküman silindi: ${document.id}")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("FirestoreDelete", "Silme hatası: ", e)
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreQuery", "Sorgulama hatası: ", e)
+            }
+    }
+
+
 
 
 

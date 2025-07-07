@@ -89,7 +89,7 @@ class KayitCardAdapter (val dataSet: ArrayList<kayitRapor>,
 
                     builder.setPositiveButton("Evet") { dialog, _ ->
                         DatabaseOperations().deleteData(helper, id)
-
+                        FirebaseSyncHelper(context).deleteFromFirestore(dataSet[position])
                         // Listeyi güncelle
                         dataSet.removeAt(position)
                         notifyItemRemoved(position)
