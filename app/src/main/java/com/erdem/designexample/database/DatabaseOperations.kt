@@ -183,6 +183,38 @@ class DatabaseOperations {
         return gardens
     }
 
+    fun getId(helper: DatabaseHelper, record: kayitRapor) : Int {
+
+        //price sıkıntı çıkardı. şuanlık bir sıkıntı olmaz gibi ama daha sonra tekrar bakılacak.
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT id FROM TeaHarverst " +
+                "WHERE year = ? AND season = ? " +
+                "AND weight_kg = ?" +
+                "AND month = ? AND day = ?",
+            arrayOf(
+                            record.yil.toString(),
+                            record.surgun.toString(),
+                            record.kg.toString(),
+                            record.ay.toString(),
+                            record.gun.toString()))
+
+        var id = -1
+        Log.e("cardAdapter", record.toString())
+        while (cursor.moveToNext()) {
+
+            id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
+        }
+        cursor.close()
+        return id
+    }
+
+    fun deleteData(helper: DatabaseHelper, id: Int) {
+        val db = helper.writableDatabase
+        val whereClause = "id = ?"
+        val whereArgs = arrayOf(id.toString())
+        db.delete("TeaHarverst", whereClause, whereArgs)
+    }
+
     fun readYear(helper: DatabaseHelper) :ArrayList<String> {
 
         val db = helper.readableDatabase
@@ -230,7 +262,7 @@ class DatabaseOperations {
             val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
             val season = cursor.getInt(cursor.getColumnIndexOrThrow("season"))
             val weight = cursor.getInt(cursor.getColumnIndexOrThrow("weight_kg"))
-            val price = cursor.getInt(cursor.getColumnIndexOrThrow("price"))
+            val price = cursor.getFloat(cursor.getColumnIndexOrThrow("price"))
             val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
             val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
 
@@ -242,6 +274,8 @@ class DatabaseOperations {
         cursor.close()
         return kayit
     }
+
+
 
 
     fun readGardenName(helper: DatabaseHelper) :ArrayList<String> {
