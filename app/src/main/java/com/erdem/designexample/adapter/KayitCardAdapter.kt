@@ -13,6 +13,7 @@ import com.erdem.designexample.R
 import com.erdem.designexample.dataClass.kayitRapor
 import com.erdem.designexample.database.DatabaseHelper
 import com.erdem.designexample.database.DatabaseOperations
+import com.erdem.designexample.database.FirebaseSyncHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -74,33 +75,52 @@ class KayitCardAdapter (val dataSet: ArrayList<kayitRapor>,
         viewHolder.kayıtTarih.text = tarih
         viewHolder.kayıtSurgun.text = surgun
         viewHolder.kayıtMiktar.text = dataSet[position].kg.toString()
+
+
+
         viewHolder.silButon.setOnClickListener {
-            val id = DatabaseOperations().getId(helper, dataSet[position])
-            if (id != -1) {
+
+            if(FirebaseSyncHelper(context).isInternetAvailable()){
+                val id = DatabaseOperations().getId(helper, dataSet[position])
+                if (id != -1) {
+                    val builder =MaterialAlertDialogBuilder(viewHolder.itemView.context)
+                    builder.setTitle("Kayıt Silme")
+                    builder.setMessage("Bu kaydı silmek istediğinize eminmisiniz?")
+
+                    builder.setPositiveButton("Evet") { dialog, _ ->
+                        DatabaseOperations().deleteData(helper, id)
+
+                        // Listeyi güncelle
+                        dataSet.removeAt(position)
+                        notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, dataSet.size)
+
+                        Toast.makeText(viewHolder.itemView.context, "Kayıt Silindi", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+
+                    builder.setNegativeButton("Hayır") { dialog, _ ->
+                        dialog.dismiss() // sadece kapat
+                    }
+
+                    builder.create().show()
+                } else {
+                    Log.e("cardAdapter", "Kayıt bulunamadı")
+                }
+            } else {
                 val builder =MaterialAlertDialogBuilder(viewHolder.itemView.context)
-                builder.setTitle("Kayıt Silme")
-                builder.setMessage("Bu kaydı silmek istediğinize eminmisiniz?")
+                builder.setTitle("Bağlantı Yok")
+                builder.setMessage("İnternet bağlantınız olmadan kayıt silme işlemi gerçekleştiremezsiniz")
 
-                builder.setPositiveButton("Evet") { dialog, _ ->
-                    DatabaseOperations().deleteData(helper, id)
+                builder.setPositiveButton("tamam") { dialog, _ ->
 
-                    // Listeyi güncelle
-                    dataSet.removeAt(position)
-                    notifyItemRemoved(position)
-                    notifyItemRangeChanged(position, dataSet.size)
-
-                    Toast.makeText(viewHolder.itemView.context, "Kayıt Silindi", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                 }
 
-                builder.setNegativeButton("Hayır") { dialog, _ ->
-                    dialog.dismiss() // sadece kapat
-                }
-
                 builder.create().show()
-            } else {
-                Log.e("cardAdapter", "Kayıt bulunamadı")
             }
+
+
         }
 
     }
