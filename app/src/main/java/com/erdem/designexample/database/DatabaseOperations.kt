@@ -183,6 +183,23 @@ class DatabaseOperations {
         return gardens
     }
 
+    fun readCompany(helper: DatabaseHelper, string: String) :ArrayList<String> {
+
+        val db = helper.readableDatabase
+        val cursor = db.rawQuery("SELECT company FROM TeaHarverst WHERE company LIKE '%$string%' ", null)
+
+        var gardens = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            val tmp = cursor.getString(cursor.getColumnIndexOrThrow("company"))
+
+            gardens.add(tmp)
+
+        }
+        cursor.close()
+        return gardens
+    }
+
     fun getId(helper: DatabaseHelper, record: kayitRapor) : Int {
 
         //price sıkıntı çıkardı. şuanlık bir sıkıntı olmaz gibi ama daha sonra tekrar bakılacak.

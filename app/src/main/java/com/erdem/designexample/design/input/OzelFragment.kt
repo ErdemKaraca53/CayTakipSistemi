@@ -78,6 +78,27 @@ class OzelFragment : Fragment() {
 
         })
 
+        binding.OzelSatisYeriEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //Toast.makeText(requireContext(), s.toString(), Toast.LENGTH_SHORT).show()
+                //val dbHelper = DatabaseHelper(requireContext())
+                val firmalar = DatabaseOperations().readCompany(dbHelper, s.toString()).toTypedArray()
+                val adapter = ArrayAdapter(requireContext(), R.layout.select_dialog_item, firmalar)
+                binding.OzelSatisYeriEditText.threshold = 1
+                binding.OzelSatisYeriEditText.setAdapter(adapter)
+                Log.e("BAHCE", DatabaseOperations().readGardens(dbHelper, s.toString()).toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                //Toast.makeText(requireContext(), "asd", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
         binding.SurumEditText.setOnClickListener {
 
             // Klavyeyi kapat
@@ -208,7 +229,7 @@ class OzelFragment : Fragment() {
             hasat.season = binding.SurumEditText.text.toString().toInt()
             hasat.weight_kg = binding.KgEditText.text.toString().toFloat()
             hasat.SatisFiyati = binding.FiyatEdit.text.toString().toFloat()
-            hasat.SatisYeri = binding.OzelSatisYeriEditText.text.toString().toString()
+            hasat.SatisYeri = binding.OzelSatisYeriEditText.text.toString().uppercase()
 
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Son kayıt kontrolü")
