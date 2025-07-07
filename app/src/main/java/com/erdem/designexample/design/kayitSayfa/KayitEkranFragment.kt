@@ -69,7 +69,7 @@ class kayit_ekranFragment : Fragment() {
         var season = 2
 
         var dataSet = DatabaseOperations().readRecord(helper, year, season)
-        val customAdapter = KayitCardAdapter(dataSet)
+        val customAdapter = KayitCardAdapter(dataSet, helper, requireContext())
         binding.kayitRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.kayitRecyclerView.adapter = customAdapter
         Log.e("years", year.toString())
@@ -94,8 +94,6 @@ class kayit_ekranFragment : Fragment() {
             val modalBottomSheet = KayitFilterDialogFragment()
             modalBottomSheet.show(parentFragmentManager, KayitFilterDialogFragment.Companion.TAG)
         }
-
-
 
         helper.close()
     }
