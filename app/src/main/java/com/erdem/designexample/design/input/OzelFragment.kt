@@ -52,7 +52,7 @@ class OzelFragment : Fragment() {
         val ay = time.monthValue
 
         val tarla = TeaGardens("")
-        val hasat = TeaHarverst(0, 0, 0, 0, "", 0.0f, "DEVLET", 0.0f, time)
+        val hasat = TeaHarverst(yil, ay, gun, 0, "", 0.0f, "DEVLET", 0.0f, time)
         val dbHelper = DatabaseHelper(requireContext())
 
         binding.TarihEditText.text = "$gun/0${(ay)}/$yil"
