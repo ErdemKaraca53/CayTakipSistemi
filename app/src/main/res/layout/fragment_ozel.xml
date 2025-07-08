@@ -83,7 +83,6 @@
             android:background="@drawable/edit_text_custom"
             android:drawableEnd="@drawable/takvim_icon"
             android:text="Tarih seçiniz"
-            android:textColor="@color/gray"
             android:padding="8dp"
             android:textAlignment="center"
             android:textSize="16sp"
