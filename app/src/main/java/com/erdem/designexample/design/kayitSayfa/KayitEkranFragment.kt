@@ -76,7 +76,12 @@ class kayit_ekranFragment : Fragment() {
 
         tarih.time.observe(viewLifecycleOwner, {tarih ->
             Log.e("years", tarih.toString())
-            year = tarih.toInt()
+            if(tarih.isEmpty()) {
+                year = Calendar.getInstance().get(Calendar.YEAR)
+            } else {
+                year = tarih.toInt()
+            }
+
             dataSet = DatabaseOperations().readRecord(helper, year, season)
             customAdapter.updateData(dataSet)
             //Log.e("years", x.toString())
