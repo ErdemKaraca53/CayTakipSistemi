@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.11.0"
 anychartAndroid = "0.0.3"
 constraintlayoutVersion = "2.2.0"
 firebaseBom = "33.11.0"
@@ -24,10 +24,10 @@ firebaseAuth = "23.2.0"
 credentials = "1.5.0"
 credentialsPlayServicesAuth = "1.5.0"
 googleid = "1.1.1"
-annotation = "1.6.0"
+annotation = "1.9.1"
 lifecycleLivedataKtx = "2.6.1"
-lifecycleViewmodelKtx = "2.6.1"
-firebaseCrashlyticsBuildtools = "3.0.3"
+lifecycleViewmodelKtx = "2.9.1"
+firebaseCrashlyticsBuildtools = "3.0.4"
 
 [libraries]
 androidx-constraintlayout-v220 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }

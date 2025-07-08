@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.erdem.designexample"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.erdem.designexample"
@@ -72,6 +72,6 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.google.firebase.auth)
     implementation("com.google.firebase:firebase-firestore")
-    implementation ("com.google.code.gson:gson:2.10.1")
+    implementation ("com.google.code.gson:gson:2.13.1")
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
 }
