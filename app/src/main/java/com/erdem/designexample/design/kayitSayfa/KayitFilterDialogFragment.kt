@@ -108,6 +108,10 @@ class KayitFilterDialogFragment : BottomSheetDialogFragment() {
 
         }
 
+        binding.kapatButton.setOnClickListener {
+            this.dismiss()
+        }
+
         helper.close()
     }
 

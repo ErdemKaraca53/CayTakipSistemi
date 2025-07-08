@@ -155,6 +155,10 @@ class filterListDialogFragment : BottomSheetDialogFragment() {
             binding.tarihChipGroup.addView(chip)
         }
 
+        binding.kapatButton2.setOnClickListener {
+            this.dismiss()
+        }
+
     }
 
     companion object {
