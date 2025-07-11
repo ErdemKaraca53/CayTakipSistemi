@@ -33,7 +33,7 @@ class new_design : Fragment() {
         binding.viewPager.adapter = ViewPagerAdapter(requireActivity())
         TabLayoutMediator(binding.tabLayout, binding.viewPager) {tab, position ->
             when(position) {
-                0 -> tab.text = "DEVLET"
+                0 -> tab.text = "ÇAYKUR"
                 1 -> tab.text = "OZEL"
             }
         }.attach()
