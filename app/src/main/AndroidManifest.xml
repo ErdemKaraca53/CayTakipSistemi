@@ -7,6 +7,7 @@
 
     <!-- Uygulama verilerinin (SharedPreferences, oturum bilgileri vb.) Google Drive'a otomatik yedeklenmesini engeller -->
     <application
+        android:name=".DesignApp"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

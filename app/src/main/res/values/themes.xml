@@ -4,6 +4,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:statusBarColor">@color/black</item>
+        <!-- Geçiş animasyonlarında beyaz parlama önlenir: pencere arka planı her zaman koyu navy -->
+        <item name="android:windowBackground">@color/app_bg</item>
     </style>
 
     <style name="Theme.DesignExample" parent="Base.Theme.DesignExample" />
