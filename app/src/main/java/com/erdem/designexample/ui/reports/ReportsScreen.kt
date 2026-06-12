@@ -4,6 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,20 +35,18 @@ import androidx.compose.material.icons.outlined.Payments
 import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material.icons.outlined.Spa
 import androidx.compose.material.icons.outlined.Tune
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -62,13 +62,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.erdem.designexample.data.db.entity.HarvestEntity
 import com.erdem.designexample.ui.components.AppButton
 import com.erdem.designexample.ui.components.BarEntry
 import com.erdem.designexample.ui.components.ComparisonBarChart
 import com.erdem.designexample.ui.components.DonutPalette
-import com.erdem.designexample.ui.components.SegmentedTabs
+import com.erdem.designexample.ui.components.WheelPicker
 import com.erdem.designexample.ui.theme.AppPalette
 import com.erdem.designexample.ui.theme.LightStatusBarIcons
 import java.time.LocalDate
@@ -84,9 +86,6 @@ private const val ALL_SEASONS = "Tüm Sürümler"
 
 /** Sürüm seçenekleri her zaman sabit 4 değer. */
 private val seasonOptions = listOf(ALL_SEASONS, "1. Sürüm", "2. Sürüm", "3. Sürüm", "4. Sürüm")
-
-/** Grafik ölçütü sekmesi etiketleri — [Metric.ordinal] ile hizalı. */
-private val metricTabs = listOf("Miktar (Kg)", "Gelir (TL)")
 
 private val Positive = AppPalette.Teal
 private val Negative = Color(0xFFE5707E)
@@ -172,12 +171,6 @@ private fun avgPriceText(kg: Float, revenue: Float): String {
     return String.format(Locale.US, "%.1f", revenue / kg).replace('.', ',') + " TL/Kg"
 }
 
-private fun dimName(m: CompareMode) = when (m) {
-    CompareMode.YEAR   -> "Yıllar"
-    CompareMode.SEASON -> "Sürümler"
-    CompareMode.GARDEN -> "Bahçeler"
-}
-
 // --- Ekran ------------------------------------------------------------------------------------
 
 /**
@@ -203,11 +196,10 @@ fun ReportsScreen(
     var yearSel      by remember { mutableStateOf(ALL_YEARS) }
     var seasonSel    by remember { mutableStateOf(ALL_SEASONS) }
     var gardenSel    by remember { mutableStateOf(ALL_GARDENS) }
-    var metric       by remember { mutableStateOf(Metric.REVENUE) }
+    var metric       by remember { mutableStateOf(Metric.KG) }
     var groupOverride by remember { mutableStateOf<CompareMode?>(null) }
 
     var showFilter by remember { mutableStateOf(false) }
-    val sheetState = rememberModalBottomSheetState()
 
     LightStatusBarIcons()
 
@@ -438,164 +430,133 @@ fun ReportsScreen(
         }
     }
 
-    // Filtre alt sayfası
+    // Filtre — ekranın ortasında açılan dialog (tarih seçici tarzı tekerlekler)
     if (showFilter) {
-        ModalBottomSheet(
-            onDismissRequest = { showFilter = false },
-            sheetState = sheetState,
-            containerColor = AppPalette.Bg,
-            dragHandle = { BottomSheetDefaults.DragHandle(color = AppPalette.Border) }
-        ) {
-            ReportFilterSheet(
-                yearOptions   = yearOptions,
-                gardenOptions = gardenOptions,
-                yearSel       = yearSel,
-                onYearChange  = { yearSel = it },
-                seasonSel     = seasonSel,
-                onSeasonChange = { seasonSel = it },
-                gardenSel     = gardenSel,
-                onGardenChange = { gardenSel = it },
-                freeDims      = freeDims,
-                groupDim      = groupDim,
-                onGroupChange = { groupOverride = it },
-                metric        = metric,
-                onMetricChange = { metric = it },
-                onApply       = { showFilter = false }
-            )
-        }
+        ReportFilterDialog(
+            yearOptions   = yearOptions,
+            gardenOptions = gardenOptions,
+            yearSel       = yearSel,
+            seasonSel     = seasonSel,
+            gardenSel     = gardenSel,
+            onApply       = { y, s, g ->
+                yearSel = y; seasonSel = s; gardenSel = g
+                showFilter = false
+            },
+            onDismiss     = { showFilter = false }
+        )
     }
 }
 
-// --- Filtre alt sayfası -----------------------------------------------------------------------
+// --- Filtre dialog'u --------------------------------------------------------------------------
 
 /**
- * Üç doğal soru (Hangi yıl/sürüm/bahçe) + gerekirse kırılım seçimi + grafik ölçütü.
- * Yıl ve bahçe seçenekleri DB'den canlı gelir; sürüm sabit 4 değer.
+ * Rapor filtresi — ekranın **ortasında** açılan dialog (bottom sheet değil).
+ * Tarih seçicideki gibi üç tekerlek: **Yıl · Bahçe · Sürüm**. Seçim "Uygula" ile
+ * uygulanır; "İptal" değişiklikleri yok sayar. Yıl/bahçe seçenekleri DB'den canlı gelir.
  */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ReportFilterSheet(
+private fun ReportFilterDialog(
     yearOptions: List<String>,
     gardenOptions: List<String>,
     yearSel: String,
-    onYearChange: (String) -> Unit,
     seasonSel: String,
-    onSeasonChange: (String) -> Unit,
     gardenSel: String,
-    onGardenChange: (String) -> Unit,
-    freeDims: List<CompareMode>,
-    groupDim: CompareMode?,
-    onGroupChange: (CompareMode) -> Unit,
-    metric: Metric,
-    onMetricChange: (Metric) -> Unit,
-    onApply: () -> Unit
+    onApply: (year: String, season: String, garden: String) -> Unit,
+    onDismiss: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .navigationBarsPadding()
-            .padding(horizontal = 24.dp)
-            .padding(bottom = 8.dp)
+    // Geçici seçim — "Uygula" basılana kadar rapor değişmez (tarih seçici davranışı).
+    var tempYear   by remember { mutableStateOf(yearSel) }
+    var tempGarden by remember { mutableStateOf(gardenSel) }
+    var tempSeason by remember { mutableStateOf(seasonSel) }
+
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Text(
-            text = "Rapor Filtrele",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = AppPalette.TextPrimary
-        )
-        Spacer(Modifier.height(6.dp))
-        Text(
-            text = "Yıl, sürüm ve bahçeyi seç. \"Tümü\" bıraktığın alan karşılaştırılır.",
-            fontSize = 14.sp,
-            color = AppPalette.TextSecondary
-        )
+        Surface(
+            shape = RoundedCornerShape(24.dp),
+            color = AppPalette.Card,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        ) {
+            Column(Modifier.padding(20.dp)) {
+                Text(
+                    text = "Rapor Filtrele",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppPalette.TextPrimary
+                )
 
-        Spacer(Modifier.height(22.dp))
-        ScopeField(Icons.Outlined.CalendarMonth, "Hangi yıl?",   yearOptions,   yearSel,   onYearChange)
-        Spacer(Modifier.height(20.dp))
-        ScopeField(Icons.Outlined.Spa,           "Hangi sürüm?", seasonOptions, seasonSel, onSeasonChange)
-        Spacer(Modifier.height(20.dp))
-        ScopeField(Icons.Outlined.Grass,         "Hangi bahçe?", gardenOptions, gardenSel, onGardenChange)
+                Spacer(Modifier.height(20.dp))
 
-        // Birden fazla boyut "Tümü" ise kırılım ekseni sorulur
-        if (freeDims.size >= 2) {
-            Spacer(Modifier.height(22.dp))
-            ThinDivider()
-            Spacer(Modifier.height(22.dp))
-            QuestionLabel("Neye göre kırılsın?")
-            Spacer(Modifier.height(12.dp))
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                freeDims.forEach { dim ->
-                    ChoicePill(
-                        label = dimName(dim),
-                        selected = dim == groupDim,
-                        onClick = { onGroupChange(dim) }
+                // Kolon başlıkları
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    listOf("Yıl" to 1f, "Bahçe" to 1.4f, "Sürüm" to 1.1f).forEach { (title, w) ->
+                        Text(
+                            text = title,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            letterSpacing = 0.8.sp,
+                            color = AppPalette.TextSecondary,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            modifier = Modifier.weight(w)
+                        )
+                    }
+                }
+
+                Spacer(Modifier.height(6.dp))
+
+                // Üç tekerlek — ortadaki öğe seçili
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    WheelPicker(
+                        items         = yearOptions,
+                        selectedIndex = yearOptions.indexOf(tempYear).coerceAtLeast(0),
+                        onSelect      = { tempYear = yearOptions[it] },
+                        modifier      = Modifier.weight(1f)
+                    )
+                    WheelPicker(
+                        items         = gardenOptions,
+                        selectedIndex = gardenOptions.indexOf(tempGarden).coerceAtLeast(0),
+                        onSelect      = { tempGarden = gardenOptions[it] },
+                        modifier      = Modifier.weight(1.4f)
+                    )
+                    WheelPicker(
+                        items         = seasonOptions,
+                        selectedIndex = seasonOptions.indexOf(tempSeason).coerceAtLeast(0),
+                        onSelect      = { tempSeason = seasonOptions[it] },
+                        modifier      = Modifier.weight(1.1f)
+                    )
+                }
+
+                Spacer(Modifier.height(24.dp))
+
+                // Butonlar
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    TextButton(onClick = onDismiss, modifier = Modifier.weight(1f)) {
+                        Text("İptal", color = AppPalette.TextSecondary, fontWeight = FontWeight.Medium)
+                    }
+                    AppButton(
+                        text           = "Uygula",
+                        onClick        = { onApply(tempYear, tempSeason, tempGarden) },
+                        modifier       = Modifier.weight(2f),
+                        containerColor = AppPalette.Teal,
+                        contentColor   = AppPalette.Bg
                     )
                 }
             }
         }
-
-        Spacer(Modifier.height(22.dp))
-        ThinDivider()
-        Spacer(Modifier.height(22.dp))
-        QuestionLabel("Grafik ölçütü")
-        Spacer(Modifier.height(12.dp))
-        SegmentedTabs(
-            options = metricTabs,
-            selectedIndex = metric.ordinal,
-            onSelect = { onMetricChange(Metric.entries[it]) }
-        )
-
-        Spacer(Modifier.height(28.dp))
-        AppButton(
-            text = "Uygula",
-            onClick = onApply,
-            modifier = Modifier.fillMaxWidth(),
-            containerColor = AppPalette.Teal,
-            contentColor = AppPalette.Bg
-        )
-        Spacer(Modifier.height(12.dp))
     }
-}
-
-/** Tek bir boyut için ikon + soru başlığı + seçilebilir çip grubu. */
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun ScopeField(
-    icon: ImageVector,
-    question: String,
-    options: List<String>,
-    selected: String,
-    onSelect: (String) -> Unit
-) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Icon(icon, contentDescription = null, tint = AppPalette.Teal, modifier = Modifier.size(18.dp))
-        Spacer(Modifier.width(8.dp))
-        Text(
-            text = question,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = AppPalette.TextPrimary
-        )
-    }
-    Spacer(Modifier.height(12.dp))
-    FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        options.forEach { option ->
-            ChoicePill(label = option, selected = option == selected, onClick = { onSelect(option) })
-        }
-    }
-}
-
-/** Alt sayfadaki soru başlığı. */
-@Composable
-private fun QuestionLabel(text: String) {
-    Text(text = text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = AppPalette.TextPrimary)
 }
 
 // --- Liste & yardımcı bileşenler -------------------------------------------------------------
@@ -746,28 +707,6 @@ private fun SectionHeader(icon: ImageVector, title: String) {
         Icon(icon, contentDescription = null, tint = AppPalette.Teal, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(8.dp))
         Text(text = title, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = AppPalette.TextPrimary)
-    }
-}
-
-/** Seçilebilir kapsam pili. */
-@Composable
-private fun ChoicePill(label: String, selected: Boolean, onClick: () -> Unit) {
-    val bg        = if (selected) AppPalette.Teal else AppPalette.Field
-    val textColor = if (selected) AppPalette.Bg   else AppPalette.TextSecondary
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(50))
-            .background(bg)
-            .border(1.dp, if (selected) AppPalette.Teal else AppPalette.Border, RoundedCornerShape(50))
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-    ) {
-        Text(
-            text = label,
-            fontSize = 14.sp,
-            fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
-            color = textColor
-        )
     }
 }
 

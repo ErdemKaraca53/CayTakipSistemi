@@ -53,6 +53,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.erdem.designexample.ui.theme.AppPalette
@@ -99,8 +100,20 @@ private fun tonalFieldColors() = TextFieldDefaults.colors(
     disabledLeadingIconColor   = AppPalette.TextSecondary,
     focusedTrailingIconColor   = AppPalette.TextSecondary,
     unfocusedTrailingIconColor = AppPalette.TextSecondary,
-    cursorColor                = AppPalette.Teal
+    cursorColor                = AppPalette.Teal,
+    // Hata durumu: boş bırakılan zorunlu alanlar etiket/ikon rengiyle kırmızı vurgulanır;
+    // görünür kenarlık ise her alanın kendi modifier'ında AppPalette.Error border ile eklenir.
+    errorTextColor             = AppPalette.TextPrimary,
+    errorLabelColor            = AppPalette.Error,
+    errorLeadingIconColor      = AppPalette.Error,
+    errorTrailingIconColor     = AppPalette.Error,
+    errorCursorColor           = AppPalette.Error
 )
+
+/** Hata durumunda alanın etrafına kırmızı kenarlık ekler. */
+@Composable
+private fun Modifier.errorBorder(isError: Boolean): Modifier =
+    if (isError) this.border(1.5.dp, AppPalette.Error, FieldShape) else this
 
 // ─── TonalTextField ───────────────────────────────────────────────────────
 
@@ -114,7 +127,8 @@ fun TonalTextField(
     leadingIcon: ImageVector? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    isError: Boolean = false
 ) {
     TextField(
         value = value,
@@ -122,12 +136,13 @@ fun TonalTextField(
         label = { Text(label) },
         singleLine = true,
         enabled = enabled,
+        isError = isError,
         shape = FieldShape,
         textStyle = fieldTextStyle(),
         colors = tonalFieldColors(),
         leadingIcon = leadingIcon?.let { { Icon(it, contentDescription = null) } },
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
-        modifier = modifier
+        modifier = modifier.errorBorder(isError)
     )
 }
 
@@ -146,7 +161,8 @@ fun TonalAutocompleteField(
     suggestions: List<String>,
     modifier: Modifier = Modifier,
     leadingIcon: ImageVector? = null,
-    imeAction: ImeAction = ImeAction.Next
+    imeAction: ImeAction = ImeAction.Next,
+    isError: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
     val query    = value.trim()
@@ -168,6 +184,7 @@ fun TonalAutocompleteField(
             },
             label = { Text(label) },
             singleLine = true,
+            isError = isError,
             shape = FieldShape,
             textStyle = fieldTextStyle(),
             colors = tonalFieldColors(),
@@ -176,6 +193,7 @@ fun TonalAutocompleteField(
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth()
+                .errorBorder(isError)
         )
         ExposedDropdownMenu(
             expanded = open,
@@ -208,7 +226,8 @@ fun TonalDropdownField(
     label: String,
     modifier: Modifier = Modifier,
     leadingIcon: ImageVector? = null,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    isError: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -222,6 +241,7 @@ fun TonalDropdownField(
             onValueChange = {},
             readOnly = true,
             enabled = enabled,
+            isError = isError,
             label = { Text(label) },
             shape = FieldShape,
             textStyle = fieldTextStyle(),
@@ -231,6 +251,7 @@ fun TonalDropdownField(
             modifier = Modifier
                 .menuAnchor()
                 .fillMaxWidth()
+                .errorBorder(isError)
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -369,7 +390,12 @@ fun WheelPicker(
                         fontSize     = if (isSelected) 20.sp else 15.sp,
                         fontWeight   = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                         color        = if (isSelected) AppPalette.TextPrimary
-                                       else AppPalette.TextSecondary.copy(alpha = 0.45f)
+                                       else AppPalette.TextSecondary.copy(alpha = 0.45f),
+                        maxLines     = 1,
+                        softWrap     = false,
+                        overflow     = TextOverflow.Ellipsis,
+                        textAlign    = androidx.compose.ui.text.style.TextAlign.Center,
+                        modifier     = Modifier.padding(horizontal = 6.dp)
                     )
                 }
             }

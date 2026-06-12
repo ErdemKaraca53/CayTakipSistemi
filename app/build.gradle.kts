@@ -105,4 +105,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    // WorkManager (arka plan ödeme hatırlatmaları).
+    // Not: @HiltWorker/androidx.hilt-compiler KULLANILMIYOR — o işlemci Kotlin 2.1 metadata'sını
+    // okuyamayıp "unsupported metadata version" hatası veriyordu. Worker bağımlılıklarını
+    // EntryPoint ile (mevcut Dagger Hilt üzerinden) alıyoruz.
+    implementation(libs.androidx.work.runtime.ktx)
 }

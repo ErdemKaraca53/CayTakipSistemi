@@ -7,16 +7,13 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.erdem.designexample.database.FirebaseSyncHelper
 import com.erdem.designexample.ui.auth.LoginScreen
 import com.erdem.designexample.ui.auth.SignUpScreen
 import com.erdem.designexample.ui.dashboard.DashboardScreen
@@ -25,8 +22,6 @@ import com.erdem.designexample.ui.payments.PaymentsScreen
 import com.erdem.designexample.ui.records.RecordsScreen
 import com.erdem.designexample.ui.reports.ReportsScreen
 import com.erdem.designexample.ui.settings.SettingsScreen
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 // --- Animasyon sabitleri -------------------------------------------------------------------
 
@@ -75,9 +70,6 @@ fun AppNavHost(
     startDestination: String,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-
     fun goToDashboard() {
         navController.navigate(Routes.DASHBOARD) {
             popUpTo(Routes.SIGNUP) { inclusive = true }
@@ -105,11 +97,8 @@ fun AppNavHost(
         }
         composable(Routes.LOGIN) {
             LoginScreen(
-                onLoggedIn = {
-                    val syncHelper = FirebaseSyncHelper(context)
-                    scope.launch(Dispatchers.IO) { syncHelper.syncFirestoreToSQLite() }
-                    goToDashboard()
-                }
+                // Bulut → Room geri yüklemesi Dashboard açılışında yapılır (DashboardViewModel).
+                onLoggedIn = { goToDashboard() }
             )
         }
 

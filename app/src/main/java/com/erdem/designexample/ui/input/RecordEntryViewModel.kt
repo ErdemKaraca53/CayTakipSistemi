@@ -91,6 +91,11 @@ class RecordEntryViewModel @Inject constructor(
     private val _saveState = MutableStateFlow<SaveState>(SaveState.Idle)
     val saveState: StateFlow<SaveState> = _saveState.asStateFlow()
 
+    // Boş/zorunlu alanların kırmızı vurgulanması — ilk başarısız "Kaydet" denemesinden sonra true olur.
+    // Ekranlar bunu form alanlarının isError durumunu hesaplamak için kullanır.
+    private val _showErrors = MutableStateFlow(false)
+    val showErrors: StateFlow<Boolean> = _showErrors.asStateFlow()
+
     // Autocomplete listeleri — DB'den canlı akış
     val gardenNames: StateFlow<List<String>> = repository.gardenNames
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
@@ -159,8 +164,11 @@ class RecordEntryViewModel @Inject constructor(
         _formState.update { it.copy(season = number) }
     }
 
-    fun setWeightKg(value: String) = _formState.update { it.copy(weightKg = value) }
-    fun setPricePerKg(value: String) = _formState.update { it.copy(pricePerKg = value) }
+    // Türkçe ondalık klavyede kullanıcı "," girer; toFloat()/toFloatOrNull() yalnızca "." kabul
+    // eder. Girişte virgülü noktaya çevirerek "45,50" gibi geçerli değerlerin "Geçerli bir
+    // miktar/fiyat giriniz" hatasıyla reddedilmesini önlüyoruz.
+    fun setWeightKg(value: String) = _formState.update { it.copy(weightKg = value.replace(',', '.')) }
+    fun setPricePerKg(value: String) = _formState.update { it.copy(pricePerKg = value.replace(',', '.')) }
     fun setDueDate(date: LocalDate) = _formState.update { it.copy(dueDate = date) }
 
     /** Kaydet işlemi tamamlandıktan sonra durumu sıfırlar. */
@@ -185,10 +193,12 @@ class RecordEntryViewModel @Inject constructor(
         }
 
         if (error != null) {
+            _showErrors.update { true }
             _saveState.update { SaveState.Error(error) }
             return
         }
 
+        _showErrors.update { false }
         _saveState.update { SaveState.Loading }
 
         viewModelScope.launch {
@@ -225,7 +235,10 @@ class RecordEntryViewModel @Inject constructor(
             }.onSuccess {
                 _saveState.update { SaveState.Success }
                 // Sadece yeni kayıt modunda form sıfırlanır; düzenleme sonrası geri dönülür.
-                if (editId == null) _formState.update { RecordFormState() }
+                if (editId == null) {
+                    _formState.update { RecordFormState() }
+                    _showErrors.update { false }
+                }
             }.onFailure { e ->
                 _saveState.update { SaveState.Error(e.message ?: "Kayıt kaydedilemedi.") }
             }

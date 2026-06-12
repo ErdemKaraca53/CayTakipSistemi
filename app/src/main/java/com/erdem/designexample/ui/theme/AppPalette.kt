@@ -20,6 +20,7 @@ object AppPalette {
     val Amber = Color(0xFFE7A33C)       // İkincil vurgu / dikkat
     val TextPrimary = Color(0xFFEDF1F5) // Ana metin
     val TextSecondary = Color(0xFF8B98A7) // İkincil/etiket metni
+    val Error = Color(0xFFE5707E)       // Hata / boş alan vurgusu, silme aksiyonu
 }
 
 /**

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Locale
 import javax.inject.Inject
@@ -32,7 +33,7 @@ data class DashboardSummary(
  */
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    repository: HarvestRepository
+    private val repository: HarvestRepository
 ) : ViewModel() {
 
     /**
@@ -41,6 +42,12 @@ class DashboardViewModel @Inject constructor(
     val summary: StateFlow<DashboardSummary?> = repository.allHarvests
         .map { records -> buildSummary(records) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    init {
+        // Giriş sonrası / oturumluyken açılışta: buluttaki kayıtları Room'a geri yükle.
+        // Yeni cihaz veya yeniden kurulumda verinin geri gelmesini sağlar (oturumda bir kez).
+        viewModelScope.launch { repository.restoreFromCloud() }
+    }
 
     private fun buildSummary(records: List<HarvestEntity>): DashboardSummary {
         if (records.isEmpty()) {

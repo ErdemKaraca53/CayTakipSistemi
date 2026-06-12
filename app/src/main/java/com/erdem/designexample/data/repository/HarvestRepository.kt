@@ -6,6 +6,7 @@ import com.erdem.designexample.data.db.dao.SellerDao
 import com.erdem.designexample.data.db.entity.GardenEntity
 import com.erdem.designexample.data.db.entity.HarvestEntity
 import com.erdem.designexample.data.db.entity.SellerEntity
+import com.erdem.designexample.data.remote.HarvestRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDate
@@ -15,27 +16,45 @@ import javax.inject.Singleton
 /**
  * Hasat kayıtları, bahçe ve satış yeri öneri havuzları için tek erişim noktası.
  * ViewModel'ler yalnızca bu sınıfla konuşur; DAO'lara doğrudan erişmez.
+ *
+ * Yerel Room kaynaktır; her yazma işlemi ayrıca [remote] üzerinden Firestore'a yedeklenir
+ * (best-effort, çevrimdışı kuyruğa alınır). Girişte [restoreFromCloud] ile bulut → Room geri yüklenir.
  */
 @Singleton
 class HarvestRepository @Inject constructor(
     private val harvestDao: HarvestDao,
     private val gardenDao: GardenDao,
-    private val sellerDao: SellerDao
+    private val sellerDao: SellerDao,
+    private val remote: HarvestRemoteDataSource
 ) {
+
+    /** Bu uygulama oturumunda bulut geri yüklemesi başarıyla yapıldı mı (tekrarı önler). */
+    @Volatile private var cloudRestored = false
 
     // --- Hasat kayıtları -----------------------------------------------------------------
 
     /** Tüm kayıtlar akışı (yeniden eskiye). */
     val allHarvests: Flow<List<HarvestEntity>> = harvestDao.getAll()
 
-    /** Yeni kayıt ekler. Eklenen satırın id'sini döndürür. */
-    suspend fun insertHarvest(entity: HarvestEntity): Long = harvestDao.insert(entity)
+    /** Yeni kayıt ekler. Eklenen satırın id'sini döndürür ve buluta yedekler. */
+    suspend fun insertHarvest(entity: HarvestEntity): Long {
+        val id = harvestDao.insert(entity)
+        // Room autoGenerate gerçek id'yi şimdi verdi; buluta o id ile yaz.
+        remote.upsert(entity.copy(id = id))
+        return id
+    }
 
-    /** Mevcut kaydı günceller. */
-    suspend fun updateHarvest(entity: HarvestEntity) = harvestDao.update(entity)
+    /** Mevcut kaydı günceller ve buluta yansıtır. */
+    suspend fun updateHarvest(entity: HarvestEntity) {
+        harvestDao.update(entity)
+        remote.upsert(entity)
+    }
 
-    /** Kaydı id ile siler. */
-    suspend fun deleteHarvest(id: Long) = harvestDao.deleteById(id)
+    /** Kaydı id ile siler (yerel + bulut). */
+    suspend fun deleteHarvest(id: Long) {
+        harvestDao.deleteById(id)
+        remote.delete(id)
+    }
 
     /** Tek kayıt (düzenleme için). */
     suspend fun getHarvestById(id: Long): HarvestEntity? = harvestDao.getById(id)
@@ -93,5 +112,31 @@ class HarvestRepository @Inject constructor(
     suspend fun registerSeller(name: String) {
         val trimmed = name.trim()
         if (trimmed.isNotEmpty()) sellerDao.insertIfAbsent(SellerEntity(name = trimmed))
+    }
+
+    // --- Bulut geri yükleme --------------------------------------------------------------
+
+    /**
+     * Buluttaki hasat kayıtlarını yerel Room'a indirir (giriş / uygulama açılışında çağrılır).
+     * Yeni cihaz veya yeniden kurulumda verinin geri gelmesini sağlar.
+     *
+     * - Her kayıt kendi id'siyle REPLACE edilir → yerelle birebir eşlenir.
+     * - Bahçe ve firma öneri havuzları indirilen kayıtlardan yeniden inşa edilir.
+     * - Bir oturumda yalnızca bir kez başarılı çalışır; internet yoksa (failure) bayrak
+     *   set edilmez, sonraki denemede tekrar dener.
+     */
+    suspend fun restoreFromCloud() {
+        if (cloudRestored) return
+
+        val harvests = remote.fetchAll().getOrNull() ?: return  // failure → tekrar denenecek
+        cloudRestored = true
+
+        harvests.forEach { harvestDao.insert(it) }  // id ile REPLACE (upsert)
+
+        // Öneri havuzlarını indirilen veriden doldur (her havuz girişi bir kayıttan gelir)
+        harvests.forEach { h ->
+            registerGarden(h.gardenName)
+            if (h.source == "OZEL") registerSeller(h.companyName)
+        }
     }
 }

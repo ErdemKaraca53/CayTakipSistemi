@@ -54,9 +54,23 @@ fun OzelInputScreen(
     onPriceChange: (String) -> Unit,
     onDueDateChange: (LocalDate) -> Unit,
     onSave: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showErrors: Boolean = false
 ) {
     val seasonDisplay = if (form.season in 1..4) "${form.season}. Sürüm" else ""
+
+    // Zorunlu alan boş/geçersizse ve kullanıcı "Kaydet"i denediyse alan kırmızı vurgulanır.
+    val gardenError = showErrors && form.gardenName.isBlank()
+    val companyError = showErrors && form.companyName.isBlank()
+    val seasonError = showErrors && form.season == 0
+    val weightInvalid = form.weightKg.isBlank() ||
+        form.weightKg.toFloatOrNull() == null ||
+        (form.weightKg.toFloatOrNull() ?: 0f) <= 0f
+    val weightError = showErrors && weightInvalid
+    val priceInvalid = form.pricePerKg.isBlank() ||
+        form.pricePerKg.toFloatOrNull() == null ||
+        (form.pricePerKg.toFloatOrNull() ?: 0f) <= 0f
+    val priceError = showErrors && priceInvalid
 
     Column(
         modifier = modifier
@@ -75,7 +89,8 @@ fun OzelInputScreen(
                 label = "Bahçe adı",
                 suggestions = gardens,
                 modifier = Modifier.fillMaxWidth(),
-                leadingIcon = Icons.Outlined.Grass
+                leadingIcon = Icons.Outlined.Grass,
+                isError = gardenError
             )
             TonalAutocompleteField(
                 value = form.companyName,
@@ -83,7 +98,8 @@ fun OzelInputScreen(
                 label = "Satış yeri (firma)",
                 suggestions = sellers,
                 modifier = Modifier.fillMaxWidth(),
-                leadingIcon = Icons.Outlined.Store
+                leadingIcon = Icons.Outlined.Store,
+                isError = companyError
             )
         }
 
@@ -99,7 +115,8 @@ fun OzelInputScreen(
                 onOptionSelected = onSeasonChange,
                 label = "Sürüm",
                 modifier = Modifier.fillMaxWidth(),
-                leadingIcon = Icons.Outlined.Spa
+                leadingIcon = Icons.Outlined.Spa,
+                isError = seasonError
             )
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 TonalTextField(
@@ -108,7 +125,8 @@ fun OzelInputScreen(
                     label = "Miktar (Kg)",
                     modifier = Modifier.weight(1f),
                     leadingIcon = Icons.Outlined.Scale,
-                    keyboardType = KeyboardType.Number
+                    keyboardType = KeyboardType.Number,
+                    isError = weightError
                 )
                 TonalTextField(
                     value = form.pricePerKg,
@@ -117,7 +135,8 @@ fun OzelInputScreen(
                     modifier = Modifier.weight(1f),
                     leadingIcon = Icons.Outlined.Payments,
                     keyboardType = KeyboardType.Decimal,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Done,
+                    isError = priceError
                 )
             }
         }

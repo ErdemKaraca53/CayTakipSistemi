@@ -72,9 +72,18 @@ fun DevletInputScreen(
     onSeasonChange: (String) -> Unit,
     onWeightChange: (String) -> Unit,
     onSave: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showErrors: Boolean = false
 ) {
     val seasonDisplay = if (form.season in 1..4) "${form.season}. Sürüm" else ""
+
+    // Zorunlu alan boş/geçersizse ve kullanıcı "Kaydet"i denediyse alan kırmızı vurgulanır.
+    val gardenError = showErrors && form.gardenName.isBlank()
+    val seasonError = showErrors && form.season == 0
+    val weightInvalid = form.weightKg.isBlank() ||
+        form.weightKg.toFloatOrNull() == null ||
+        (form.weightKg.toFloatOrNull() ?: 0f) <= 0f
+    val weightError = showErrors && weightInvalid
 
     Column(
         modifier = modifier
@@ -94,7 +103,8 @@ fun DevletInputScreen(
                 label = "Bahçe adı",
                 suggestions = gardens,
                 modifier = Modifier.fillMaxWidth(),
-                leadingIcon = Icons.Outlined.Grass
+                leadingIcon = Icons.Outlined.Grass,
+                isError = gardenError
             )
             TonalDateField(
                 date = form.harvestDate,
@@ -111,7 +121,8 @@ fun DevletInputScreen(
                 onOptionSelected = onSeasonChange,
                 label = "Sürüm",
                 modifier = Modifier.fillMaxWidth(),
-                leadingIcon = Icons.Outlined.Spa
+                leadingIcon = Icons.Outlined.Spa,
+                isError = seasonError
             )
             TonalTextField(
                 value = form.weightKg,
@@ -119,7 +130,8 @@ fun DevletInputScreen(
                 label = "Miktar (Kg)",
                 modifier = Modifier.fillMaxWidth(),
                 leadingIcon = Icons.Outlined.Scale,
-                keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
+                keyboardType = androidx.compose.ui.text.input.KeyboardType.Number,
+                isError = weightError
             )
         }
 

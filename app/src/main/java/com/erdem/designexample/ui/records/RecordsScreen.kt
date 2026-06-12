@@ -31,6 +31,7 @@ import androidx.compose.material.icons.outlined.Grass
 import androidx.compose.material.icons.outlined.Payments
 import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material.icons.outlined.Spa
+import androidx.compose.material.icons.outlined.Store
 import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomSheetDefaults
@@ -85,7 +86,8 @@ data class RecordUi(
     val seasonText: String,
     val kgText: String,
     val priceText: String,
-    val totalText: String
+    val totalText: String,
+    val companyName: String
 )
 
 /** [HarvestEntity]'yi UI modeline dönüştürür. */
@@ -99,7 +101,8 @@ private fun HarvestEntity.toUi(): RecordUi {
         seasonText = "$season. Sürüm",
         kgText = "${weightKg.toInt()} Kg",
         priceText = String.format(Locale.US, "%.1f", pricePerKg).replace('.', ',') + " TL/Kg",
-        totalText = String.format(Locale.US, "%,.0f", total).replace(',', '.') + " TL"
+        totalText = String.format(Locale.US, "%,.0f", total).replace(',', '.') + " TL",
+        companyName = companyName
     )
 }
 
@@ -400,6 +403,25 @@ private fun RecordRow(
                     Spacer(Modifier.height(2.dp))
                     Text(text = "Gelir", fontSize = 11.sp, color = AppPalette.TextSecondary)
                 }
+            }
+
+            // 2.1) Satış yeri (firma)
+            Spacer(Modifier.height(8.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    Icons.Outlined.Store,
+                    contentDescription = null,
+                    tint = AppPalette.TextSecondary,
+                    modifier = Modifier.size(14.dp)
+                )
+                Spacer(Modifier.width(6.dp))
+                Text(
+                    text = "Satış yeri: ${record.companyName}",
+                    fontSize = 12.sp,
+                    color = AppPalette.TextSecondary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
 
             Spacer(Modifier.height(14.dp))

@@ -56,4 +56,11 @@ interface HarvestDao {
     /** Toplam kayıt sayısı. */
     @Query("SELECT COUNT(*) FROM harvests")
     fun getCount(): Flow<Int>
+
+    /**
+     * Vade tarihi [startEpoch] – [endEpoch] (epoch-day) arasında olan kayıtlar.
+     * Ödeme hatırlatma worker'ı tarafından tek seferlik (suspend) okunur.
+     */
+    @Query("SELECT * FROM harvests WHERE dueDateEpoch BETWEEN :startEpoch AND :endEpoch ORDER BY dueDateEpoch ASC")
+    suspend fun getDueBetween(startEpoch: Long, endEpoch: Long): List<HarvestEntity>
 }
